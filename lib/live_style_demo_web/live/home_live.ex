@@ -153,10 +153,10 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   style(:hero_title,
-    font_size: %{
-      :default => var(:text_size_3xl),
-      Tokens.breakpoints_lg() => var(:text_size_5xl)
-    },
+    font_size: [
+      {:default, var(:text_size_3xl)},
+      {Tokens.breakpoints_lg(), var(:text_size_5xl)}
+    ],
     font_weight: var(:font_weight_bold),
     color: var(:text_primary),
     line_height: var(:leading_tight),
@@ -171,10 +171,10 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   style(:hero_subtitle,
-    font_size: %{
-      :default => var(:text_size_lg),
-      Tokens.breakpoints_lg() => var(:text_size_xl)
-    },
+    font_size: [
+      {:default, var(:text_size_lg)},
+      {Tokens.breakpoints_lg(), var(:text_size_xl)}
+    ],
     color: var(:text_secondary),
     max_width: "42rem",
     margin_left: "auto",
@@ -251,11 +251,11 @@ defmodule LiveStyleDemoWeb.HomeLive do
   style(:features_grid,
     display: "grid",
     gap: var(:space_8),
-    grid_template_columns: %{
-      :default => "1fr",
-      Tokens.breakpoints_md() => "repeat(2, 1fr)",
-      Tokens.breakpoints_lg() => "repeat(3, 1fr)"
-    }
+    grid_template_columns: [
+      {:default, "1fr"},
+      {Tokens.breakpoints_md(), "repeat(2, 1fr)"},
+      {Tokens.breakpoints_lg(), "repeat(3, 1fr)"}
+    ]
   )
 
   # Using __include__ to compose from BaseStyles.card_base

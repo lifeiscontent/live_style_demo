@@ -42,16 +42,16 @@ defmodule LiveStyleDemoWeb.PageHTML do
     margin_bottom: var(:space_8)
   })
 
-  style(:features, %{
+  style(:features,
     display: "grid",
     gap: var(:space_6),
     margin_bottom: var(:space_8),
-    grid_template_columns: %{
-      :default => "1fr",
-      LiveStyleDemoWeb.Tokens.breakpoints_md() => "repeat(2, 1fr)",
-      LiveStyleDemoWeb.Tokens.breakpoints_lg() => "repeat(3, 1fr)"
-    }
-  })
+    grid_template_columns: [
+      {:default, "1fr"},
+      {LiveStyleDemoWeb.Tokens.breakpoints_md(), "repeat(2, 1fr)"},
+      {LiveStyleDemoWeb.Tokens.breakpoints_lg(), "repeat(3, 1fr)"}
+    ]
+  )
 
   style(:feature_card, %{
     background_color: var(:fill_page),
