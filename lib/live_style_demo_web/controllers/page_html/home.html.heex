@@ -1,0 +1,42 @@
+<div class={style([:page_container])}>
+  <div class={style([:content_wrapper])}>
+    <h1 class={style([:title])}>
+      LiveStyle Demo
+    </h1>
+    <p class={style([:subtitle])}>
+      A compile-time CSS-in-Elixir solution for Phoenix LiveView
+    </p>
+    
+    <div class={style([:features])}>
+      <div class={style([:feature_card])}>
+        <h3 class={style([:feature_title])}>Static CSS</h3>
+        <p class={style([:feature_text])}>
+          All styles are resolved at compile time. Zero runtime overhead.
+        </p>
+      </div>
+      
+      <div class={style([:feature_card])}>
+        <h3 class={style([:feature_title])}>Design Tokens</h3>
+        <p class={style([:feature_text])}>
+          Define your design system with typed tokens using defvars.
+        </p>
+      </div>
+      
+      <div class={style([:feature_card])}>
+        <h3 class={style([:feature_title])}>Auto Recompile</h3>
+        <p class={style([:feature_text])}>
+          CSS regenerates automatically when you save your files.
+        </p>
+      </div>
+    </div>
+    
+    <div class={style([:buttons])}>
+      <.link href="https://github.com" class={style([:btn_primary])}>
+        View on GitHub
+      </.link>
+      <.link href="https://hexdocs.pm" class={style([:btn_secondary])}>
+        Documentation
+      </.link>
+    </div>
+  </div>
+</div>
