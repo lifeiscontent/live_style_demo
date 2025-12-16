@@ -31,13 +31,13 @@ defmodule LiveStyleDemoWeb.TableLive do
   # Page Layout
   # ============================================================================
 
-  style(:page, %{
+  style(:page,
     min_height: "100vh",
     background_color: "light-dark(#f3f4f6, #111827)",
     font_family: var(:font_sans)
-  })
+  )
 
-  style(:back_link, %{
+  style(:back_link,
     display: "inline-flex",
     align_items: "center",
     gap: var(:space_2),
@@ -47,56 +47,56 @@ defmodule LiveStyleDemoWeb.TableLive do
     text_decoration: "none",
     padding: var(:space_4),
     transition: "color 0.2s ease",
-    ":hover": %{
+    ":hover": [
       color: "light-dark(#374151, #f9fafb)"
-    }
-  })
+    ]
+  )
 
-  style(:content, %{
+  style(:content,
     padding_bottom: var(:space_16)
-  })
+  )
 
-  style(:header, %{
+  style(:header,
     text_align: "center",
     padding_top: var(:space_8),
     padding_bottom: var(:space_4)
-  })
+  )
 
-  style(:title, %{
+  style(:title,
     font_size: var(:text_size_2xl),
     font_weight: var(:font_weight_bold),
     color: "light-dark(#111827, #f9fafb)",
     margin_bottom: var(:space_2)
-  })
+  )
 
-  style(:subtitle, %{
+  style(:subtitle,
     font_size: var(:text_size_base),
     color: "light-dark(#6b7280, #9ca3af)",
     max_width: "32rem",
     margin_left: "auto",
     margin_right: "auto"
-  })
+  )
 
   # ============================================================================
   # Container styles - matching StyleX
   # ============================================================================
 
-  style(:container, %{
+  style(:container,
     background_color: "light-dark(#fff, #000)",
     padding: "32px",
     margin_left: "auto",
     margin_right: "auto",
     max_width: "64rem",
     border_radius: "12px"
-  })
+  )
 
-  style(:table, %{
+  style(:table,
     width: "100%",
     border_width: "1px",
     border_style: "solid",
     border_color: "light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1))",
     border_radius: "4px"
-  })
+  )
 
   # ============================================================================
   # Cell styles - matching StyleX exactly
@@ -104,11 +104,11 @@ defmodule LiveStyleDemoWeb.TableLive do
 
   # Base td style matching StyleX's td style exactly
   # Uses nested conditions for :nth-child combined with when.ancestor
-  style(:td, %{
-    text_align: %{
+  style(:td,
+    text_align: [
       default: "center",
       ":first-child": "right"
-    },
+    ],
     padding: "4px",
     padding_inline: "8px",
     color: "light-dark(#333, #aaa)",
@@ -203,15 +203,15 @@ defmodule LiveStyleDemoWeb.TableLive do
            @col8_has_hover => @teal
          }}
       ])
-  })
+  )
 
   # Header cell style
-  style(:th, %{
+  style(:th,
     __include__: [:td],
     color: "light-dark(#000, #fff)",
     font_weight: "800",
     background_color: "transparent"
-  })
+  )
 
   # ============================================================================
   # LiveView Callbacks

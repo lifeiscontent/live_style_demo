@@ -10,15 +10,18 @@ defmodule LiveStyleDemoWeb.Tokens do
   - `var(:text_primary)` -> namespace: "text", name: "primary"
   - `var(:text_size_lg)` -> namespace: "text", name: "size_lg"
 
-  So when defining tokens with `defvars(:namespace, %{name: value})`, the
+  So when defining tokens with `defvars(:namespace, name: value)`, the
   namespace + name must match what's expected by `var(:namespace_name)`.
   """
   use LiveStyle.Tokens
   use LiveStyle.ViewTransitions
   import LiveStyle.Types
 
+  # ===========================================================================
   # Colors - Base palette
-  defvars(:color, %{
+  # ===========================================================================
+
+  defvars(:color,
     white: "#ffffff",
     black: "#000000",
     # Gray scale
@@ -75,12 +78,14 @@ defmodule LiveStyleDemoWeb.Tokens do
     amber_200: "#fde68a",
     amber_500: "#f59e0b",
     amber_600: "#d97706"
-  })
+  )
 
-  # Semantic text colors + text sizes
-  # var(:text_primary) -> "text:primary"
-  # var(:text_size_lg) -> "text:size_lg"
-  defvars(:text, %{
+  # ===========================================================================
+  # Semantic tokens
+  # ===========================================================================
+
+  # Text colors + sizes
+  defvars(:text,
     # Colors
     primary: var(:color_gray_900),
     secondary: var(:color_gray_600),
@@ -98,9 +103,10 @@ defmodule LiveStyleDemoWeb.Tokens do
     size_3xl: "1.875rem",
     size_4xl: "2.25rem",
     size_5xl: "3rem"
-  })
+  )
 
-  defvars(:fill, %{
+  # Fill/background colors
+  defvars(:fill,
     primary: var(:color_indigo_600),
     primary_hover: var(:color_indigo_500),
     secondary: var(:color_gray_100),
@@ -113,17 +119,21 @@ defmodule LiveStyleDemoWeb.Tokens do
     surface: var(:color_gray_50),
     muted: var(:color_gray_100),
     card: var(:color_white)
-  })
+  )
 
-  defvars(:border, %{
+  # Border colors
+  defvars(:border,
     default: var(:color_gray_200),
     subtle: var(:color_gray_100),
     focus: var(:color_indigo_500),
     accent: var(:color_indigo_200)
-  })
+  )
 
+  # ===========================================================================
   # Spacing
-  defvars(:space, %{
+  # ===========================================================================
+
+  defvars(:space,
     px: "1px",
     "0": "0",
     "1": "0.25rem",
@@ -136,29 +146,33 @@ defmodule LiveStyleDemoWeb.Tokens do
     "10": "2.5rem",
     "12": "3rem",
     "16": "4rem"
-  })
+  )
 
-  # Typography - font families and weights
-  # var(:font_sans) -> "font:sans"
-  # var(:font_weight_bold) -> "font:weight_bold"
-  defvars(:font, %{
+  # ===========================================================================
+  # Typography
+  # ===========================================================================
+
+  defvars(:font,
     sans: "'Inter', system-ui, -apple-system, sans-serif",
     mono: "ui-monospace, monospace",
     weight_normal: "400",
     weight_medium: "500",
     weight_semibold: "600",
     weight_bold: "700"
-  })
+  )
 
-  defvars(:leading, %{
+  defvars(:leading,
     none: "1",
     tight: "1.25",
     normal: "1.5",
     relaxed: "1.75"
-  })
+  )
 
+  # ===========================================================================
   # Border radius
-  defvars(:radius, %{
+  # ===========================================================================
+
+  defvars(:radius,
     none: "0",
     sm: "0.125rem",
     default: "0.25rem",
@@ -168,41 +182,50 @@ defmodule LiveStyleDemoWeb.Tokens do
     "2xl": "1rem",
     "3xl": "1.5rem",
     full: "9999px"
-  })
+  )
 
+  # ===========================================================================
   # Shadows
-  defvars(:shadow, %{
+  # ===========================================================================
+
+  defvars(:shadow,
     sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
     default: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
     md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
     lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
-  })
+  )
 
-  # Animation - typed variables for CSS animations
-  # Using angle() type allows animating the gradient rotation
-  defvars(:anim, %{
+  # ===========================================================================
+  # Animation
+  # ===========================================================================
+
+  # Typed variable for CSS animations (allows animating gradient rotation)
+  defvars(:anim,
     angle: angle("0deg")
-  })
+  )
 
   # Keyframes
-  defkeyframes(:spin, %{
-    from: %{transform: "rotate(0deg)"},
-    to: %{transform: "rotate(360deg)"}
-  })
+  defkeyframes(:spin,
+    from: [transform: "rotate(0deg)"],
+    to: [transform: "rotate(360deg)"]
+  )
 
-  defkeyframes(:pulse, %{
-    "0%, 100%": %{opacity: "1"},
-    "50%": %{opacity: "0.5"}
-  })
+  defkeyframes(:pulse,
+    "0%, 100%": [opacity: "1"],
+    "50%": [opacity: "0.5"]
+  )
 
-  # Static constants (inlined at build time, not CSS variables)
-  defconsts(:breakpoints, %{
+  # ===========================================================================
+  # Constants (inlined at build time, not CSS variables)
+  # ===========================================================================
+
+  defconsts(:breakpoints,
     sm: "@media (max-width: 640px)",
     md: "@media (min-width: 641px) and (max-width: 1024px)",
     lg: "@media (min-width: 1025px)"
-  })
+  )
 
-  defconsts(:z, %{
+  defconsts(:z,
     dropdown: "10",
     sticky: "20",
     fixed: "30",
@@ -210,10 +233,13 @@ defmodule LiveStyleDemoWeb.Tokens do
     modal: "50",
     popover: "60",
     tooltip: "70"
-  })
+  )
 
-  # Themes - override variable values for subtrees
-  create_theme(:dark_fill, :fill, %{
+  # ===========================================================================
+  # Themes
+  # ===========================================================================
+
+  create_theme(:dark_fill, :fill,
     primary: "#818cf8",
     primary_hover: "#a5b4fc",
     secondary: "#374151",
@@ -223,91 +249,87 @@ defmodule LiveStyleDemoWeb.Tokens do
     surface: "#111827",
     muted: "#1f2937",
     card: "#1f2937"
-  })
+  )
 
-  create_theme(:dark_text, :text, %{
+  create_theme(:dark_text, :text,
     primary: "#f9fafb",
     secondary: "#d1d5db",
     muted: "#6b7280",
     accent: "#a5b4fc",
     link: "#60a5fa"
-  })
+  )
 
-  create_theme(:dark_border, :border, %{
+  create_theme(:dark_border, :border,
     default: "#374151",
     subtle: "#1f2937",
     focus: "#818cf8",
     accent: "#4f46e5"
-  })
+  )
 
-  # ============================================================================
+  # ===========================================================================
   # View Transitions
-  # ============================================================================
+  # ===========================================================================
 
   # Keyframes for view transitions
-  # defkeyframes creates a function that returns the hashed keyframe name
-  defkeyframes(:vt_scale_in, %{
-    from: %{opacity: "0", transform: "scale(0.8)"},
-    to: %{opacity: "1", transform: "scale(1)"}
-  })
+  defkeyframes(:vt_scale_in,
+    from: [opacity: "0", transform: "scale(0.8)"],
+    to: [opacity: "1", transform: "scale(1)"]
+  )
 
-  defkeyframes(:vt_scale_out, %{
-    from: %{opacity: "1", transform: "scale(1)"},
-    to: %{opacity: "0", transform: "scale(0.8)"}
-  })
+  defkeyframes(:vt_scale_out,
+    from: [opacity: "1", transform: "scale(1)"],
+    to: [opacity: "0", transform: "scale(0.8)"]
+  )
 
-  defkeyframes(:vt_fade_in, %{
-    from: %{opacity: "0"},
-    to: %{opacity: "1"}
-  })
+  defkeyframes(:vt_fade_in,
+    from: [opacity: "0"],
+    to: [opacity: "1"]
+  )
 
-  defkeyframes(:vt_fade_out, %{
-    from: %{opacity: "1"},
-    to: %{opacity: "0"}
-  })
+  defkeyframes(:vt_fade_out,
+    from: [opacity: "1"],
+    to: [opacity: "0"]
+  )
 
   # Todo items: scale for add/remove, fade for reorder
   # Respects prefers-reduced-motion
-  #
-  # Note: For animation-name, use atom references like :vt_scale_out
-  # They get resolved to the hashed keyframe name at compile time
-  view_transition("todo-*", %{
-    old_only_child: %{
-      animation_name: %{
-        :default => :vt_scale_out,
-        "@media (prefers-reduced-motion: reduce)" => "none"
-      },
+  view_transition("todo-*",
+    old_only_child: [
+      animation_name: [
+        default: :vt_scale_out,
+        "@media (prefers-reduced-motion: reduce)": :none
+      ],
       animation_duration: "250ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"
-    },
-    new_only_child: %{
-      animation_name: %{
-        :default => :vt_scale_in,
-        "@media (prefers-reduced-motion: reduce)" => "none"
-      },
+    ],
+    new_only_child: [
+      animation_name: [
+        default: :vt_scale_in,
+        "@media (prefers-reduced-motion: reduce)": :none
+      ],
       animation_duration: "250ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"
-    },
-    old: %{
-      animation_name: %{
-        :default => :vt_fade_out,
-        "@media (prefers-reduced-motion: reduce)" => "none"
-      },
+    ],
+    old: [
+      animation_name: [
+        default: :vt_fade_out,
+        "@media (prefers-reduced-motion: reduce)": :none
+      ],
       animation_duration: "150ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"
-    },
-    new: %{
-      animation_name: %{
-        :default => :vt_fade_in,
-        "@media (prefers-reduced-motion: reduce)" => "none"
-      },
+    ],
+    new: [
+      animation_name: [
+        default: :vt_fade_in,
+        "@media (prefers-reduced-motion: reduce)": :none
+      ],
       animation_duration: "150ms",
       animation_delay: "50ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"
-    }
-  })
+    ]
+  )
 end

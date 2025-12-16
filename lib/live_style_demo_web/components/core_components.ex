@@ -224,7 +224,9 @@ defmodule LiveStyleDemoWeb.CoreComponents do
       class={style([:flash_container])}
       {@rest}
     >
-      <div class={style([:flash_alert, @kind == :info && :flash_info, @kind == :error && :flash_error])}>
+      <div class={
+        style([:flash_alert, @kind == :info && :flash_info, @kind == :error && :flash_error])
+      }>
         <.icon
           :if={@kind == :info}
           name="hero-information-circle"
@@ -259,13 +261,32 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   def button(%{rest: rest} = assigns) do
     if rest[:href] || rest[:navigate] || rest[:patch] do
       ~H"""
-      <.link class={style([:btn_base, @variant == :primary && :btn_primary, @variant == :secondary && :btn_secondary])} {@rest}>
+      <.link
+        class={
+          style([
+            :btn_base,
+            @variant == :primary && :btn_primary,
+            @variant == :secondary && :btn_secondary
+          ])
+        }
+        {@rest}
+      >
         {render_slot(@inner_block)}
       </.link>
       """
     else
       ~H"""
-      <button type={@type} class={style([:btn_base, @variant == :primary && :btn_primary, @variant == :secondary && :btn_secondary])} {@rest}>
+      <button
+        type={@type}
+        class={
+          style([
+            :btn_base,
+            @variant == :primary && :btn_primary,
+            @variant == :secondary && :btn_secondary
+          ])
+        }
+        {@rest}
+      >
         {render_slot(@inner_block)}
       </button>
       """

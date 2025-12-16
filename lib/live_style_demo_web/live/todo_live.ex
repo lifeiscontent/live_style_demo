@@ -9,54 +9,54 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # ============================================================================
 
   # Animations for view transition pseudo-elements
-  keyframes(:slide_in_from_right, %{
-    from: %{opacity: "0", transform: "translateX(30px)"},
-    to: %{opacity: "1", transform: "translateX(0)"}
-  })
+  keyframes(:slide_in_from_right,
+    from: [opacity: "0", transform: "translateX(30px)"],
+    to: [opacity: "1", transform: "translateX(0)"]
+  )
 
-  keyframes(:slide_out_to_left, %{
-    from: %{opacity: "1", transform: "translateX(0)"},
-    to: %{opacity: "0", transform: "translateX(-30px)"}
-  })
+  keyframes(:slide_out_to_left,
+    from: [opacity: "1", transform: "translateX(0)"],
+    to: [opacity: "0", transform: "translateX(-30px)"]
+  )
 
-  keyframes(:scale_in, %{
-    from: %{opacity: "0", transform: "scale(0.8)"},
-    to: %{opacity: "1", transform: "scale(1)"}
-  })
+  keyframes(:scale_in,
+    from: [opacity: "0", transform: "scale(0.8)"],
+    to: [opacity: "1", transform: "scale(1)"]
+  )
 
-  keyframes(:scale_out, %{
-    from: %{opacity: "1", transform: "scale(1)"},
-    to: %{opacity: "0", transform: "scale(0.8)"}
-  })
+  keyframes(:scale_out,
+    from: [opacity: "1", transform: "scale(1)"],
+    to: [opacity: "0", transform: "scale(0.8)"]
+  )
 
-  keyframes(:check_bounce, %{
-    "0%": %{transform: "scale(1)"},
-    "50%": %{transform: "scale(1.2)"},
-    "100%": %{transform: "scale(1)"}
-  })
+  keyframes(:check_bounce,
+    "0%": [transform: "scale(1)"],
+    "50%": [transform: "scale(1.2)"],
+    "100%": [transform: "scale(1)"]
+  )
 
-  keyframes(:strike_through, %{
-    from: %{width: "0%"},
-    to: %{width: "100%"}
-  })
+  keyframes(:strike_through,
+    from: [width: "0%"],
+    to: [width: "100%"]
+  )
 
-  keyframes(:shake, %{
-    "0%, 100%": %{transform: "translateX(0)"},
-    "25%": %{transform: "translateX(-5px)"},
-    "75%": %{transform: "translateX(5px)"}
-  })
+  keyframes(:shake,
+    "0%, 100%": [transform: "translateX(0)"],
+    "25%": [transform: "translateX(-5px)"],
+    "75%": [transform: "translateX(5px)"]
+  )
 
   # ============================================================================
   # Page Layout
   # ============================================================================
 
-  style(:page, %{
+  style(:page,
     min_height: "100vh",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     font_family: var(:font_sans)
-  })
+  )
 
-  style(:back_link, %{
+  style(:back_link,
     display: "inline-flex",
     align_items: "center",
     gap: var(:space_2),
@@ -66,68 +66,66 @@ defmodule LiveStyleDemoWeb.TodoLive do
     text_decoration: "none",
     padding: var(:space_4),
     transition: "color 0.2s ease",
-    ":hover": %{
-      color: var(:color_white)
-    }
-  })
+    ":hover": [color: var(:color_white)]
+  )
 
-  style(:content, %{
+  style(:content,
     padding_top: var(:space_8),
     padding_bottom: var(:space_16)
-  })
+  )
 
-  style(:container, %{
+  style(:container,
     __include__: [{BaseStyles, :container_narrow}],
     max_width: "32rem"
-  })
+  )
 
   # ============================================================================
   # Card
   # ============================================================================
 
-  style(:card, %{
+  style(:card,
     background_color: var(:color_white),
     border_radius: var(:radius_2xl),
     box_shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
     overflow: "hidden"
-  })
+  )
 
-  style(:card_header, %{
+  style(:card_header,
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     padding: var(:space_6),
     color: var(:color_white)
-  })
+  )
 
-  style(:card_title, %{
+  style(:card_title,
     font_size: var(:text_size_2xl),
     font_weight: var(:font_weight_bold),
     margin: "0",
     display: "flex",
     align_items: "center",
     gap: var(:space_3)
-  })
+  )
 
-  style(:card_subtitle, %{
+  style(:card_subtitle,
     font_size: var(:text_size_sm),
     opacity: "0.9",
     margin_top: var(:space_1)
-  })
+  )
 
-  style(:card_body, %{
+  style(:card_body,
     padding: var(:space_6)
-  })
+  )
 
   # ============================================================================
   # Input Form
   # ============================================================================
 
-  style(:form, %{
+  style(:form,
     display: "flex",
     gap: var(:space_3),
     margin_bottom: var(:space_6)
-  })
+  )
 
-  style(:input, %{
+  style(:input,
     flex: "1",
     padding: var(:space_3),
     font_size: var(:text_size_base),
@@ -137,13 +135,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
     border_radius: var(:radius_lg),
     outline: "none",
     transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-    ":focus": %{
+    ":focus": [
       border_color: var(:color_indigo_500),
       box_shadow: "0 0 0 3px rgba(99, 102, 241, 0.1)"
-    }
-  })
+    ]
+  )
 
-  style(:add_button, %{
+  style(:add_button,
     __include__: [{BaseStyles, :btn_base}],
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     color: var(:color_white),
@@ -151,26 +149,24 @@ defmodule LiveStyleDemoWeb.TodoLive do
     padding_right: var(:space_5),
     font_weight: var(:font_weight_semibold),
     box_shadow: "0 4px 14px 0 rgba(102, 126, 234, 0.4)",
-    ":hover": %{
+    ":hover": [
       transform: "translateY(-1px)",
       box_shadow: "0 6px 20px 0 rgba(102, 126, 234, 0.5)"
-    },
-    ":active": %{
-      transform: "translateY(0)"
-    }
-  })
+    ],
+    ":active": [transform: "translateY(0)"]
+  )
 
   # ============================================================================
   # Todo List
   # ============================================================================
 
-  style(:todo_list, %{
+  style(:todo_list,
     list_style: "none",
     padding: "0",
     margin: "0"
-  })
+  )
 
-  style(:todo_item, %{
+  style(:todo_item,
     display: "flex",
     align_items: "center",
     gap: var(:space_3),
@@ -181,45 +177,36 @@ defmodule LiveStyleDemoWeb.TodoLive do
     transition: "background-color 0.2s ease",
     # Each todo item gets a unique view-transition-name via inline style
     contain: "layout",
-    ":hover": %{
-      background_color: var(:color_gray_100)
-    }
-  })
+    ":hover": [background_color: var(:color_gray_100)]
+  )
 
-  style(:todo_item_completed, %{
+  style(:todo_item_completed,
     opacity: "0.6",
     background_color: var(:color_green_50),
-    ":hover": %{
-      background_color: var(:color_green_100)
-    }
-  })
-
-  # ============================================================================
-  # View Transition Styles (applied globally via ::view-transition pseudo-elements)
-  # These are defined in app.css since LiveStyle generates atomic classes
-  # ============================================================================
+    ":hover": [background_color: var(:color_green_100)]
+  )
 
   # ============================================================================
   # Checkbox
   # ============================================================================
 
-  style(:checkbox_wrapper, %{
+  style(:checkbox_wrapper,
     position: "relative",
     width: "1.5rem",
     height: "1.5rem",
     flex_shrink: "0"
-  })
+  )
 
-  style(:checkbox_input, %{
+  style(:checkbox_input,
     position: "absolute",
     opacity: "0",
     width: "100%",
     height: "100%",
     cursor: "pointer",
     z_index: "1"
-  })
+  )
 
-  style(:checkbox_custom, %{
+  style(:checkbox_custom,
     position: "absolute",
     top: "0",
     left: "0",
@@ -234,50 +221,50 @@ defmodule LiveStyleDemoWeb.TodoLive do
     display: "flex",
     align_items: "center",
     justify_content: "center"
-  })
+  )
 
-  style(:checkbox_custom_checked, %{
+  style(:checkbox_custom_checked,
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     border_color: "transparent",
     animation_name: :check_bounce,
     animation_duration: "0.3s",
     animation_timing_function: "ease-out"
-  })
+  )
 
-  style(:checkbox_icon, %{
+  style(:checkbox_icon,
     color: var(:color_white),
     font_size: "0.75rem",
     opacity: "0",
     transform: "scale(0)",
     transition: "all 0.2s ease"
-  })
+  )
 
-  style(:checkbox_icon_visible, %{
+  style(:checkbox_icon_visible,
     opacity: "1",
     transform: "scale(1)"
-  })
+  )
 
   # ============================================================================
   # Todo Text
   # ============================================================================
 
-  style(:todo_text_wrapper, %{
+  style(:todo_text_wrapper,
     flex: "1",
     position: "relative",
     overflow: "hidden"
-  })
+  )
 
-  style(:todo_text, %{
+  style(:todo_text,
     font_size: var(:text_size_base),
     color: var(:color_gray_700),
     transition: "color 0.2s ease"
-  })
+  )
 
-  style(:todo_text_completed, %{
+  style(:todo_text_completed,
     color: var(:color_gray_400)
-  })
+  )
 
-  style(:todo_strike, %{
+  style(:todo_strike,
     position: "absolute",
     top: "50%",
     left: "0",
@@ -287,13 +274,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
     animation_duration: "0.3s",
     animation_timing_function: "ease-out",
     animation_fill_mode: "forwards"
-  })
+  )
 
   # ============================================================================
   # Delete Button
   # ============================================================================
 
-  style(:delete_button, %{
+  style(:delete_button,
     __include__: [{BaseStyles, :interactive}],
     width: "2rem",
     height: "2rem",
@@ -308,54 +295,54 @@ defmodule LiveStyleDemoWeb.TodoLive do
     opacity: "0",
     transform: "scale(0.8)",
     transition: "all 0.2s ease",
-    ":hover": %{
+    ":hover": [
       color: var(:color_red_500),
       background_color: var(:color_red_50)
-    }
-  })
+    ]
+  )
 
-  style(:delete_button_visible, %{
+  style(:delete_button_visible,
     opacity: "1",
     transform: "scale(1)"
-  })
+  )
 
   # ============================================================================
   # Empty State
   # ============================================================================
 
-  style(:empty_state, %{
+  style(:empty_state,
     text_align: "center",
     padding: var(:space_8),
     color: var(:color_gray_400)
-  })
+  )
 
-  style(:empty_icon, %{
+  style(:empty_icon,
     font_size: "3rem",
     margin_bottom: var(:space_4),
     opacity: "0.5"
-  })
+  )
 
-  style(:empty_text, %{
+  style(:empty_text,
     font_size: var(:text_size_lg),
     margin_bottom: var(:space_2)
-  })
+  )
 
-  style(:empty_subtext, %{
+  style(:empty_subtext,
     font_size: var(:text_size_sm)
-  })
+  )
 
   # ============================================================================
   # Filter Buttons
   # ============================================================================
 
-  style(:filter_group, %{
+  style(:filter_group,
     display: "flex",
     justify_content: "center",
     gap: var(:space_2),
     margin_bottom: var(:space_4)
-  })
+  )
 
-  style(:filter_button, %{
+  style(:filter_button,
     __include__: [{BaseStyles, :interactive}],
     padding_top: var(:space_2),
     padding_bottom: var(:space_2),
@@ -369,41 +356,39 @@ defmodule LiveStyleDemoWeb.TodoLive do
     border_color: var(:color_gray_200),
     border_radius: var(:radius_full),
     transition: "all 0.2s ease",
-    ":hover": %{
+    ":hover": [
       border_color: var(:color_gray_300),
       color: var(:color_gray_700)
-    }
-  })
+    ]
+  )
 
-  style(:filter_button_active, %{
+  style(:filter_button_active,
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     color: var(:color_white),
     border_color: "transparent",
-    ":hover": %{
-      color: var(:color_white)
-    }
-  })
+    ":hover": [color: var(:color_white)]
+  )
 
   # ============================================================================
   # Input Shake Animation
   # ============================================================================
 
-  style(:input_shake, %{
+  style(:input_shake,
     animation_name: :shake,
     animation_duration: "0.4s",
     animation_timing_function: "ease-out",
     border_color: var(:color_red_400),
-    ":focus": %{
+    ":focus": [
       border_color: var(:color_red_400),
       box_shadow: "0 0 0 3px rgba(248, 113, 113, 0.2)"
-    }
-  })
+    ]
+  )
 
   # ============================================================================
   # Footer Stats
   # ============================================================================
 
-  style(:footer, %{
+  style(:footer,
     display: "flex",
     justify_content: "space-between",
     align_items: "center",
@@ -412,24 +397,24 @@ defmodule LiveStyleDemoWeb.TodoLive do
     border_top_style: "solid",
     border_top_color: var(:color_gray_200),
     margin_top: var(:space_4)
-  })
+  )
 
-  style(:stats, %{
+  style(:stats,
     font_size: var(:text_size_sm),
     color: var(:color_gray_500)
-  })
+  )
 
-  style(:clear_button, %{
+  style(:clear_button,
     __include__: [{BaseStyles, :interactive}],
     font_size: var(:text_size_sm),
     color: var(:color_gray_500),
     background: "none",
     border: "none",
-    text_decoration: %{
+    text_decoration: [
       default: "none",
       ":hover": "underline"
-    }
-  })
+    ]
+  )
 
   # ============================================================================
   # LiveView Callbacks
@@ -570,8 +555,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
             <%!-- Header --%>
             <div class={style([:card_header])}>
               <h1 class={style([:card_title])}>
-                <span>&#9745;</span>
-                Todo List
+                <span>&#9745;</span> Todo List
               </h1>
               <p class={style([:card_subtitle])}>
                 Built with LiveStyle &amp; View Transitions API
