@@ -28,7 +28,13 @@ import topbar from "../vendor/topbar"
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 // View Transitions API integration
-// Wraps LiveView DOM updates in startViewTransition for smooth animations
+// Uses the onDocumentPatch callback added in phoenix_live_view 1.1.18+
+// See: https://github.com/phoenixframework/phoenix_live_view/pull/4043
+
+let transitionTypes = []
+let transitionEls = []
+let scheduleTransition = null
+
 const viewTransitionDom = {
   // Called before updating an element - return false to skip morphdom's update
   onBeforeElUpdated(fromEl, toEl) {
@@ -37,11 +43,47 @@ const viewTransitionDom = {
       toEl.style.viewTransitionName = fromEl.style.viewTransitionName
     }
     return true
+  },
+
+  // Called before the document is patched - allows wrapping in View Transitions
+  onDocumentPatch(start) {
+    const update = () => {
+      // Reset transitionEls
+      transitionEls.forEach((el) => el.style.viewTransitionName = "")
+      transitionEls = []
+      transitionTypes = []
+      scheduleTransition = null
+      start()
+    }
+
+    if (transitionEls.length !== 0 || scheduleTransition) {
+      // Firefox 144 doesn't support the callbackOptions yet, so fallback to the basic version
+      try {
+        document.startViewTransition({
+          update,
+          types: transitionTypes.length ? transitionTypes : ["same-document"],
+        })
+      } catch (error) {
+        document.startViewTransition(update)
+      }
+    } else {
+      update()
+    }
   }
 }
 
-// Create a wrapper that triggers View Transitions for DOM updates
-let pendingTransition = null
+// Listen for view transition events from LiveView
+window.addEventListener("phx:start-view-transition", (e) => {
+  const opts = e.detail
+  if (opts.temp_name && e.target !== window) {
+    e.target.style.viewTransitionName = opts.temp_name
+    transitionEls.push(e.target)
+  }
+  if (opts.type) {
+    transitionTypes.push(opts.type)
+  }
+  scheduleTransition = true
+})
 
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
@@ -49,18 +91,6 @@ const liveSocket = new LiveSocket("/live", Socket, {
   hooks: colocatedHooks,
   dom: viewTransitionDom,
 })
-
-// Intercept LiveView's DOM patching to wrap in View Transitions
-if (document.startViewTransition) {
-  // Patch the requestDOMUpdate to use View Transitions
-  const originalRequestDOMUpdate = liveSocket.requestDOMUpdate.bind(liveSocket)
-  liveSocket.requestDOMUpdate = (callback) => {
-    // Use View Transitions API for smooth animations
-    document.startViewTransition(() => {
-      originalRequestDOMUpdate(callback)
-    })
-  }
-}
 
 // Show progress bar on live navigation and form submits
 topbar.config({barColors: {0: "#29d"}, shadowColor: "rgba(0, 0, 0, .3)"})

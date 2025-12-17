@@ -5,29 +5,8 @@ defmodule LiveStyleDemoWeb.TodoLive do
   alias LiveStyleDemoWeb.BaseStyles
 
   # ============================================================================
-  # Keyframes for View Transitions
+  # Keyframes
   # ============================================================================
-
-  # Animations for view transition pseudo-elements
-  keyframes(:slide_in_from_right,
-    from: [opacity: "0", transform: "translateX(30px)"],
-    to: [opacity: "1", transform: "translateX(0)"]
-  )
-
-  keyframes(:slide_out_to_left,
-    from: [opacity: "1", transform: "translateX(0)"],
-    to: [opacity: "0", transform: "translateX(-30px)"]
-  )
-
-  keyframes(:scale_in,
-    from: [opacity: "0", transform: "scale(0.8)"],
-    to: [opacity: "1", transform: "scale(1)"]
-  )
-
-  keyframes(:scale_out,
-    from: [opacity: "1", transform: "scale(1)"],
-    to: [opacity: "0", transform: "scale(0.8)"]
-  )
 
   keyframes(:check_bounce,
     "0%": [transform: "scale(1)"],
@@ -177,7 +156,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
     transition: "background-color 0.2s ease",
     # Each todo item gets a unique view-transition-name via inline style
     contain: "layout",
-    ":hover": [background_color: var(:color_gray_100)]
+    ":hover": [
+      background_color: var(:color_gray_100),
+      " .delete-button": [
+        opacity: "1",
+        transform: "scale(1)"
+      ]
+    ]
   )
 
   style(:todo_item_completed,
@@ -299,11 +284,6 @@ defmodule LiveStyleDemoWeb.TodoLive do
       color: var(:color_red_500),
       background_color: var(:color_red_50)
     ]
-  )
-
-  style(:delete_button_visible,
-    opacity: "1",
-    transform: "scale(1)"
   )
 
   # ============================================================================
@@ -430,15 +410,16 @@ defmodule LiveStyleDemoWeb.TodoLive do
     ]
 
     {:ok,
-     assign(socket,
+     socket
+     |> assign(
        page_title: "Todo Demo",
        todos: todos,
        new_todo: "",
        next_id: 5,
-       hover_id: nil,
        filter: :all,
        input_error: false
-     )}
+     )
+     |> push_event("start-view-transition", %{type: "page"}, dispatch: :before)}
   end
 
   @impl true
@@ -463,12 +444,14 @@ defmodule LiveStyleDemoWeb.TodoLive do
       }
 
       {:noreply,
-       assign(socket,
+       socket
+       |> assign(
          todos: socket.assigns.todos ++ [new_todo],
          new_todo: "",
          next_id: socket.assigns.next_id + 1,
          input_error: false
-       )}
+       )
+       |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
     end
   end
 
@@ -480,7 +463,11 @@ defmodule LiveStyleDemoWeb.TodoLive do
   @impl true
   def handle_event("set_filter", %{"filter" => filter}, socket) do
     filter = String.to_existing_atom(filter)
-    {:noreply, assign(socket, filter: filter)}
+
+    {:noreply,
+     socket
+     |> assign(filter: filter)
+     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
   end
 
   @impl true
@@ -496,30 +483,31 @@ defmodule LiveStyleDemoWeb.TodoLive do
         end
       end)
 
-    {:noreply, assign(socket, todos: todos)}
+    {:noreply,
+     socket
+     |> assign(todos: todos)
+     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
   end
 
   @impl true
   def handle_event("delete_todo", %{"id" => id}, socket) do
     id = String.to_integer(id)
     todos = Enum.reject(socket.assigns.todos, &(&1.id == id))
-    {:noreply, assign(socket, todos: todos)}
+
+    {:noreply,
+     socket
+     |> assign(todos: todos)
+     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
   end
 
   @impl true
   def handle_event("clear_completed", _params, socket) do
     todos = Enum.reject(socket.assigns.todos, & &1.completed)
-    {:noreply, assign(socket, todos: todos)}
-  end
 
-  @impl true
-  def handle_event("hover_item", %{"id" => id}, socket) do
-    {:noreply, assign(socket, hover_id: String.to_integer(id))}
-  end
-
-  @impl true
-  def handle_event("unhover_item", _params, socket) do
-    {:noreply, assign(socket, hover_id: nil)}
+    {:noreply,
+     socket
+     |> assign(todos: todos)
+     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
   end
 
   # ============================================================================
@@ -625,9 +613,6 @@ defmodule LiveStyleDemoWeb.TodoLive do
                       id={"todo-#{todo.id}"}
                       class={todo_item_class(todo)}
                       style={"view-transition-name: todo-#{todo.id}"}
-                      phx-mouseenter="hover_item"
-                      phx-mouseleave="unhover_item"
-                      phx-value-id={todo.id}
                     >
                       <%!-- Checkbox --%>
                       <div class={style([:checkbox_wrapper])}>
@@ -658,7 +643,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
                         type="button"
                         phx-click="delete_todo"
                         phx-value-id={todo.id}
-                        class={delete_button_class(@hover_id == todo.id)}
+                        class={style([:delete_button]) <> " delete-button"}
                         aria-label="Delete todo"
                       >
                         &#10005;
@@ -733,14 +718,6 @@ defmodule LiveStyleDemoWeb.TodoLive do
       style([:todo_text, :todo_text_completed])
     else
       style([:todo_text])
-    end
-  end
-
-  defp delete_button_class(visible) do
-    if visible do
-      style([:delete_button, :delete_button_visible])
-    else
-      style([:delete_button])
     end
   end
 

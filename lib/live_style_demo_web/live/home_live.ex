@@ -440,7 +440,10 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Home", dark_mode: false)}
+    {:ok,
+     socket
+     |> assign(page_title: "Home", dark_mode: false)
+     |> push_event("start-view-transition", %{type: "page"}, dispatch: :before)}
   end
 
   defp code_example do

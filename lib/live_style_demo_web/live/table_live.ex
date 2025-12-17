@@ -221,7 +221,10 @@ defmodule LiveStyleDemoWeb.TableLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Table Demo")}
+    {:ok,
+     socket
+     |> assign(page_title: "Table Demo")
+     |> push_event("start-view-transition", %{type: "page"}, dispatch: :before)}
   end
 
   @impl true
