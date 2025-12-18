@@ -31,6 +31,13 @@ config :esbuild,
     env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
   ]
 
+# Configure LiveStyle
+config :live_style,
+  default: [
+    output: "priv/static/assets/live.css",
+    cd: Path.expand("..", __DIR__)
+  ]
+
 # Configure Elixir's Logger
 config :logger, :default_formatter,
   format: "$time $metadata[$level] $message\n",

@@ -3,199 +3,189 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   Core UI components built with LiveStyle.
   """
   use Phoenix.Component
-  use LiveStyle
+  use LiveStyle.Sheet
   use Gettext, backend: LiveStyleDemoWeb.Gettext
 
   alias Phoenix.LiveView.JS
+
+  # Ensure Tokens is compiled first
+  require LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens
 
   # ============================================================================
   # Button Styles
   # ============================================================================
 
-  style(:btn_base, %{
+  css_rule(:btn_base,
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
-    padding_top: var(:space_2),
-    padding_bottom: var(:space_2),
-    padding_left: var(:space_4),
-    padding_right: var(:space_4),
-    font_size: var(:text_size_sm),
-    font_weight: var(:font_weight_medium),
-    border_radius: var(:radius_md),
-    cursor: %{
-      default: "pointer",
-      ":disabled": "not-allowed"
-    },
+    padding_top: css_var({Tokens, :space, :"2"}),
+    padding_bottom: css_var({Tokens, :space, :"2"}),
+    padding_left: css_var({Tokens, :space, :"4"}),
+    padding_right: css_var({Tokens, :space, :"4"}),
+    font_size: css_var({Tokens, :text, :size_sm}),
+    font_weight: css_var({Tokens, :font, :weight_medium}),
+    border_radius: css_var({Tokens, :radius, :md}),
+    cursor: "pointer",
     text_decoration: "none",
     border: "none",
-    opacity: %{
-      default: "1",
-      ":hover": "0.9",
-      ":disabled": "0.5"
-    }
-  })
+    transition: "all 0.2s ease"
+  )
 
-  style(:btn_primary, %{
-    background_color: var(:fill_primary),
-    color: var(:text_inverse)
-  })
+  css_rule(:btn_primary,
+    background_color: css_var({Tokens, :fill, :primary}),
+    color: css_var({Tokens, :text, :inverse})
+  )
 
-  style(:btn_secondary, %{
-    background_color: var(:fill_secondary),
-    color: var(:text_primary)
-  })
+  css_rule(:btn_secondary,
+    background_color: css_var({Tokens, :fill, :secondary}),
+    color: css_var({Tokens, :text, :primary})
+  )
 
   # ============================================================================
   # Flash Styles
   # ============================================================================
 
-  style(:flash_container, %{
+  css_rule(:flash_container,
     position: "fixed",
-    top: var(:space_4),
-    right: var(:space_4),
+    top: css_var({Tokens, :space, :"4"}),
+    right: css_var({Tokens, :space, :"4"}),
     z_index: "50"
-  })
+  )
 
-  style(:flash_alert, %{
+  css_rule(:flash_alert,
     display: "flex",
     align_items: "flex-start",
-    gap: var(:space_3),
-    padding: var(:space_4),
-    border_radius: var(:radius_lg),
-    box_shadow: var(:shadow_lg),
+    gap: css_var({Tokens, :space, :"3"}),
+    padding: css_var({Tokens, :space, :"4"}),
+    border_radius: css_var({Tokens, :radius, :lg}),
+    box_shadow: css_var({Tokens, :shadow, :lg}),
     max_width: "24rem"
-  })
+  )
 
-  style(:flash_info, %{
-    background_color: var(:color_blue_50),
+  css_rule(:flash_info,
+    background_color: css_var({Tokens, :color, :blue_50}),
     border_width: "1px",
     border_style: "solid",
-    border_color: var(:color_blue_500)
-  })
+    border_color: css_var({Tokens, :color, :blue_500})
+  )
 
-  style(:flash_error, %{
-    background_color: var(:color_red_50),
+  css_rule(:flash_error,
+    background_color: css_var({Tokens, :color, :red_50}),
     border_width: "1px",
     border_style: "solid",
-    border_color: var(:color_red_500)
-  })
+    border_color: css_var({Tokens, :color, :red_500})
+  )
 
-  style(:flash_content, %{
+  css_rule(:flash_content,
     flex: "1"
-  })
+  )
 
-  style(:flash_title, %{
-    font_weight: var(:font_weight_semibold),
-    margin_bottom: var(:space_1)
-  })
+  css_rule(:flash_title,
+    font_weight: css_var({Tokens, :font, :weight_semibold}),
+    margin_bottom: css_var({Tokens, :space, :"1"})
+  )
 
-  style(:flash_close, %{
+  css_rule(:flash_close,
     background: "none",
     border: "none",
     cursor: "pointer",
-    opacity: %{
-      default: "0.5",
-      ":hover": "1"
-    }
-  })
+    opacity: "0.5",
+    transition: "opacity 0.2s ease"
+  )
 
   # ============================================================================
   # Icon Styles
   # ============================================================================
 
-  style(:icon_base, %{
+  css_rule(:icon_base,
     display: "inline-block",
     flex_shrink: "0"
-  })
+  )
 
-  style(:icon_sm, %{
+  css_rule(:icon_sm,
     width: "1rem",
     height: "1rem"
-  })
+  )
 
-  style(:icon_md, %{
+  css_rule(:icon_md,
     width: "1.25rem",
     height: "1.25rem"
-  })
+  )
 
   # ============================================================================
   # Input Styles
   # ============================================================================
 
-  style(:input_wrapper, %{
-    margin_bottom: var(:space_4)
-  })
+  css_rule(:input_wrapper,
+    margin_bottom: css_var({Tokens, :space, :"4"})
+  )
 
-  style(:input_label, %{
+  css_rule(:input_label,
     display: "block",
-    font_size: var(:text_size_sm),
-    font_weight: var(:font_weight_medium),
-    color: var(:text_primary),
-    margin_bottom: var(:space_1)
-  })
+    font_size: css_var({Tokens, :text, :size_sm}),
+    font_weight: css_var({Tokens, :font, :weight_medium}),
+    color: css_var({Tokens, :text, :primary}),
+    margin_bottom: css_var({Tokens, :space, :"1"})
+  )
 
-  style(:input_field, %{
+  css_rule(:input_field,
     display: "block",
     width: "100%",
-    padding_top: var(:space_2),
-    padding_bottom: var(:space_2),
-    padding_left: var(:space_3),
-    padding_right: var(:space_3),
-    font_size: var(:text_size_base),
+    padding_top: css_var({Tokens, :space, :"2"}),
+    padding_bottom: css_var({Tokens, :space, :"2"}),
+    padding_left: css_var({Tokens, :space, :"3"}),
+    padding_right: css_var({Tokens, :space, :"3"}),
+    font_size: css_var({Tokens, :text, :size_base}),
     border_width: "1px",
     border_style: "solid",
-    border_color: %{
-      default: var(:border_default),
-      ":focus": var(:border_focus)
-    },
-    border_radius: var(:radius_md),
-    background_color: var(:fill_page),
-    outline: %{
-      default: "none",
-      ":focus": "none"
-    }
-  })
+    border_color: css_var({Tokens, :border, :default}),
+    border_radius: css_var({Tokens, :radius, :md}),
+    background_color: css_var({Tokens, :fill, :page}),
+    outline: "none",
+    transition: "border-color 0.2s ease"
+  )
 
-  style(:input_error, %{
-    border_color: var(:color_red_500)
-  })
+  css_rule(:input_error,
+    border_color: css_var({Tokens, :color, :red_500})
+  )
 
-  style(:error_message, %{
+  css_rule(:error_message,
     display: "flex",
     align_items: "center",
-    gap: var(:space_1),
-    margin_top: var(:space_1),
-    font_size: var(:text_size_sm),
-    color: var(:color_red_600)
-  })
+    gap: css_var({Tokens, :space, :"1"}),
+    margin_top: css_var({Tokens, :space, :"1"}),
+    font_size: css_var({Tokens, :text, :size_sm}),
+    color: css_var({Tokens, :color, :red_600})
+  )
 
   # ============================================================================
   # Header Styles
   # ============================================================================
 
-  style(:header_wrapper, %{
-    padding_bottom: var(:space_4)
-  })
+  css_rule(:header_wrapper,
+    padding_bottom: css_var({Tokens, :space, :"4"})
+  )
 
-  style(:header_with_actions, %{
+  css_rule(:header_with_actions,
     display: "flex",
     align_items: "center",
     justify_content: "space-between",
-    gap: var(:space_6)
-  })
+    gap: css_var({Tokens, :space, :"6"})
+  )
 
-  style(:header_title, %{
-    font_size: var(:text_size_lg),
-    font_weight: var(:font_weight_semibold),
-    line_height: var(:leading_tight)
-  })
+  css_rule(:header_title,
+    font_size: css_var({Tokens, :text, :size_lg}),
+    font_weight: css_var({Tokens, :font, :weight_semibold}),
+    line_height: css_var({Tokens, :leading, :tight})
+  )
 
-  style(:header_subtitle, %{
-    font_size: var(:text_size_sm),
-    color: var(:text_secondary),
-    margin_top: var(:space_1)
-  })
+  css_rule(:header_subtitle,
+    font_size: css_var({Tokens, :text, :size_sm}),
+    color: css_var({Tokens, :text, :secondary}),
+    margin_top: css_var({Tokens, :space, :"1"})
+  )
 
   # ============================================================================
   # Components
@@ -221,28 +211,28 @@ defmodule LiveStyleDemoWeb.CoreComponents do
       id={@id}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       role="alert"
-      class={style([:flash_container])}
+      class={css_class([:flash_container])}
       {@rest}
     >
       <div class={
-        style([:flash_alert, @kind == :info && :flash_info, @kind == :error && :flash_error])
+        css_class([:flash_alert, @kind == :info && :flash_info, @kind == :error && :flash_error])
       }>
         <.icon
           :if={@kind == :info}
           name="hero-information-circle"
-          class={style([:icon_base, :icon_md])}
+          class={css_class([:icon_base, :icon_md])}
         />
         <.icon
           :if={@kind == :error}
           name="hero-exclamation-circle"
-          class={style([:icon_base, :icon_md])}
+          class={css_class([:icon_base, :icon_md])}
         />
-        <div class={style([:flash_content])}>
-          <p :if={@title} class={style([:flash_title])}>{@title}</p>
+        <div class={css_class([:flash_content])}>
+          <p :if={@title} class={css_class([:flash_title])}>{@title}</p>
           <p>{msg}</p>
         </div>
-        <button type="button" class={style([:flash_close])} aria-label={gettext("close")}>
-          <.icon name="hero-x-mark" class={style([:icon_base, :icon_md])} />
+        <button type="button" class={css_class([:flash_close])} aria-label={gettext("close")}>
+          <.icon name="hero-x-mark" class={css_class([:icon_base, :icon_md])} />
         </button>
       </div>
     </div>
@@ -263,7 +253,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
       ~H"""
       <.link
         class={
-          style([
+          css_class([
             :btn_base,
             @variant == :primary && :btn_primary,
             @variant == :secondary && :btn_secondary
@@ -279,7 +269,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
       <button
         type={@type}
         class={
-          style([
+          css_class([
             :btn_base,
             @variant == :primary && :btn_primary,
             @variant == :secondary && :btn_secondary
@@ -318,18 +308,18 @@ defmodule LiveStyleDemoWeb.CoreComponents do
 
   def input(assigns) do
     ~H"""
-    <div class={style([:input_wrapper])}>
-      <label :if={@label} class={style([:input_label])}>{@label}</label>
+    <div class={css_class([:input_wrapper])}>
+      <label :if={@label} class={css_class([:input_label])}>{@label}</label>
       <input
         type={@type}
         name={@name}
         id={@id}
         value={Phoenix.HTML.Form.normalize_value(@type, @value)}
-        class={style([:input_field, @errors != [] && :input_error])}
+        class={css_class([:input_field, @errors != [] && :input_error])}
         {@rest}
       />
-      <p :for={msg <- @errors} class={style([:error_message])}>
-        <.icon name="hero-exclamation-circle" class={style([:icon_base, :icon_sm])} />
+      <p :for={msg <- @errors} class={css_class([:error_message])}>
+        <.icon name="hero-exclamation-circle" class={css_class([:icon_base, :icon_sm])} />
         {msg}
       </p>
     </div>
@@ -345,12 +335,12 @@ defmodule LiveStyleDemoWeb.CoreComponents do
 
   def header(assigns) do
     ~H"""
-    <header class={style([:header_wrapper, @actions != [] && :header_with_actions])}>
+    <header class={css_class([:header_wrapper, @actions != [] && :header_with_actions])}>
       <div>
-        <h1 class={style([:header_title])}>
+        <h1 class={css_class([:header_title])}>
           {render_slot(@inner_block)}
         </h1>
-        <p :if={@subtitle != []} class={style([:header_subtitle])}>
+        <p :if={@subtitle != []} class={css_class([:header_subtitle])}>
           {render_slot(@subtitle)}
         </p>
       </div>

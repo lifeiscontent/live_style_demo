@@ -1,40 +1,40 @@
-<div class={style([:page_container])}>
-  <div class={style([:content_wrapper])}>
-    <h1 class={style([:title])}>
+<div class={css_class([:page_container])}>
+  <div class={css_class([:content_wrapper])}>
+    <h1 class={css_class([:title])}>
       LiveStyle Demo
     </h1>
-    <p class={style([:subtitle])}>
+    <p class={css_class([:subtitle])}>
       A compile-time CSS-in-Elixir solution for Phoenix LiveView
     </p>
 
-    <div class={style([:features])}>
-      <div class={style([:feature_card])}>
-        <h3 class={style([:feature_title])}>Static CSS</h3>
-        <p class={style([:feature_text])}>
+    <div class={css_class([:features])}>
+      <div class={css_class([:feature_card])}>
+        <h3 class={css_class([:feature_title])}>Static CSS</h3>
+        <p class={css_class([:feature_text])}>
           All styles are resolved at compile time. Zero runtime overhead.
         </p>
       </div>
 
-      <div class={style([:feature_card])}>
-        <h3 class={style([:feature_title])}>Design Tokens</h3>
-        <p class={style([:feature_text])}>
-          Define your design system with typed tokens using defvars.
+      <div class={css_class([:feature_card])}>
+        <h3 class={css_class([:feature_title])}>Design Tokens</h3>
+        <p class={css_class([:feature_text])}>
+          Define your design system with typed tokens using css_vars.
         </p>
       </div>
 
-      <div class={style([:feature_card])}>
-        <h3 class={style([:feature_title])}>Auto Recompile</h3>
-        <p class={style([:feature_text])}>
+      <div class={css_class([:feature_card])}>
+        <h3 class={css_class([:feature_title])}>Auto Recompile</h3>
+        <p class={css_class([:feature_text])}>
           CSS regenerates automatically when you save your files.
         </p>
       </div>
     </div>
 
-    <div class={style([:buttons])}>
-      <.link href="https://github.com" class={style([:btn_primary])}>
+    <div class={css_class([:buttons])}>
+      <.link href="https://github.com" class={css_class([:btn_primary])}>
         View on GitHub
       </.link>
-      <.link href="https://hexdocs.pm" class={style([:btn_secondary])}>
+      <.link href="https://hexdocs.pm" class={css_class([:btn_secondary])}>
         Documentation
       </.link>
     </div>

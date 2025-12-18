@@ -1,10 +1,10 @@
 defmodule LiveStyleDemoWeb.BaseStyles do
   @moduledoc """
-  Shared base styles that can be included in other components.
+  Shared base styles that can be referenced from other components.
 
-  This module demonstrates LiveStyle's compile-time style composition feature.
-  Use `__include__: [{LiveStyleDemoWeb.BaseStyles, :style_name}]` in your styles
-  to copy these base properties at compile time.
+  This module demonstrates LiveStyle's compile-time style composition.
+  Use cross-module references like `css_rule({LiveStyleDemoWeb.BaseStyles, :btn_base})`
+  in your styles.
 
   ## Available Styles
 
@@ -12,7 +12,7 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   - `:interactive` - cursor, transition, outline removal
 
   ### Buttons
-  - `:btn_base` - core button styles (includes interactive)
+  - `:btn_base` - core button styles
 
   ### Cards
   - `:card_base` - background, padding, border, shadow
@@ -34,14 +34,18 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   - `:flex_col` - flex column layout
   """
 
-  use LiveStyle
+  use LiveStyle.Sheet
+
+  # Ensure Tokens is compiled first
+  require LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens
 
   # ============================================================================
   # Interactive Base Styles
   # ============================================================================
 
   # Base interactive element styles - cursor, transition, and focus outline removal.
-  style(:interactive,
+  css_rule(:interactive,
     cursor: "pointer",
     transition: "all 0.2s ease",
     outline: "none",
@@ -53,22 +57,24 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   # ============================================================================
 
   # Core button styles - flex layout, padding, rounded corners.
-  # Uses self-reference to include :interactive styles.
-  style(:btn_base,
-    __include__: [:interactive],
+  css_rule(:btn_base,
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
-    gap: var(:space_2),
-    padding_top: var(:space_3),
-    padding_bottom: var(:space_3),
-    padding_left: var(:space_6),
-    padding_right: var(:space_6),
-    font_size: var(:text_size_base),
-    font_weight: var(:font_weight_medium),
-    border_radius: var(:radius_lg),
+    gap: css_var({Tokens, :space, :"2"}),
+    padding_top: css_var({Tokens, :space, :"3"}),
+    padding_bottom: css_var({Tokens, :space, :"3"}),
+    padding_left: css_var({Tokens, :space, :"6"}),
+    padding_right: css_var({Tokens, :space, :"6"}),
+    font_size: css_var({Tokens, :text, :size_base}),
+    font_weight: css_var({Tokens, :font, :weight_medium}),
+    border_radius: css_var({Tokens, :radius, :lg}),
     text_decoration: "none",
-    border: "none"
+    border: "none",
+    cursor: "pointer",
+    transition: "all 0.2s ease",
+    outline: "none",
+    "-webkit-tap-highlight-color": "transparent"
   )
 
   # ============================================================================
@@ -76,13 +82,13 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   # ============================================================================
 
   # Base card styles - background, padding, rounded corners, border, shadow.
-  style(:card_base,
-    background_color: var(:fill_card),
-    padding: var(:space_6),
-    border_radius: var(:radius_xl),
+  css_rule(:card_base,
+    background_color: css_var({Tokens, :fill, :card}),
+    padding: css_var({Tokens, :space, :"6"}),
+    border_radius: css_var({Tokens, :radius, :xl}),
     border_width: "1px",
     border_style: "solid",
-    border_color: var(:border_subtle),
+    border_color: css_var({Tokens, :border, :subtle}),
     transition: "all 0.2s ease"
   )
 
@@ -91,21 +97,21 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   # ============================================================================
 
   # Centered container with max-width and horizontal padding.
-  style(:container,
+  css_rule(:container,
     max_width: "80rem",
     margin_left: "auto",
     margin_right: "auto",
-    padding_left: var(:space_6),
-    padding_right: var(:space_6)
+    padding_left: css_var({Tokens, :space, :"6"}),
+    padding_right: css_var({Tokens, :space, :"6"})
   )
 
   # Narrower container for content like articles.
-  style(:container_narrow,
+  css_rule(:container_narrow,
     max_width: "64rem",
     margin_left: "auto",
     margin_right: "auto",
-    padding_left: var(:space_6),
-    padding_right: var(:space_6)
+    padding_left: css_var({Tokens, :space, :"6"}),
+    padding_right: css_var({Tokens, :space, :"6"})
   )
 
   # ============================================================================
@@ -113,9 +119,9 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   # ============================================================================
 
   # Standard section with vertical padding.
-  style(:section,
-    padding_top: var(:space_16),
-    padding_bottom: var(:space_16)
+  css_rule(:section,
+    padding_top: css_var({Tokens, :space, :"16"}),
+    padding_bottom: css_var({Tokens, :space, :"16"})
   )
 
   # ============================================================================
@@ -123,17 +129,17 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   # ============================================================================
 
   # Base heading styles.
-  style(:heading,
-    font_weight: var(:font_weight_bold),
-    color: var(:text_primary),
-    line_height: var(:leading_tight)
+  css_rule(:heading,
+    font_weight: css_var({Tokens, :font, :weight_bold}),
+    color: css_var({Tokens, :text, :primary}),
+    line_height: css_var({Tokens, :leading, :tight})
   )
 
   # Base body text styles.
-  style(:body_text,
-    font_size: var(:text_size_base),
-    color: var(:text_secondary),
-    line_height: var(:leading_relaxed)
+  css_rule(:body_text,
+    font_size: css_var({Tokens, :text, :size_base}),
+    color: css_var({Tokens, :text, :secondary}),
+    line_height: css_var({Tokens, :leading, :relaxed})
   )
 
   # ============================================================================
@@ -141,21 +147,21 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   # ============================================================================
 
   # Flex container with centered items.
-  style(:flex_center,
+  css_rule(:flex_center,
     display: "flex",
     align_items: "center",
     justify_content: "center"
   )
 
   # Flex container with space-between.
-  style(:flex_between,
+  css_rule(:flex_between,
     display: "flex",
     align_items: "center",
     justify_content: "space-between"
   )
 
   # Flex column layout.
-  style(:flex_col,
+  css_rule(:flex_col,
     display: "flex",
     flex_direction: "column"
   )

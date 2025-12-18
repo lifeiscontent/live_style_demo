@@ -2,26 +2,31 @@ defmodule LiveStyleDemoWeb.Tokens do
   @moduledoc """
   Design tokens for the LiveStyle demo application.
 
-  ## Naming Convention
+  Uses LiveStyle API:
+  - `css_vars/2` defines CSS custom properties
+  - `css_consts/2` defines compile-time constants
+  - `css_keyframes/2` defines keyframe animations
+  - `css_theme/3` defines theme overrides
+  - `css_view_transition/2` defines view transition classes
 
-  The `var()` macro splits atom names on the first underscore to determine
-  namespace and name. For example:
-  - `var(:color_blue_500)` -> namespace: "color", name: "blue_500"
-  - `var(:text_primary)` -> namespace: "text", name: "primary"
-  - `var(:text_size_lg)` -> namespace: "text", name: "size_lg"
+  ## Usage
 
-  So when defining tokens with `defvars(:namespace, name: value)`, the
-  namespace + name must match what's expected by `var(:namespace_name)`.
+      # In components:
+      use LiveStyle
+
+      css_rule :button,
+        color: css_var({LiveStyleDemoWeb.Tokens, :text, :primary}),
+        background: css_var({LiveStyleDemoWeb.Tokens, :fill, :primary}),
+        padding: css_var({LiveStyleDemoWeb.Tokens, :space, :"4"})
   """
   use LiveStyle.Tokens
-  use LiveStyle.ViewTransitions
   import LiveStyle.Types
 
   # ===========================================================================
   # Colors - Base palette
   # ===========================================================================
 
-  defvars(:color,
+  css_vars(:color,
     white: "#ffffff",
     black: "#000000",
     # Gray scale
@@ -85,14 +90,14 @@ defmodule LiveStyleDemoWeb.Tokens do
   # ===========================================================================
 
   # Text colors + sizes
-  defvars(:text,
-    # Colors
-    primary: var(:color_gray_900),
-    secondary: var(:color_gray_600),
-    muted: var(:color_gray_400),
-    inverse: var(:color_white),
-    accent: var(:color_indigo_600),
-    link: var(:color_blue_600),
+  css_vars(:text,
+    # Colors - reference base colors
+    primary: css_var({:color, :gray_900}),
+    secondary: css_var({:color, :gray_600}),
+    muted: css_var({:color, :gray_400}),
+    inverse: css_var({:color, :white}),
+    accent: css_var({:color, :indigo_600}),
+    link: css_var({:color, :blue_600}),
     # Sizes
     size_xs: "0.75rem",
     size_sm: "0.875rem",
@@ -106,34 +111,34 @@ defmodule LiveStyleDemoWeb.Tokens do
   )
 
   # Fill/background colors
-  defvars(:fill,
-    primary: var(:color_indigo_600),
-    primary_hover: var(:color_indigo_500),
-    secondary: var(:color_gray_100),
-    secondary_hover: var(:color_gray_200),
-    accent: var(:color_purple_500),
-    danger: var(:color_red_600),
-    success: var(:color_green_600),
-    warning: var(:color_amber_500),
-    page: var(:color_white),
-    surface: var(:color_gray_50),
-    muted: var(:color_gray_100),
-    card: var(:color_white)
+  css_vars(:fill,
+    primary: css_var({:color, :indigo_600}),
+    primary_hover: css_var({:color, :indigo_500}),
+    secondary: css_var({:color, :gray_100}),
+    secondary_hover: css_var({:color, :gray_200}),
+    accent: css_var({:color, :purple_500}),
+    danger: css_var({:color, :red_600}),
+    success: css_var({:color, :green_600}),
+    warning: css_var({:color, :amber_500}),
+    page: css_var({:color, :white}),
+    surface: css_var({:color, :gray_50}),
+    muted: css_var({:color, :gray_100}),
+    card: css_var({:color, :white})
   )
 
   # Border colors
-  defvars(:border,
-    default: var(:color_gray_200),
-    subtle: var(:color_gray_100),
-    focus: var(:color_indigo_500),
-    accent: var(:color_indigo_200)
+  css_vars(:border,
+    default: css_var({:color, :gray_200}),
+    subtle: css_var({:color, :gray_100}),
+    focus: css_var({:color, :indigo_500}),
+    accent: css_var({:color, :indigo_200})
   )
 
   # ===========================================================================
   # Spacing
   # ===========================================================================
 
-  defvars(:space,
+  css_vars(:space,
     px: "1px",
     "0": "0",
     "1": "0.25rem",
@@ -152,7 +157,7 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Typography
   # ===========================================================================
 
-  defvars(:font,
+  css_vars(:font,
     sans: "'Inter', system-ui, -apple-system, sans-serif",
     mono: "ui-monospace, monospace",
     weight_normal: "400",
@@ -161,7 +166,7 @@ defmodule LiveStyleDemoWeb.Tokens do
     weight_bold: "700"
   )
 
-  defvars(:leading,
+  css_vars(:leading,
     none: "1",
     tight: "1.25",
     normal: "1.5",
@@ -172,7 +177,7 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Border radius
   # ===========================================================================
 
-  defvars(:radius,
+  css_vars(:radius,
     none: "0",
     sm: "0.125rem",
     default: "0.25rem",
@@ -188,7 +193,7 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Shadows
   # ===========================================================================
 
-  defvars(:shadow,
+  css_vars(:shadow,
     sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
     default: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
     md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
@@ -200,17 +205,18 @@ defmodule LiveStyleDemoWeb.Tokens do
   # ===========================================================================
 
   # Typed variable for CSS animations (allows animating gradient rotation)
-  defvars(:anim,
+  # angle("0deg") generates @property with syntax: '<angle>'
+  css_vars(:anim,
     angle: angle("0deg")
   )
 
-  # Keyframes
-  defkeyframes(:spin,
+  # Keyframes - content-hashed
+  css_keyframes(:spin,
     from: [transform: "rotate(0deg)"],
     to: [transform: "rotate(360deg)"]
   )
 
-  defkeyframes(:pulse,
+  css_keyframes(:pulse,
     "0%, 100%": [opacity: "1"],
     "50%": [opacity: "0.5"]
   )
@@ -219,13 +225,13 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Constants (inlined at build time, not CSS variables)
   # ===========================================================================
 
-  defconsts(:breakpoints,
+  css_consts(:breakpoint,
     sm: "@media (max-width: 640px)",
     md: "@media (min-width: 641px) and (max-width: 1024px)",
     lg: "@media (min-width: 1025px)"
   )
 
-  defconsts(:z,
+  css_consts(:z,
     dropdown: "10",
     sticky: "20",
     fixed: "30",
@@ -239,7 +245,10 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Themes
   # ===========================================================================
 
-  create_theme(:dark_fill, :fill,
+  # Themes are scoped to specific var groups using css_theme/3:
+  # css_theme(var_group, theme_name, overrides)
+
+  css_theme(:fill, :dark,
     primary: "#818cf8",
     primary_hover: "#a5b4fc",
     secondary: "#374151",
@@ -251,7 +260,7 @@ defmodule LiveStyleDemoWeb.Tokens do
     card: "#1f2937"
   )
 
-  create_theme(:dark_text, :text,
+  css_theme(:text, :dark,
     primary: "#f9fafb",
     secondary: "#d1d5db",
     muted: "#6b7280",
@@ -259,7 +268,7 @@ defmodule LiveStyleDemoWeb.Tokens do
     link: "#60a5fa"
   )
 
-  create_theme(:dark_border, :border,
+  css_theme(:border, :dark,
     default: "#374151",
     subtle: "#1f2937",
     focus: "#818cf8",
@@ -267,67 +276,53 @@ defmodule LiveStyleDemoWeb.Tokens do
   )
 
   # ===========================================================================
-  # View Transitions
+  # View Transitions - Keyframes
   # ===========================================================================
 
-  # Keyframes for view transitions
-  defkeyframes(:vt_scale_in,
+  css_keyframes(:vt_scale_in,
     from: [opacity: "0", transform: "scale(0.8)"],
     to: [opacity: "1", transform: "scale(1)"]
   )
 
-  defkeyframes(:vt_scale_out,
+  css_keyframes(:vt_scale_out,
     from: [opacity: "1", transform: "scale(1)"],
     to: [opacity: "0", transform: "scale(0.8)"]
   )
 
-  defkeyframes(:vt_fade_in,
+  css_keyframes(:vt_fade_in,
     from: [opacity: "0"],
     to: [opacity: "1"]
   )
 
-  defkeyframes(:vt_fade_out,
+  css_keyframes(:vt_fade_out,
     from: [opacity: "1"],
     to: [opacity: "0"]
   )
 
-  # Todo items: scale for add/remove, fade for reorder
-  # Respects prefers-reduced-motion
-  view_transition("todo-*",
-    old_only_child: [
-      animation_name: [
-        default: :vt_scale_out,
-        "@media (prefers-reduced-motion: reduce)": :none
-      ],
-      animation_duration: "250ms",
-      animation_timing_function: "ease-out",
-      animation_fill_mode: "both"
-    ],
-    new_only_child: [
-      animation_name: [
-        default: :vt_scale_in,
-        "@media (prefers-reduced-motion: reduce)": :none
-      ],
-      animation_duration: "250ms",
-      animation_timing_function: "ease-out",
-      animation_fill_mode: "both"
-    ],
+  # ===========================================================================
+  # Table Demo - Markers
+  # ===========================================================================
+
+  # ROW marker for table row hover effects (equivalent to StyleX's defineMarker)
+  # Usage: <tr class={row_marker()}>
+  @row_marker LiveStyle.Marker.define(:row)
+  def row_marker, do: @row_marker
+
+  # ===========================================================================
+  # View Transitions
+  # ===========================================================================
+
+  # View transition class for todo items - scale animation for add/remove
+  css_view_transition(:todo_transition,
     old: [
-      animation_name: [
-        default: :vt_fade_out,
-        "@media (prefers-reduced-motion: reduce)": :none
-      ],
-      animation_duration: "150ms",
+      animation_name: css_keyframes(:vt_scale_out),
+      animation_duration: "250ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"
     ],
     new: [
-      animation_name: [
-        default: :vt_fade_in,
-        "@media (prefers-reduced-motion: reduce)": :none
-      ],
-      animation_duration: "150ms",
-      animation_delay: "50ms",
+      animation_name: css_keyframes(:vt_scale_in),
+      animation_duration: "250ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"
     ]

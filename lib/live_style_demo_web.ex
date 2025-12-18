@@ -82,8 +82,13 @@ defmodule LiveStyleDemoWeb do
       # Translation
       use Gettext, backend: LiveStyleDemoWeb.Gettext
 
+      # LiveStyle for CSS-in-Elixir
+      # Each module gets its own private css/1 and css_class/1 functions for its rules
+      use LiveStyle.Sheet
+
       # HTML escaping functionality
       import Phoenix.HTML
+
       # Core UI components
       import LiveStyleDemoWeb.CoreComponents
 
