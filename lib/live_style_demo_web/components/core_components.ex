@@ -24,8 +24,8 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     padding_bottom: css_var({Tokens, :space, :"2"}),
     padding_left: css_var({Tokens, :space, :"4"}),
     padding_right: css_var({Tokens, :space, :"4"}),
-    font_size: css_var({Tokens, :text, :size_sm}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     border_radius: css_var({Tokens, :radius, :md}),
     cursor: "pointer",
     text_decoration: "none",
@@ -34,13 +34,13 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   )
 
   css_rule(:btn_primary,
-    background_color: css_var({Tokens, :fill, :primary}),
-    color: css_var({Tokens, :text, :inverse})
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
+    color: css_var({Tokens, :semantic, :text_inverse})
   )
 
   css_rule(:btn_secondary,
-    background_color: css_var({Tokens, :fill, :secondary}),
-    color: css_var({Tokens, :text, :primary})
+    background_color: css_var({Tokens, :semantic, :fill_secondary}),
+    color: css_var({Tokens, :semantic, :text_primary})
   )
 
   # ============================================================================
@@ -65,17 +65,17 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   )
 
   css_rule(:flash_info,
-    background_color: css_var({Tokens, :color, :blue_50}),
+    background_color: css_var({Tokens, :colors, :blue_50}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :color, :blue_500})
+    border_color: css_var({Tokens, :colors, :blue_500})
   )
 
   css_rule(:flash_error,
-    background_color: css_var({Tokens, :color, :red_50}),
+    background_color: css_var({Tokens, :colors, :red_50}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :color, :red_500})
+    border_color: css_var({Tokens, :colors, :red_500})
   )
 
   css_rule(:flash_content,
@@ -83,7 +83,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   )
 
   css_rule(:flash_title,
-    font_weight: css_var({Tokens, :font, :weight_semibold}),
+    font_weight: css_var({Tokens, :font_weight, :semibold}),
     margin_bottom: css_var({Tokens, :space, :"1"})
   )
 
@@ -124,9 +124,9 @@ defmodule LiveStyleDemoWeb.CoreComponents do
 
   css_rule(:input_label,
     display: "block",
-    font_size: css_var({Tokens, :text, :size_sm}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
-    color: css_var({Tokens, :text, :primary}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"1"})
   )
 
@@ -137,18 +137,18 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     padding_bottom: css_var({Tokens, :space, :"2"}),
     padding_left: css_var({Tokens, :space, :"3"}),
     padding_right: css_var({Tokens, :space, :"3"}),
-    font_size: css_var({Tokens, :text, :size_base}),
+    font_size: css_var({Tokens, :font_size, :base}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :border, :default}),
+    border_color: css_var({Tokens, :semantic, :border_default}),
     border_radius: css_var({Tokens, :radius, :md}),
-    background_color: css_var({Tokens, :fill, :page}),
+    background_color: css_var({Tokens, :semantic, :fill_page}),
     outline: "none",
     transition: "border-color 0.2s ease"
   )
 
   css_rule(:input_error,
-    border_color: css_var({Tokens, :color, :red_500})
+    border_color: css_var({Tokens, :colors, :red_500})
   )
 
   css_rule(:error_message,
@@ -156,8 +156,8 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     align_items: "center",
     gap: css_var({Tokens, :space, :"1"}),
     margin_top: css_var({Tokens, :space, :"1"}),
-    font_size: css_var({Tokens, :text, :size_sm}),
-    color: css_var({Tokens, :color, :red_600})
+    font_size: css_var({Tokens, :font_size, :sm}),
+    color: css_var({Tokens, :colors, :red_600})
   )
 
   # ============================================================================
@@ -176,14 +176,14 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   )
 
   css_rule(:header_title,
-    font_size: css_var({Tokens, :text, :size_lg}),
-    font_weight: css_var({Tokens, :font, :weight_semibold}),
+    font_size: css_var({Tokens, :font_size, :lg}),
+    font_weight: css_var({Tokens, :font_weight, :semibold}),
     line_height: css_var({Tokens, :leading, :tight})
   )
 
   css_rule(:header_subtitle,
-    font_size: css_var({Tokens, :text, :size_sm}),
-    color: css_var({Tokens, :text, :secondary}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
     margin_top: css_var({Tokens, :space, :"1"})
   )
 

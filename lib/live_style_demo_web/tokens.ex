@@ -2,34 +2,36 @@ defmodule LiveStyleDemoWeb.Tokens do
   @moduledoc """
   Design tokens for the LiveStyle demo application.
 
-  Uses LiveStyle API:
-  - `css_vars/2` defines CSS custom properties
-  - `css_consts/2` defines compile-time constants
-  - `css_keyframes/2` defines keyframe animations
-  - `css_theme/3` defines theme overrides
-  - `css_view_transition/2` defines view transition classes
+  ## Architecture
+
+  1. `colors` - Raw color palette (hex values, not themed)
+  2. `semantic` - Semantic tokens referencing colors (themed for light/dark)
 
   ## Usage
 
-      # In components:
-      use LiveStyle
+      use LiveStyle.Sheet
 
       css_rule :button,
-        color: css_var({LiveStyleDemoWeb.Tokens, :text, :primary}),
-        background: css_var({LiveStyleDemoWeb.Tokens, :fill, :primary}),
+        color: css_var({LiveStyleDemoWeb.Tokens, :semantic, :text_primary}),
+        background: css_var({LiveStyleDemoWeb.Tokens, :semantic, :fill_primary}),
         padding: css_var({LiveStyleDemoWeb.Tokens, :space, :"4"})
+
+      # Apply dark theme:
+      <div class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :dark})}>
+        ...
+      </div>
   """
   use LiveStyle.Tokens
   import LiveStyle.Types
 
   # ===========================================================================
-  # Colors - Base palette
+  # Colors - Raw palette (not themed)
   # ===========================================================================
 
-  css_vars(:color,
+  css_vars(:colors,
     white: "#ffffff",
     black: "#000000",
-    # Gray scale
+    # Gray
     gray_50: "#f9fafb",
     gray_100: "#f3f4f6",
     gray_200: "#e5e7eb",
@@ -43,13 +45,10 @@ defmodule LiveStyleDemoWeb.Tokens do
     gray_950: "#030712",
     # Blue
     blue_50: "#eff6ff",
-    blue_100: "#dbeafe",
-    blue_200: "#bfdbfe",
     blue_400: "#60a5fa",
     blue_500: "#3b82f6",
     blue_600: "#2563eb",
-    blue_700: "#1d4ed8",
-    # Indigo (accent)
+    # Indigo
     indigo_50: "#eef2ff",
     indigo_100: "#e0e7ff",
     indigo_200: "#c7d2fe",
@@ -59,10 +58,7 @@ defmodule LiveStyleDemoWeb.Tokens do
     indigo_600: "#4f46e5",
     # Purple
     purple_50: "#faf5ff",
-    purple_100: "#f3e8ff",
-    purple_200: "#e9d5ff",
     purple_400: "#c084fc",
-    purple_500: "#a855f7",
     purple_600: "#9333ea",
     # Red
     red_50: "#fef2f2",
@@ -73,65 +69,82 @@ defmodule LiveStyleDemoWeb.Tokens do
     # Green
     green_50: "#f0fdf4",
     green_100: "#dcfce7",
-    green_200: "#bbf7d0",
     green_400: "#4ade80",
     green_500: "#22c55e",
     green_600: "#16a34a",
     # Amber
     amber_50: "#fffbeb",
-    amber_100: "#fef3c7",
     amber_200: "#fde68a",
     amber_500: "#f59e0b",
     amber_600: "#d97706"
   )
 
   # ===========================================================================
-  # Semantic tokens
+  # Semantic - References to colors (themed)
   # ===========================================================================
 
-  # Text colors + sizes
-  css_vars(:text,
-    # Colors - reference base colors
-    primary: css_var({:color, :gray_900}),
-    secondary: css_var({:color, :gray_600}),
-    muted: css_var({:color, :gray_400}),
-    inverse: css_var({:color, :white}),
-    accent: css_var({:color, :indigo_600}),
-    link: css_var({:color, :blue_600}),
-    # Sizes
-    size_xs: "0.75rem",
-    size_sm: "0.875rem",
-    size_base: "1rem",
-    size_lg: "1.125rem",
-    size_xl: "1.25rem",
-    size_2xl: "1.5rem",
-    size_3xl: "1.875rem",
-    size_4xl: "2.25rem",
-    size_5xl: "3rem"
+  css_vars(:semantic,
+    # Text
+    text_primary: css_var({:colors, :gray_900}),
+    text_secondary: css_var({:colors, :gray_600}),
+    text_muted: css_var({:colors, :gray_400}),
+    text_inverse: css_var({:colors, :white}),
+    text_accent: css_var({:colors, :indigo_600}),
+    text_link: css_var({:colors, :blue_600}),
+
+    # Fill/background
+    fill_primary: css_var({:colors, :indigo_600}),
+    fill_primary_hover: css_var({:colors, :indigo_500}),
+    fill_secondary: css_var({:colors, :gray_100}),
+    fill_secondary_hover: css_var({:colors, :gray_200}),
+    fill_accent: css_var({:colors, :purple_600}),
+    fill_danger: css_var({:colors, :red_600}),
+    fill_success: css_var({:colors, :green_600}),
+    fill_warning: css_var({:colors, :amber_500}),
+    fill_page: css_var({:colors, :white}),
+    fill_surface: css_var({:colors, :gray_50}),
+    fill_muted: css_var({:colors, :gray_100}),
+    fill_card: css_var({:colors, :white}),
+
+    # Border
+    border_default: css_var({:colors, :gray_200}),
+    border_subtle: css_var({:colors, :gray_100}),
+    border_focus: css_var({:colors, :indigo_500}),
+    border_accent: css_var({:colors, :indigo_200})
   )
 
-  # Fill/background colors
-  css_vars(:fill,
-    primary: css_var({:color, :indigo_600}),
-    primary_hover: css_var({:color, :indigo_500}),
-    secondary: css_var({:color, :gray_100}),
-    secondary_hover: css_var({:color, :gray_200}),
-    accent: css_var({:color, :purple_500}),
-    danger: css_var({:color, :red_600}),
-    success: css_var({:color, :green_600}),
-    warning: css_var({:color, :amber_500}),
-    page: css_var({:color, :white}),
-    surface: css_var({:color, :gray_50}),
-    muted: css_var({:color, :gray_100}),
-    card: css_var({:color, :white})
-  )
+  # ===========================================================================
+  # Dark Theme - Override semantic tokens
+  # ===========================================================================
 
-  # Border colors
-  css_vars(:border,
-    default: css_var({:color, :gray_200}),
-    subtle: css_var({:color, :gray_100}),
-    focus: css_var({:color, :indigo_500}),
-    accent: css_var({:color, :indigo_200})
+  css_theme(:semantic, :dark,
+    # Text
+    text_primary: css_var({:colors, :gray_50}),
+    text_secondary: css_var({:colors, :gray_300}),
+    text_muted: css_var({:colors, :gray_500}),
+    text_inverse: css_var({:colors, :gray_900}),
+    text_accent: css_var({:colors, :indigo_300}),
+    text_link: css_var({:colors, :blue_400}),
+
+    # Fill/background
+    fill_primary: css_var({:colors, :indigo_400}),
+    fill_primary_hover: css_var({:colors, :indigo_300}),
+    fill_secondary: css_var({:colors, :gray_700}),
+    fill_secondary_hover: css_var({:colors, :gray_600}),
+    fill_accent: css_var({:colors, :purple_400}),
+    fill_danger: css_var({:colors, :red_500}),
+    fill_success: css_var({:colors, :green_500}),
+    fill_warning: css_var({:colors, :amber_500}),
+    fill_page: css_var({:colors, :gray_950}),
+    fill_surface: css_var({:colors, :gray_900}),
+    fill_muted: css_var({:colors, :gray_800}),
+    fill_card: css_var({:colors, :gray_800}),
+
+    # Border
+    border_default: css_var({:colors, :gray_700}),
+    border_subtle: css_var({:colors, :gray_800}),
+    border_focus: css_var({:colors, :indigo_400}),
+    border_accent: css_var({:colors, :indigo_600})
   )
 
   # ===========================================================================
@@ -159,11 +172,26 @@ defmodule LiveStyleDemoWeb.Tokens do
 
   css_vars(:font,
     sans: "'Inter', system-ui, -apple-system, sans-serif",
-    mono: "ui-monospace, monospace",
-    weight_normal: "400",
-    weight_medium: "500",
-    weight_semibold: "600",
-    weight_bold: "700"
+    mono: "ui-monospace, monospace"
+  )
+
+  css_vars(:font_weight,
+    normal: "400",
+    medium: "500",
+    semibold: "600",
+    bold: "700"
+  )
+
+  css_vars(:font_size,
+    xs: "0.75rem",
+    sm: "0.875rem",
+    base: "1rem",
+    lg: "1.125rem",
+    xl: "1.25rem",
+    "2xl": "1.5rem",
+    "3xl": "1.875rem",
+    "4xl": "2.25rem",
+    "5xl": "3rem"
   )
 
   css_vars(:leading,
@@ -204,13 +232,10 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Animation
   # ===========================================================================
 
-  # Typed variable for CSS animations (allows animating gradient rotation)
-  # angle("0deg") generates @property with syntax: '<angle>'
   css_vars(:anim,
     angle: angle("0deg")
   )
 
-  # Keyframes - content-hashed
   css_keyframes(:spin,
     from: [transform: "rotate(0deg)"],
     to: [transform: "rotate(360deg)"]
@@ -222,7 +247,7 @@ defmodule LiveStyleDemoWeb.Tokens do
   )
 
   # ===========================================================================
-  # Constants (inlined at build time, not CSS variables)
+  # Constants
   # ===========================================================================
 
   css_consts(:breakpoint,
@@ -242,41 +267,14 @@ defmodule LiveStyleDemoWeb.Tokens do
   )
 
   # ===========================================================================
-  # Themes
+  # Table Demo - Markers
   # ===========================================================================
 
-  # Themes are scoped to specific var groups using css_theme/3:
-  # css_theme(var_group, theme_name, overrides)
-
-  css_theme(:fill, :dark,
-    primary: "#818cf8",
-    primary_hover: "#a5b4fc",
-    secondary: "#374151",
-    secondary_hover: "#4b5563",
-    accent: "#c084fc",
-    page: "#030712",
-    surface: "#111827",
-    muted: "#1f2937",
-    card: "#1f2937"
-  )
-
-  css_theme(:text, :dark,
-    primary: "#f9fafb",
-    secondary: "#d1d5db",
-    muted: "#6b7280",
-    accent: "#a5b4fc",
-    link: "#60a5fa"
-  )
-
-  css_theme(:border, :dark,
-    default: "#374151",
-    subtle: "#1f2937",
-    focus: "#818cf8",
-    accent: "#4f46e5"
-  )
+  @row_marker LiveStyle.Marker.define(:row)
+  def row_marker, do: @row_marker
 
   # ===========================================================================
-  # View Transitions - Keyframes
+  # View Transitions
   # ===========================================================================
 
   css_keyframes(:vt_scale_in,
@@ -299,20 +297,6 @@ defmodule LiveStyleDemoWeb.Tokens do
     to: [opacity: "0"]
   )
 
-  # ===========================================================================
-  # Table Demo - Markers
-  # ===========================================================================
-
-  # ROW marker for table row hover effects (equivalent to StyleX's defineMarker)
-  # Usage: <tr class={row_marker()}>
-  @row_marker LiveStyle.Marker.define(:row)
-  def row_marker, do: @row_marker
-
-  # ===========================================================================
-  # View Transitions
-  # ===========================================================================
-
-  # View transition class for todo items - scale animation for add/remove
   css_view_transition(:todo_transition,
     old: [
       animation_name: css_keyframes(:vt_scale_out),

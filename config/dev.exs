@@ -16,7 +16,7 @@ config :live_style_demo, LiveStyleDemoWeb.Endpoint,
   secret_key_base: "2U04TNBIS4pbB9Ffc+3+KC8Uf8f5QzZMP4/I557s38RtFGWwSisueDx44m4uPW9I",
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:live_style_demo, ~w(--sourcemap=inline --watch)]},
-    live_style: {LiveStyle, :install_and_run, [:default, ~w(--watch)]}
+    live_style: {LiveStyle.Compiler, :run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

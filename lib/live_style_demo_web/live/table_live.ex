@@ -40,8 +40,8 @@ defmodule LiveStyleDemoWeb.TableLive do
     align_items: "center",
     gap: css_var({Tokens, :space, :"2"}),
     color: "light-dark(#6b7280, #9ca3af)",
-    font_size: css_var({Tokens, :text, :size_sm}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     text_decoration: "none",
     padding: css_var({Tokens, :space, :"4"}),
     transition: "color 0.2s ease"
@@ -58,14 +58,14 @@ defmodule LiveStyleDemoWeb.TableLive do
   )
 
   css_rule(:title,
-    font_size: css_var({Tokens, :text, :size_2xl}),
-    font_weight: css_var({Tokens, :font, :weight_bold}),
+    font_size: css_var({Tokens, :font_size, :"2xl"}),
+    font_weight: css_var({Tokens, :font_weight, :bold}),
     color: "light-dark(#111827, #f9fafb)",
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
   css_rule(:subtitle,
-    font_size: css_var({Tokens, :text, :size_base}),
+    font_size: css_var({Tokens, :font_size, :base}),
     color: "light-dark(#6b7280, #9ca3af)",
     max_width: "32rem",
     margin_left: "auto",
@@ -280,19 +280,19 @@ defmodule LiveStyleDemoWeb.TableLive do
 
   defp tr(assigns) do
     ~H"""
-    <tr class={Tokens.row_marker()}><%= render_slot(@inner_block) %></tr>
+    <tr class={Tokens.row_marker()}>{render_slot(@inner_block)}</tr>
     """
   end
 
   defp th(assigns) do
     ~H"""
-    <th class={css_class([:td, :th])}><%= render_slot(@inner_block) %></th>
+    <th class={css_class([:td, :th])}>{render_slot(@inner_block)}</th>
     """
   end
 
   defp td(assigns) do
     ~H"""
-    <td class={css_class([:td])}><%= render_slot(@inner_block) %></td>
+    <td class={css_class([:td])}>{render_slot(@inner_block)}</td>
     """
   end
 

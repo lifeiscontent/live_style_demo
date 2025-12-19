@@ -28,7 +28,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   css_rule(:page,
     min_height: "100vh",
-    background_color: css_var({Tokens, :fill, :surface}),
+    background_color: css_var({Tokens, :semantic, :fill_surface}),
     font_family: css_var({Tokens, :font, :sans}),
     "-webkit-font-smoothing": "antialiased",
     transition: "background-color 0.3s ease"
@@ -38,10 +38,10 @@ defmodule LiveStyleDemoWeb.HomeLive do
     position: "sticky",
     top: "0",
     z_index: "40",
-    background_color: css_var({Tokens, :fill, :page}),
+    background_color: css_var({Tokens, :semantic, :fill_page}),
     border_bottom_width: "1px",
     border_bottom_style: "solid",
-    border_bottom_color: css_var({Tokens, :border, :subtle}),
+    border_bottom_color: css_var({Tokens, :semantic, :border_subtle}),
     transition: "background-color 0.3s ease, border-color 0.3s ease"
   )
 
@@ -62,9 +62,9 @@ defmodule LiveStyleDemoWeb.HomeLive do
     display: "flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"2"}),
-    font_size: css_var({Tokens, :text, :size_xl}),
-    font_weight: css_var({Tokens, :font, :weight_bold}),
-    color: css_var({Tokens, :text, :primary}),
+    font_size: css_var({Tokens, :font_size, :xl}),
+    font_weight: css_var({Tokens, :font_weight, :bold}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     text_decoration: "none"
   )
 
@@ -90,7 +90,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   css_rule(:gradient_demo_section,
     padding_top: css_var({Tokens, :space, :"16"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
-    background_color: css_var({Tokens, :fill, :page})
+    background_color: css_var({Tokens, :semantic, :fill_page})
   )
 
   css_rule(:gradient_demo_inner,
@@ -121,14 +121,14 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_bottom: css_var({Tokens, :space, :"2"}),
     padding_left: css_var({Tokens, :space, :"3"}),
     padding_right: css_var({Tokens, :space, :"3"}),
-    color: css_var({Tokens, :text, :secondary}),
-    font_size: css_var({Tokens, :text, :size_sm}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     border_radius: css_var({Tokens, :radius, :full}),
     border: "none",
     cursor: "pointer",
     transition: "all 0.2s ease",
-    background_color: css_var({Tokens, :fill, :muted})
+    background_color: css_var({Tokens, :semantic, :fill_muted})
   )
 
   # ============================================================================
@@ -157,18 +157,18 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_bottom: css_var({Tokens, :space, :"1"}),
     padding_left: css_var({Tokens, :space, :"3"}),
     padding_right: css_var({Tokens, :space, :"3"}),
-    background_color: css_var({Tokens, :color, :indigo_50}),
-    color: css_var({Tokens, :color, :indigo_600}),
-    font_size: css_var({Tokens, :text, :size_sm}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    background_color: css_var({Tokens, :colors, :indigo_50}),
+    color: css_var({Tokens, :colors, :indigo_600}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     border_radius: css_var({Tokens, :radius, :full}),
     margin_bottom: css_var({Tokens, :space, :"6"})
   )
 
   css_rule(:hero_title,
-    font_size: css_var({Tokens, :text, :size_3xl}),
-    font_weight: css_var({Tokens, :font, :weight_bold}),
-    color: css_var({Tokens, :text, :primary}),
+    font_size: css_var({Tokens, :font_size, :"3xl"}),
+    font_weight: css_var({Tokens, :font_weight, :bold}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     line_height: css_var({Tokens, :leading, :tight}),
     margin_bottom: css_var({Tokens, :space, :"6"})
   )
@@ -181,8 +181,8 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_rule(:hero_subtitle,
-    font_size: css_var({Tokens, :text, :size_lg}),
-    color: css_var({Tokens, :text, :secondary}),
+    font_size: css_var({Tokens, :font_size, :lg}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
     max_width: "42rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -206,8 +206,8 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_bottom: css_var({Tokens, :space, :"3"}),
     padding_left: css_var({Tokens, :space, :"6"}),
     padding_right: css_var({Tokens, :space, :"6"}),
-    font_size: css_var({Tokens, :text, :size_base}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    font_size: css_var({Tokens, :font_size, :base}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     border_radius: css_var({Tokens, :radius, :lg}),
     text_decoration: "none",
     border: "none",
@@ -217,16 +217,16 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   css_rule(:btn_primary,
     background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-    color: css_var({Tokens, :color, :white}),
+    color: css_var({Tokens, :colors, :white}),
     box_shadow: "0 4px 14px 0 rgba(99, 102, 241, 0.4)"
   )
 
   css_rule(:btn_secondary,
-    color: css_var({Tokens, :text, :primary}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :border, :default}),
-    background_color: css_var({Tokens, :fill, :page})
+    border_color: css_var({Tokens, :semantic, :border_default}),
+    background_color: css_var({Tokens, :semantic, :fill_page})
   )
 
   # ============================================================================
@@ -236,7 +236,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   css_rule(:features_section,
     padding_top: css_var({Tokens, :space, :"8"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
-    background_color: css_var({Tokens, :fill, :page})
+    background_color: css_var({Tokens, :semantic, :fill_page})
   )
 
   css_rule(:features_inner,
@@ -253,16 +253,16 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_rule(:section_title,
-    font_weight: css_var({Tokens, :font, :weight_bold}),
-    color: css_var({Tokens, :text, :primary}),
+    font_weight: css_var({Tokens, :font_weight, :bold}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     line_height: css_var({Tokens, :leading, :tight}),
-    font_size: css_var({Tokens, :text, :size_2xl}),
+    font_size: css_var({Tokens, :font_size, :"2xl"}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
   css_rule(:section_subtitle,
-    font_size: css_var({Tokens, :text, :size_lg}),
-    color: css_var({Tokens, :text, :secondary})
+    font_size: css_var({Tokens, :font_size, :lg}),
+    color: css_var({Tokens, :semantic, :text_secondary})
   )
 
   css_rule(:features_grid,
@@ -272,12 +272,12 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_rule(:feature_card,
-    background_color: css_var({Tokens, :fill, :card}),
+    background_color: css_var({Tokens, :semantic, :fill_card}),
     padding: css_var({Tokens, :space, :"6"}),
     border_radius: css_var({Tokens, :radius, :xl}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :border, :subtle}),
+    border_color: css_var({Tokens, :semantic, :border_subtle}),
     transition: "all 0.2s ease",
     box_shadow: css_var({Tokens, :shadow, :sm})
   )
@@ -299,49 +299,49 @@ defmodule LiveStyleDemoWeb.HomeLive do
     height: "3rem",
     border_radius: css_var({Tokens, :radius, :lg}),
     margin_bottom: css_var({Tokens, :space, :"4"}),
-    font_size: css_var({Tokens, :text, :size_xl})
+    font_size: css_var({Tokens, :font_size, :xl})
   )
 
   css_rule(:feature_icon_purple,
-    background_color: css_var({Tokens, :color, :purple_50}),
-    color: css_var({Tokens, :color, :purple_600})
+    background_color: css_var({Tokens, :colors, :purple_50}),
+    color: css_var({Tokens, :colors, :purple_600})
   )
 
   css_rule(:feature_icon_blue,
-    background_color: css_var({Tokens, :color, :blue_50}),
-    color: css_var({Tokens, :color, :blue_600})
+    background_color: css_var({Tokens, :colors, :blue_50}),
+    color: css_var({Tokens, :colors, :blue_600})
   )
 
   css_rule(:feature_icon_indigo,
-    background_color: css_var({Tokens, :color, :indigo_50}),
-    color: css_var({Tokens, :color, :indigo_600})
+    background_color: css_var({Tokens, :colors, :indigo_50}),
+    color: css_var({Tokens, :colors, :indigo_600})
   )
 
   css_rule(:feature_icon_green,
-    background_color: css_var({Tokens, :color, :green_50}),
-    color: css_var({Tokens, :color, :green_600})
+    background_color: css_var({Tokens, :colors, :green_50}),
+    color: css_var({Tokens, :colors, :green_600})
   )
 
   css_rule(:feature_icon_amber,
-    background_color: css_var({Tokens, :color, :amber_50}),
-    color: css_var({Tokens, :color, :amber_600})
+    background_color: css_var({Tokens, :colors, :amber_50}),
+    color: css_var({Tokens, :colors, :amber_600})
   )
 
   css_rule(:feature_icon_red,
-    background_color: css_var({Tokens, :color, :red_50}),
-    color: css_var({Tokens, :color, :red_600})
+    background_color: css_var({Tokens, :colors, :red_50}),
+    color: css_var({Tokens, :colors, :red_600})
   )
 
   css_rule(:feature_title,
-    font_size: css_var({Tokens, :text, :size_lg}),
-    font_weight: css_var({Tokens, :font, :weight_semibold}),
-    color: css_var({Tokens, :text, :primary}),
+    font_size: css_var({Tokens, :font_size, :lg}),
+    font_weight: css_var({Tokens, :font_weight, :semibold}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
   css_rule(:feature_text,
-    font_size: css_var({Tokens, :text, :size_base}),
-    color: css_var({Tokens, :text, :secondary}),
+    font_size: css_var({Tokens, :font_size, :base}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
     line_height: css_var({Tokens, :leading, :relaxed})
   )
 
@@ -352,7 +352,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   css_rule(:code_section,
     padding_top: css_var({Tokens, :space, :"16"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
-    background_color: css_var({Tokens, :fill, :surface})
+    background_color: css_var({Tokens, :semantic, :fill_surface})
   )
 
   css_rule(:code_inner,
@@ -364,7 +364,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_rule(:code_block,
-    background_color: css_var({Tokens, :color, :gray_900}),
+    background_color: css_var({Tokens, :colors, :gray_900}),
     border_radius: css_var({Tokens, :radius, :xl}),
     padding: css_var({Tokens, :space, :"6"}),
     overflow_x: "auto"
@@ -397,8 +397,8 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   css_rule(:code_pre,
     font_family: css_var({Tokens, :font, :mono}),
-    font_size: css_var({Tokens, :text, :size_sm}),
-    color: css_var({Tokens, :color, :gray_100}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    color: css_var({Tokens, :colors, :gray_100}),
     line_height: css_var({Tokens, :leading, :relaxed}),
     margin: "0",
     white_space: "pre-wrap"
@@ -431,7 +431,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   css_rule(:anchor_demo_section,
     padding_top: css_var({Tokens, :space, :"16"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
-    background_color: css_var({Tokens, :fill, :surface})
+    background_color: css_var({Tokens, :semantic, :fill_surface})
   )
 
   css_rule(:anchor_demo_inner,
@@ -468,9 +468,9 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_bottom: css_var({Tokens, :space, :"3"}),
     padding_left: css_var({Tokens, :space, :"6"}),
     padding_right: css_var({Tokens, :space, :"6"}),
-    font_size: css_var({Tokens, :text, :size_base}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
-    color: css_var({Tokens, :color, :white}),
+    font_size: css_var({Tokens, :font_size, :base}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
+    color: css_var({Tokens, :colors, :white}),
     background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
     border: "none",
     border_radius: css_var({Tokens, :radius, :lg}),
@@ -510,9 +510,9 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_bottom: css_var({Tokens, :space, :"2"}),
     padding_left: css_var({Tokens, :space, :"3"}),
     padding_right: css_var({Tokens, :space, :"3"}),
-    background_color: css_var({Tokens, :color, :gray_900}),
-    color: css_var({Tokens, :color, :white}),
-    font_size: css_var({Tokens, :text, :size_sm}),
+    background_color: css_var({Tokens, :colors, :gray_900}),
+    color: css_var({Tokens, :colors, :white}),
+    font_size: css_var({Tokens, :font_size, :sm}),
     border_radius: css_var({Tokens, :radius, :md}),
     white_space: "nowrap",
     box_shadow: css_var({Tokens, :shadow, :lg}),
@@ -520,8 +520,8 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_rule(:anchor_note,
-    font_size: css_var({Tokens, :text, :size_sm}),
-    color: css_var({Tokens, :text, :muted}),
+    font_size: css_var({Tokens, :font_size, :sm}),
+    color: css_var({Tokens, :semantic, :text_muted}),
     text_align: "center",
     max_width: "32rem"
   )
@@ -533,10 +533,10 @@ defmodule LiveStyleDemoWeb.HomeLive do
   css_rule(:footer,
     padding_top: css_var({Tokens, :space, :"8"}),
     padding_bottom: css_var({Tokens, :space, :"8"}),
-    background_color: css_var({Tokens, :fill, :page}),
+    background_color: css_var({Tokens, :semantic, :fill_page}),
     border_top_width: "1px",
     border_top_style: "solid",
-    border_top_color: css_var({Tokens, :border, :subtle})
+    border_top_color: css_var({Tokens, :semantic, :border_subtle})
   )
 
   css_rule(:footer_inner,
@@ -549,12 +549,12 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_rule(:footer_text,
-    font_size: css_var({Tokens, :text, :size_sm}),
-    color: css_var({Tokens, :text, :muted})
+    font_size: css_var({Tokens, :font_size, :sm}),
+    color: css_var({Tokens, :semantic, :text_muted})
   )
 
   css_rule(:footer_link,
-    color: css_var({Tokens, :text, :link}),
+    color: css_var({Tokens, :semantic, :text_link}),
     text_decoration: "none"
   )
 
@@ -587,8 +587,8 @@ defmodule LiveStyleDemoWeb.HomeLive do
         border_radius: css_var({Tokens, :radius, :md})
 
       css_rule :primary,
-        background_color: css_var({Tokens, :fill, :primary}),
-        color: css_var({Tokens, :text, :inverse})
+        background_color: css_var({Tokens, :semantic, :fill_primary}),
+        color: css_var({Tokens, :semantic, :text_inverse})
 
       def button(assigns) do
         ~H\"\"\"
@@ -665,42 +665,54 @@ defmodule LiveStyleDemoWeb.HomeLive do
           </div>
           <div class={css_class([:features_grid])}>
             <div class={"#{css_class([:feature_card])} #{Marker.default()}"}>
-              <div class={css_class([:feature_icon, :feature_icon_purple, :feature_icon_transform])}>&#9889;</div>
+              <div class={css_class([:feature_icon, :feature_icon_purple, :feature_icon_transform])}>
+                &#9889;
+              </div>
               <h3 class={css_class([:feature_title])}>Zero Runtime</h3>
               <p class={css_class([:feature_text])}>
                 All styles are resolved at compile time. No runtime style generation, no JavaScript bundle, just static CSS.
               </p>
             </div>
             <div class={"#{css_class([:feature_card])} #{Marker.default()}"}>
-              <div class={css_class([:feature_icon, :feature_icon_blue, :feature_icon_transform])}>&#127912;</div>
+              <div class={css_class([:feature_icon, :feature_icon_blue, :feature_icon_transform])}>
+                &#127912;
+              </div>
               <h3 class={css_class([:feature_title])}>Design Tokens</h3>
               <p class={css_class([:feature_text])}>
                 Define your design system with typed tokens using css_vars. Colors, spacing, typography - all in one place.
               </p>
             </div>
             <div class={"#{css_class([:feature_card])} #{Marker.default()}"}>
-              <div class={css_class([:feature_icon, :feature_icon_indigo, :feature_icon_transform])}>&#127752;</div>
+              <div class={css_class([:feature_icon, :feature_icon_indigo, :feature_icon_transform])}>
+                &#127752;
+              </div>
               <h3 class={css_class([:feature_title])}>Theming</h3>
               <p class={css_class([:feature_text])}>
                 Create themes with css_theme to override CSS variables for any subtree. Dark mode? Easy.
               </p>
             </div>
             <div class={"#{css_class([:feature_card])} #{Marker.default()}"}>
-              <div class={css_class([:feature_icon, :feature_icon_green, :feature_icon_transform])}>&#9999;&#65039;</div>
+              <div class={css_class([:feature_icon, :feature_icon_green, :feature_icon_transform])}>
+                &#9999;&#65039;
+              </div>
               <h3 class={css_class([:feature_title])}>Atomic CSS</h3>
               <p class={css_class([:feature_text])}>
                 Each style property generates a unique class. Compose styles with predictable, collision-free results.
               </p>
             </div>
             <div class={"#{css_class([:feature_card])} #{Marker.default()}"}>
-              <div class={css_class([:feature_icon, :feature_icon_amber, :feature_icon_transform])}>&#128268;</div>
+              <div class={css_class([:feature_icon, :feature_icon_amber, :feature_icon_transform])}>
+                &#128268;
+              </div>
               <h3 class={css_class([:feature_title])}>Responsive</h3>
               <p class={css_class([:feature_text])}>
                 Built-in support for media queries with the condition-in-property pattern. No breakpoint gymnastics.
               </p>
             </div>
             <div class={"#{css_class([:feature_card])} #{Marker.default()}"}>
-              <div class={css_class([:feature_icon, :feature_icon_red, :feature_icon_transform])}>&#10084;&#65039;</div>
+              <div class={css_class([:feature_icon, :feature_icon_red, :feature_icon_transform])}>
+                &#10084;&#65039;
+              </div>
               <h3 class={css_class([:feature_title])}>Phoenix Native</h3>
               <p class={css_class([:feature_text])}>
                 Designed for Phoenix LiveView from the ground up. Integrates seamlessly with components and HEEx.
@@ -762,10 +774,12 @@ defmodule LiveStyleDemoWeb.HomeLive do
               </div>
             </div>
             <p class={css_class([:anchor_note])}>
-              This tooltip uses CSS Anchor Positioning with <code>@position-try</code> fallbacks.
+              This tooltip uses CSS Anchor Positioning with <code>@position-try</code>
+              fallbacks.
               When the preferred position doesn't fit, the browser automatically tries alternative positions.
               <br /><br />
-              <strong>Note:</strong> Requires Chrome 125+ or other browsers with anchor positioning support.
+              <strong>Note:</strong>
+              Requires Chrome 125+ or other browsers with anchor positioning support.
             </p>
           </div>
         </div>
@@ -808,7 +822,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   defp theme_classes(dark_mode, base_classes) do
     if dark_mode do
-      "#{base_classes} #{css_theme({Tokens, :fill, :dark})} #{css_theme({Tokens, :text, :dark})} #{css_theme({Tokens, :border, :dark})}"
+      "#{base_classes} #{css_theme({Tokens, :semantic, :dark})} #{css_theme({Tokens, :semantic, :dark})} #{css_theme({Tokens, :semantic, :dark})}"
     else
       base_classes
     end

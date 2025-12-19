@@ -18,7 +18,7 @@ defmodule LiveStyleDemoWeb.PageHTML do
     display: "flex",
     align_items: "center",
     justify_content: "center",
-    background_color: css_var({Tokens, :fill, :muted}),
+    background_color: css_var({Tokens, :semantic, :fill_muted}),
     padding: css_var({Tokens, :space, :"8"}),
     font_family: css_var({Tokens, :font, :sans}),
     "-webkit-font-smoothing": "antialiased",
@@ -32,15 +32,15 @@ defmodule LiveStyleDemoWeb.PageHTML do
   )
 
   css_rule(:title,
-    font_size: css_var({Tokens, :text, :size_3xl}),
-    font_weight: css_var({Tokens, :font, :weight_bold}),
-    color: css_var({Tokens, :text, :primary}),
+    font_size: css_var({Tokens, :font_size, :"3xl"}),
+    font_weight: css_var({Tokens, :font_weight, :bold}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
   css_rule(:subtitle,
-    font_size: css_var({Tokens, :text, :size_lg}),
-    color: css_var({Tokens, :text, :secondary}),
+    font_size: css_var({Tokens, :font_size, :lg}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
     margin_bottom: css_var({Tokens, :space, :"8"})
   )
 
@@ -52,7 +52,7 @@ defmodule LiveStyleDemoWeb.PageHTML do
   )
 
   css_rule(:feature_card,
-    background_color: css_var({Tokens, :fill, :page}),
+    background_color: css_var({Tokens, :semantic, :fill_page}),
     padding: css_var({Tokens, :space, :"6"}),
     border_radius: css_var({Tokens, :radius, :lg}),
     box_shadow: css_var({Tokens, :shadow, :default}),
@@ -60,15 +60,15 @@ defmodule LiveStyleDemoWeb.PageHTML do
   )
 
   css_rule(:feature_title,
-    font_size: css_var({Tokens, :text, :size_lg}),
-    font_weight: css_var({Tokens, :font, :weight_semibold}),
-    color: css_var({Tokens, :text, :primary}),
+    font_size: css_var({Tokens, :font_size, :lg}),
+    font_weight: css_var({Tokens, :font_weight, :semibold}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
   css_rule(:feature_text,
-    font_size: css_var({Tokens, :text, :size_base}),
-    color: css_var({Tokens, :text, :secondary}),
+    font_size: css_var({Tokens, :font_size, :base}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
     line_height: css_var({Tokens, :leading, :relaxed})
   )
 
@@ -85,9 +85,9 @@ defmodule LiveStyleDemoWeb.PageHTML do
     padding_bottom: css_var({Tokens, :space, :"3"}),
     padding_left: css_var({Tokens, :space, :"6"}),
     padding_right: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :fill, :primary}),
-    color: css_var({Tokens, :text, :inverse}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
+    color: css_var({Tokens, :semantic, :text_inverse}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     border_radius: css_var({Tokens, :radius, :md}),
     text_decoration: "none",
     transition: "background-color 0.2s ease"
@@ -100,9 +100,9 @@ defmodule LiveStyleDemoWeb.PageHTML do
     padding_bottom: css_var({Tokens, :space, :"3"}),
     padding_left: css_var({Tokens, :space, :"6"}),
     padding_right: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :fill, :secondary}),
-    color: css_var({Tokens, :text, :primary}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    background_color: css_var({Tokens, :semantic, :fill_secondary}),
+    color: css_var({Tokens, :semantic, :text_primary}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     border_radius: css_var({Tokens, :radius, :md}),
     text_decoration: "none",
     transition: "background-color 0.2s ease"

@@ -66,8 +66,8 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     padding_bottom: css_var({Tokens, :space, :"3"}),
     padding_left: css_var({Tokens, :space, :"6"}),
     padding_right: css_var({Tokens, :space, :"6"}),
-    font_size: css_var({Tokens, :text, :size_base}),
-    font_weight: css_var({Tokens, :font, :weight_medium}),
+    font_size: css_var({Tokens, :font_size, :base}),
+    font_weight: css_var({Tokens, :font_weight, :medium}),
     border_radius: css_var({Tokens, :radius, :lg}),
     text_decoration: "none",
     border: "none",
@@ -83,12 +83,12 @@ defmodule LiveStyleDemoWeb.BaseStyles do
 
   # Base card styles - background, padding, rounded corners, border, shadow.
   css_rule(:card_base,
-    background_color: css_var({Tokens, :fill, :card}),
+    background_color: css_var({Tokens, :semantic, :fill_card}),
     padding: css_var({Tokens, :space, :"6"}),
     border_radius: css_var({Tokens, :radius, :xl}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :border, :subtle}),
+    border_color: css_var({Tokens, :semantic, :border_subtle}),
     transition: "all 0.2s ease"
   )
 
@@ -130,15 +130,15 @@ defmodule LiveStyleDemoWeb.BaseStyles do
 
   # Base heading styles.
   css_rule(:heading,
-    font_weight: css_var({Tokens, :font, :weight_bold}),
-    color: css_var({Tokens, :text, :primary}),
+    font_weight: css_var({Tokens, :font_weight, :bold}),
+    color: css_var({Tokens, :semantic, :text_primary}),
     line_height: css_var({Tokens, :leading, :tight})
   )
 
   # Base body text styles.
   css_rule(:body_text,
-    font_size: css_var({Tokens, :text, :size_base}),
-    color: css_var({Tokens, :text, :secondary}),
+    font_size: css_var({Tokens, :font_size, :base}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
     line_height: css_var({Tokens, :leading, :relaxed})
   )
 
