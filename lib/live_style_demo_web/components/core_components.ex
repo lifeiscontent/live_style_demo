@@ -16,7 +16,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # Button Styles
   # ============================================================================
 
-  css_rule(:btn_base,
+  css_class(:btn_base,
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
@@ -33,12 +33,12 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     transition: "all 0.2s ease"
   )
 
-  css_rule(:btn_primary,
+  css_class(:btn_primary,
     background_color: css_var({Tokens, :semantic, :fill_primary}),
     color: css_var({Tokens, :semantic, :text_inverse})
   )
 
-  css_rule(:btn_secondary,
+  css_class(:btn_secondary,
     background_color: css_var({Tokens, :semantic, :fill_secondary}),
     color: css_var({Tokens, :semantic, :text_primary})
   )
@@ -47,14 +47,14 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # Flash Styles
   # ============================================================================
 
-  css_rule(:flash_container,
+  css_class(:flash_container,
     position: "fixed",
     top: css_var({Tokens, :space, :"4"}),
     right: css_var({Tokens, :space, :"4"}),
     z_index: "50"
   )
 
-  css_rule(:flash_alert,
+  css_class(:flash_alert,
     display: "flex",
     align_items: "flex-start",
     gap: css_var({Tokens, :space, :"3"}),
@@ -64,30 +64,30 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     max_width: "24rem"
   )
 
-  css_rule(:flash_info,
+  css_class(:flash_info,
     background_color: css_var({Tokens, :colors, :blue_50}),
     border_width: "1px",
     border_style: "solid",
     border_color: css_var({Tokens, :colors, :blue_500})
   )
 
-  css_rule(:flash_error,
+  css_class(:flash_error,
     background_color: css_var({Tokens, :colors, :red_50}),
     border_width: "1px",
     border_style: "solid",
     border_color: css_var({Tokens, :colors, :red_500})
   )
 
-  css_rule(:flash_content,
+  css_class(:flash_content,
     flex: "1"
   )
 
-  css_rule(:flash_title,
+  css_class(:flash_title,
     font_weight: css_var({Tokens, :font_weight, :semibold}),
     margin_bottom: css_var({Tokens, :space, :"1"})
   )
 
-  css_rule(:flash_close,
+  css_class(:flash_close,
     background: "none",
     border: "none",
     cursor: "pointer",
@@ -99,17 +99,17 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # Icon Styles
   # ============================================================================
 
-  css_rule(:icon_base,
+  css_class(:icon_base,
     display: "inline-block",
     flex_shrink: "0"
   )
 
-  css_rule(:icon_sm,
+  css_class(:icon_sm,
     width: "1rem",
     height: "1rem"
   )
 
-  css_rule(:icon_md,
+  css_class(:icon_md,
     width: "1.25rem",
     height: "1.25rem"
   )
@@ -118,11 +118,11 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # Input Styles
   # ============================================================================
 
-  css_rule(:input_wrapper,
+  css_class(:input_wrapper,
     margin_bottom: css_var({Tokens, :space, :"4"})
   )
 
-  css_rule(:input_label,
+  css_class(:input_label,
     display: "block",
     font_size: css_var({Tokens, :font_size, :sm}),
     font_weight: css_var({Tokens, :font_weight, :medium}),
@@ -130,7 +130,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     margin_bottom: css_var({Tokens, :space, :"1"})
   )
 
-  css_rule(:input_field,
+  css_class(:input_field,
     display: "block",
     width: "100%",
     padding_top: css_var({Tokens, :space, :"2"}),
@@ -147,11 +147,11 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     transition: "border-color 0.2s ease"
   )
 
-  css_rule(:input_error,
+  css_class(:input_error,
     border_color: css_var({Tokens, :colors, :red_500})
   )
 
-  css_rule(:error_message,
+  css_class(:error_message,
     display: "flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"1"}),
@@ -164,24 +164,24 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # Header Styles
   # ============================================================================
 
-  css_rule(:header_wrapper,
+  css_class(:header_wrapper,
     padding_bottom: css_var({Tokens, :space, :"4"})
   )
 
-  css_rule(:header_with_actions,
+  css_class(:header_with_actions,
     display: "flex",
     align_items: "center",
     justify_content: "space-between",
     gap: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:header_title,
+  css_class(:header_title,
     font_size: css_var({Tokens, :font_size, :lg}),
     font_weight: css_var({Tokens, :font_weight, :semibold}),
     line_height: css_var({Tokens, :leading, :tight})
   )
 
-  css_rule(:header_subtitle,
+  css_class(:header_subtitle,
     font_size: css_var({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :semantic, :text_secondary}),
     margin_top: css_var({Tokens, :space, :"1"})

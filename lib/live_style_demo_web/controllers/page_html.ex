@@ -13,7 +13,7 @@ defmodule LiveStyleDemoWeb.PageHTML do
   embed_templates("page_html/*")
 
   # Page styles
-  css_rule(:page_container,
+  css_class(:page_container,
     min_height: "100vh",
     display: "flex",
     align_items: "center",
@@ -25,33 +25,33 @@ defmodule LiveStyleDemoWeb.PageHTML do
     "-moz-osx-font-smoothing": "grayscale"
   )
 
-  css_rule(:content_wrapper,
+  css_class(:content_wrapper,
     max_width: "48rem",
     text_align: "center",
     position: "sticky"
   )
 
-  css_rule(:title,
+  css_class(:title,
     font_size: css_var({Tokens, :font_size, :"3xl"}),
     font_weight: css_var({Tokens, :font_weight, :bold}),
     color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
-  css_rule(:subtitle,
+  css_class(:subtitle,
     font_size: css_var({Tokens, :font_size, :lg}),
     color: css_var({Tokens, :semantic, :text_secondary}),
     margin_bottom: css_var({Tokens, :space, :"8"})
   )
 
-  css_rule(:features,
+  css_class(:features,
     display: "grid",
     gap: css_var({Tokens, :space, :"6"}),
     margin_bottom: css_var({Tokens, :space, :"8"}),
     grid_template_columns: "1fr"
   )
 
-  css_rule(:feature_card,
+  css_class(:feature_card,
     background_color: css_var({Tokens, :semantic, :fill_page}),
     padding: css_var({Tokens, :space, :"6"}),
     border_radius: css_var({Tokens, :radius, :lg}),
@@ -59,26 +59,26 @@ defmodule LiveStyleDemoWeb.PageHTML do
     text_align: "left"
   )
 
-  css_rule(:feature_title,
+  css_class(:feature_title,
     font_size: css_var({Tokens, :font_size, :lg}),
     font_weight: css_var({Tokens, :font_weight, :semibold}),
     color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
-  css_rule(:feature_text,
+  css_class(:feature_text,
     font_size: css_var({Tokens, :font_size, :base}),
     color: css_var({Tokens, :semantic, :text_secondary}),
     line_height: css_var({Tokens, :leading, :relaxed})
   )
 
-  css_rule(:buttons,
+  css_class(:buttons,
     display: "flex",
     gap: css_var({Tokens, :space, :"4"}),
     justify_content: "center"
   )
 
-  css_rule(:btn_primary,
+  css_class(:btn_primary,
     display: "inline-flex",
     align_items: "center",
     padding_top: css_var({Tokens, :space, :"3"}),
@@ -93,7 +93,7 @@ defmodule LiveStyleDemoWeb.PageHTML do
     transition: "background-color 0.2s ease"
   )
 
-  css_rule(:btn_secondary,
+  css_class(:btn_secondary,
     display: "inline-flex",
     align_items: "center",
     padding_top: css_var({Tokens, :space, :"3"}),

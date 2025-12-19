@@ -26,7 +26,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   # Layout Styles
   # ============================================================================
 
-  css_rule(:page,
+  css_class(:page,
     min_height: "100vh",
     background_color: css_var({Tokens, :semantic, :fill_surface}),
     font_family: css_var({Tokens, :font, :sans}),
@@ -34,7 +34,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     transition: "background-color 0.3s ease"
   )
 
-  css_rule(:nav,
+  css_class(:nav,
     position: "sticky",
     top: "0",
     z_index: "40",
@@ -45,7 +45,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     transition: "background-color 0.3s ease, border-color 0.3s ease"
   )
 
-  css_rule(:nav_inner,
+  css_class(:nav_inner,
     max_width: "80rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -58,7 +58,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     justify_content: "space-between"
   )
 
-  css_rule(:logo,
+  css_class(:logo,
     display: "flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"2"}),
@@ -68,14 +68,14 @@ defmodule LiveStyleDemoWeb.HomeLive do
     text_decoration: "none"
   )
 
-  css_rule(:logo_icon,
+  css_class(:logo_icon,
     width: "2rem",
     height: "2rem",
     background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
     border_radius: css_var({Tokens, :radius, :lg})
   )
 
-  css_rule(:animated_gradient,
+  css_class(:animated_gradient,
     width: "12rem",
     height: "12rem",
     border_radius: css_var({Tokens, :radius, :xl}),
@@ -87,13 +87,13 @@ defmodule LiveStyleDemoWeb.HomeLive do
     animation_iteration_count: "infinite"
   )
 
-  css_rule(:gradient_demo_section,
+  css_class(:gradient_demo_section,
     padding_top: css_var({Tokens, :space, :"16"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
     background_color: css_var({Tokens, :semantic, :fill_page})
   )
 
-  css_rule(:gradient_demo_inner,
+  css_class(:gradient_demo_inner,
     max_width: "64rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -101,19 +101,19 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_right: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:gradient_demo_content,
+  css_class(:gradient_demo_content,
     display: "flex",
     flex_direction: "column",
     align_items: "center",
     gap: css_var({Tokens, :space, :"8"})
   )
 
-  css_rule(:gradient_demo_text,
+  css_class(:gradient_demo_text,
     text_align: "center",
     max_width: "36rem"
   )
 
-  css_rule(:theme_toggle,
+  css_class(:theme_toggle,
     display: "flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"2"}),
@@ -135,13 +135,13 @@ defmodule LiveStyleDemoWeb.HomeLive do
   # Hero Section
   # ============================================================================
 
-  css_rule(:hero,
+  css_class(:hero,
     padding_top: css_var({Tokens, :space, :"16"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
     text_align: "center"
   )
 
-  css_rule(:hero_inner,
+  css_class(:hero_inner,
     max_width: "64rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -149,7 +149,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_right: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:badge,
+  css_class(:badge,
     display: "inline-flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"2"}),
@@ -165,7 +165,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     margin_bottom: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:hero_title,
+  css_class(:hero_title,
     font_size: css_var({Tokens, :font_size, :"3xl"}),
     font_weight: css_var({Tokens, :font_weight, :bold}),
     color: css_var({Tokens, :semantic, :text_primary}),
@@ -173,14 +173,14 @@ defmodule LiveStyleDemoWeb.HomeLive do
     margin_bottom: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:hero_gradient,
+  css_class(:hero_gradient,
     background: "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
     "-webkit-background-clip": "text",
     "-webkit-text-fill-color": "transparent",
     background_clip: "text"
   )
 
-  css_rule(:hero_subtitle,
+  css_class(:hero_subtitle,
     font_size: css_var({Tokens, :font_size, :lg}),
     color: css_var({Tokens, :semantic, :text_secondary}),
     max_width: "42rem",
@@ -190,14 +190,14 @@ defmodule LiveStyleDemoWeb.HomeLive do
     line_height: css_var({Tokens, :leading, :relaxed})
   )
 
-  css_rule(:hero_buttons,
+  css_class(:hero_buttons,
     display: "flex",
     flex_wrap: "wrap",
     gap: css_var({Tokens, :space, :"4"}),
     justify_content: "center"
   )
 
-  css_rule(:btn,
+  css_class(:btn,
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
@@ -215,13 +215,13 @@ defmodule LiveStyleDemoWeb.HomeLive do
     transition: "all 0.2s ease"
   )
 
-  css_rule(:btn_primary,
+  css_class(:btn_primary,
     background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
     color: css_var({Tokens, :colors, :white}),
     box_shadow: "0 4px 14px 0 rgba(99, 102, 241, 0.4)"
   )
 
-  css_rule(:btn_secondary,
+  css_class(:btn_secondary,
     color: css_var({Tokens, :semantic, :text_primary}),
     border_width: "1px",
     border_style: "solid",
@@ -233,13 +233,13 @@ defmodule LiveStyleDemoWeb.HomeLive do
   # Features Section
   # ============================================================================
 
-  css_rule(:features_section,
+  css_class(:features_section,
     padding_top: css_var({Tokens, :space, :"8"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
     background_color: css_var({Tokens, :semantic, :fill_page})
   )
 
-  css_rule(:features_inner,
+  css_class(:features_inner,
     max_width: "80rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -247,12 +247,12 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_right: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:section_header,
+  css_class(:section_header,
     text_align: "center",
     margin_bottom: css_var({Tokens, :space, :"12"})
   )
 
-  css_rule(:section_title,
+  css_class(:section_title,
     font_weight: css_var({Tokens, :font_weight, :bold}),
     color: css_var({Tokens, :semantic, :text_primary}),
     line_height: css_var({Tokens, :leading, :tight}),
@@ -260,18 +260,18 @@ defmodule LiveStyleDemoWeb.HomeLive do
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
-  css_rule(:section_subtitle,
+  css_class(:section_subtitle,
     font_size: css_var({Tokens, :font_size, :lg}),
     color: css_var({Tokens, :semantic, :text_secondary})
   )
 
-  css_rule(:features_grid,
+  css_class(:features_grid,
     display: "grid",
     gap: css_var({Tokens, :space, :"8"}),
     grid_template_columns: "repeat(1, 1fr)"
   )
 
-  css_rule(:feature_card,
+  css_class(:feature_card,
     background_color: css_var({Tokens, :semantic, :fill_card}),
     padding: css_var({Tokens, :space, :"6"}),
     border_radius: css_var({Tokens, :radius, :xl}),
@@ -283,7 +283,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   # Demo: When selectors - icon transforms when parent card is hovered
-  css_rule(:feature_icon_transform,
+  css_class(:feature_icon_transform,
     transform: %{
       :default => "scale(1)",
       When.ancestor(":hover") => "scale(1.15) rotate(5deg)"
@@ -291,7 +291,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     transition: "transform 0.2s ease"
   )
 
-  css_rule(:feature_icon,
+  css_class(:feature_icon,
     display: "flex",
     align_items: "center",
     justify_content: "center",
@@ -302,44 +302,44 @@ defmodule LiveStyleDemoWeb.HomeLive do
     font_size: css_var({Tokens, :font_size, :xl})
   )
 
-  css_rule(:feature_icon_purple,
+  css_class(:feature_icon_purple,
     background_color: css_var({Tokens, :colors, :purple_50}),
     color: css_var({Tokens, :colors, :purple_600})
   )
 
-  css_rule(:feature_icon_blue,
+  css_class(:feature_icon_blue,
     background_color: css_var({Tokens, :colors, :blue_50}),
     color: css_var({Tokens, :colors, :blue_600})
   )
 
-  css_rule(:feature_icon_indigo,
+  css_class(:feature_icon_indigo,
     background_color: css_var({Tokens, :colors, :indigo_50}),
     color: css_var({Tokens, :colors, :indigo_600})
   )
 
-  css_rule(:feature_icon_green,
+  css_class(:feature_icon_green,
     background_color: css_var({Tokens, :colors, :green_50}),
     color: css_var({Tokens, :colors, :green_600})
   )
 
-  css_rule(:feature_icon_amber,
+  css_class(:feature_icon_amber,
     background_color: css_var({Tokens, :colors, :amber_50}),
     color: css_var({Tokens, :colors, :amber_600})
   )
 
-  css_rule(:feature_icon_red,
+  css_class(:feature_icon_red,
     background_color: css_var({Tokens, :colors, :red_50}),
     color: css_var({Tokens, :colors, :red_600})
   )
 
-  css_rule(:feature_title,
+  css_class(:feature_title,
     font_size: css_var({Tokens, :font_size, :lg}),
     font_weight: css_var({Tokens, :font_weight, :semibold}),
     color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
-  css_rule(:feature_text,
+  css_class(:feature_text,
     font_size: css_var({Tokens, :font_size, :base}),
     color: css_var({Tokens, :semantic, :text_secondary}),
     line_height: css_var({Tokens, :leading, :relaxed})
@@ -349,13 +349,13 @@ defmodule LiveStyleDemoWeb.HomeLive do
   # Code Example Section
   # ============================================================================
 
-  css_rule(:code_section,
+  css_class(:code_section,
     padding_top: css_var({Tokens, :space, :"16"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
     background_color: css_var({Tokens, :semantic, :fill_surface})
   )
 
-  css_rule(:code_inner,
+  css_class(:code_inner,
     max_width: "64rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -363,39 +363,39 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_right: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:code_block,
+  css_class(:code_block,
     background_color: css_var({Tokens, :colors, :gray_900}),
     border_radius: css_var({Tokens, :radius, :xl}),
     padding: css_var({Tokens, :space, :"6"}),
     overflow_x: "auto"
   )
 
-  css_rule(:code_header,
+  css_class(:code_header,
     display: "flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"2"}),
     margin_bottom: css_var({Tokens, :space, :"4"})
   )
 
-  css_rule(:code_dot,
+  css_class(:code_dot,
     width: "0.75rem",
     height: "0.75rem",
     border_radius: css_var({Tokens, :radius, :full})
   )
 
-  css_rule(:code_dot_red,
+  css_class(:code_dot_red,
     background_color: "#ff5f57"
   )
 
-  css_rule(:code_dot_yellow,
+  css_class(:code_dot_yellow,
     background_color: "#febc2e"
   )
 
-  css_rule(:code_dot_green,
+  css_class(:code_dot_green,
     background_color: "#28c840"
   )
 
-  css_rule(:code_pre,
+  css_class(:code_pre,
     font_family: css_var({Tokens, :font, :mono}),
     font_size: css_var({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :colors, :gray_100}),
@@ -404,23 +404,23 @@ defmodule LiveStyleDemoWeb.HomeLive do
     white_space: "pre-wrap"
   )
 
-  css_rule(:code_keyword,
+  css_class(:code_keyword,
     color: "#c084fc"
   )
 
-  css_rule(:code_function,
+  css_class(:code_function,
     color: "#60a5fa"
   )
 
-  css_rule(:code_string,
+  css_class(:code_string,
     color: "#86efac"
   )
 
-  css_rule(:code_comment,
+  css_class(:code_comment,
     color: "#6b7280"
   )
 
-  css_rule(:code_atom,
+  css_class(:code_atom,
     color: "#fbbf24"
   )
 
@@ -428,13 +428,13 @@ defmodule LiveStyleDemoWeb.HomeLive do
   # Anchor Positioning Demo (@position-try)
   # ============================================================================
 
-  css_rule(:anchor_demo_section,
+  css_class(:anchor_demo_section,
     padding_top: css_var({Tokens, :space, :"16"}),
     padding_bottom: css_var({Tokens, :space, :"16"}),
     background_color: css_var({Tokens, :semantic, :fill_surface})
   )
 
-  css_rule(:anchor_demo_inner,
+  css_class(:anchor_demo_inner,
     max_width: "64rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -442,14 +442,14 @@ defmodule LiveStyleDemoWeb.HomeLive do
     padding_right: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:anchor_demo_content,
+  css_class(:anchor_demo_content,
     display: "flex",
     flex_direction: "column",
     align_items: "center",
     gap: css_var({Tokens, :space, :"8"})
   )
 
-  css_rule(:anchor_demo_container,
+  css_class(:anchor_demo_container,
     display: "flex",
     justify_content: "center",
     align_items: "center",
@@ -458,7 +458,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   # The anchor element (button that the tooltip is anchored to)
-  css_rule(:anchor_button,
+  css_class(:anchor_button,
     anchor_name: "--demo-anchor",
     display: "inline-flex",
     align_items: "center",
@@ -481,7 +481,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   # The positioned tooltip element with inline @position-try fallbacks
   # Hidden by default, shown when button is hovered
   # Note: @position-try only allows positioning/sizing properties (not transform/translate)
-  css_rule(:anchor_tooltip,
+  css_class(:anchor_tooltip,
     # Fixed positioning relative to viewport, anchored to the button
     position: "fixed",
     position_anchor: "--demo-anchor",
@@ -519,7 +519,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     z_index: "50"
   )
 
-  css_rule(:anchor_note,
+  css_class(:anchor_note,
     font_size: css_var({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :semantic, :text_muted}),
     text_align: "center",
@@ -530,7 +530,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   # Footer
   # ============================================================================
 
-  css_rule(:footer,
+  css_class(:footer,
     padding_top: css_var({Tokens, :space, :"8"}),
     padding_bottom: css_var({Tokens, :space, :"8"}),
     background_color: css_var({Tokens, :semantic, :fill_page}),
@@ -539,7 +539,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     border_top_color: css_var({Tokens, :semantic, :border_subtle})
   )
 
-  css_rule(:footer_inner,
+  css_class(:footer_inner,
     max_width: "80rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -548,12 +548,12 @@ defmodule LiveStyleDemoWeb.HomeLive do
     text_align: "center"
   )
 
-  css_rule(:footer_text,
+  css_class(:footer_text,
     font_size: css_var({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :semantic, :text_muted})
   )
 
-  css_rule(:footer_link,
+  css_class(:footer_link,
     color: css_var({Tokens, :semantic, :text_link}),
     text_decoration: "none"
   )
@@ -564,7 +564,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   # Dynamic style rule - opacity can be set at runtime
   # CSS is generated with var(--x-opacity), runtime sets the variable value
-  css_rule(:dynamic_opacity, fn opacity -> [opacity: opacity] end)
+  css_class(:dynamic_opacity, fn opacity -> [opacity: opacity] end)
 
   @impl true
   def mount(_params, _session, socket) do
@@ -581,12 +581,12 @@ defmodule LiveStyleDemoWeb.HomeLive do
       use LiveStyle
 
       # Define a named style with keyword list syntax
-      css_rule :base,
+      css_class :base,
         display: "inline-flex",
         padding: "8px 16px",
         border_radius: css_var({Tokens, :radius, :md})
 
-      css_rule :primary,
+      css_class :primary,
         background_color: css_var({Tokens, :semantic, :fill_primary}),
         color: css_var({Tokens, :semantic, :text_inverse})
 

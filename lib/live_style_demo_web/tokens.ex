@@ -11,7 +11,7 @@ defmodule LiveStyleDemoWeb.Tokens do
 
       use LiveStyle.Sheet
 
-      css_rule :button,
+      css_class :button,
         color: css_var({LiveStyleDemoWeb.Tokens, :semantic, :text_primary}),
         background: css_var({LiveStyleDemoWeb.Tokens, :semantic, :fill_primary}),
         padding: css_var({LiveStyleDemoWeb.Tokens, :space, :"4"})

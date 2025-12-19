@@ -30,13 +30,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Page Layout
   # ============================================================================
 
-  css_rule(:page,
+  css_class(:page,
     min_height: "100vh",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     font_family: css_var({Tokens, :font, :sans})
   )
 
-  css_rule(:back_link,
+  css_class(:back_link,
     display: "inline-flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"2"}),
@@ -48,12 +48,12 @@ defmodule LiveStyleDemoWeb.TodoLive do
     transition: "color 0.2s ease"
   )
 
-  css_rule(:content,
+  css_class(:content,
     padding_top: css_var({Tokens, :space, :"8"}),
     padding_bottom: css_var({Tokens, :space, :"16"})
   )
 
-  css_rule(:container,
+  css_class(:container,
     max_width: "32rem",
     margin_left: "auto",
     margin_right: "auto",
@@ -65,20 +65,20 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Card
   # ============================================================================
 
-  css_rule(:card,
+  css_class(:card,
     background_color: css_var({Tokens, :colors, :white}),
     border_radius: css_var({Tokens, :radius, :"2xl"}),
     box_shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
     overflow: "hidden"
   )
 
-  css_rule(:card_header,
+  css_class(:card_header,
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     padding: css_var({Tokens, :space, :"6"}),
     color: css_var({Tokens, :colors, :white})
   )
 
-  css_rule(:card_title,
+  css_class(:card_title,
     font_size: css_var({Tokens, :font_size, :"2xl"}),
     font_weight: css_var({Tokens, :font_weight, :bold}),
     margin: "0",
@@ -87,13 +87,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
     gap: css_var({Tokens, :space, :"3"})
   )
 
-  css_rule(:card_subtitle,
+  css_class(:card_subtitle,
     font_size: css_var({Tokens, :font_size, :sm}),
     opacity: "0.9",
     margin_top: css_var({Tokens, :space, :"1"})
   )
 
-  css_rule(:card_body,
+  css_class(:card_body,
     padding: css_var({Tokens, :space, :"6"})
   )
 
@@ -101,13 +101,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Input Form
   # ============================================================================
 
-  css_rule(:form,
+  css_class(:form,
     display: "flex",
     gap: css_var({Tokens, :space, :"3"}),
     margin_bottom: css_var({Tokens, :space, :"6"})
   )
 
-  css_rule(:input,
+  css_class(:input,
     flex: "1",
     padding: css_var({Tokens, :space, :"3"}),
     font_size: css_var({Tokens, :font_size, :base}),
@@ -119,12 +119,12 @@ defmodule LiveStyleDemoWeb.TodoLive do
     transition: "border-color 0.2s ease, box-shadow 0.2s ease"
   )
 
-  css_rule(:input_focus,
+  css_class(:input_focus,
     border_color: css_var({Tokens, :colors, :indigo_500}),
     box_shadow: "0 0 0 3px rgba(99, 102, 241, 0.1)"
   )
 
-  css_rule(:add_button,
+  css_class(:add_button,
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
@@ -146,13 +146,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Todo List
   # ============================================================================
 
-  css_rule(:todo_list,
+  css_class(:todo_list,
     list_style: "none",
     padding: "0",
     margin: "0"
   )
 
-  css_rule(:todo_item,
+  css_class(:todo_item,
     display: "flex",
     align_items: "center",
     gap: css_var({Tokens, :space, :"3"}),
@@ -164,7 +164,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     contain: "layout"
   )
 
-  css_rule(:todo_item_completed,
+  css_class(:todo_item_completed,
     opacity: "0.6",
     background_color: css_var({Tokens, :colors, :green_50})
   )
@@ -173,14 +173,14 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Checkbox
   # ============================================================================
 
-  css_rule(:checkbox_wrapper,
+  css_class(:checkbox_wrapper,
     position: "relative",
     width: "1.5rem",
     height: "1.5rem",
     flex_shrink: "0"
   )
 
-  css_rule(:checkbox_input,
+  css_class(:checkbox_input,
     position: "absolute",
     opacity: "0",
     width: "100%",
@@ -189,7 +189,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     z_index: "1"
   )
 
-  css_rule(:checkbox_custom,
+  css_class(:checkbox_custom,
     position: "absolute",
     top: "0",
     left: "0",
@@ -206,7 +206,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     justify_content: "center"
   )
 
-  css_rule(:checkbox_custom_checked,
+  css_class(:checkbox_custom_checked,
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     border_color: "transparent",
     animation_name: css_keyframes(:check_bounce),
@@ -214,7 +214,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     animation_timing_function: "ease-out"
   )
 
-  css_rule(:checkbox_icon,
+  css_class(:checkbox_icon,
     color: css_var({Tokens, :colors, :white}),
     font_size: "0.75rem",
     opacity: "0",
@@ -222,7 +222,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     transition: "all 0.2s ease"
   )
 
-  css_rule(:checkbox_icon_visible,
+  css_class(:checkbox_icon_visible,
     opacity: "1",
     transform: "scale(1)"
   )
@@ -231,23 +231,23 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Todo Text
   # ============================================================================
 
-  css_rule(:todo_text_wrapper,
+  css_class(:todo_text_wrapper,
     flex: "1",
     position: "relative",
     overflow: "hidden"
   )
 
-  css_rule(:todo_text,
+  css_class(:todo_text,
     font_size: css_var({Tokens, :font_size, :base}),
     color: css_var({Tokens, :colors, :gray_700}),
     transition: "color 0.2s ease"
   )
 
-  css_rule(:todo_text_completed,
+  css_class(:todo_text_completed,
     color: css_var({Tokens, :colors, :gray_400})
   )
 
-  css_rule(:todo_strike,
+  css_class(:todo_strike,
     position: "absolute",
     top: "50%",
     left: "0",
@@ -263,7 +263,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Delete Button
   # ============================================================================
 
-  css_rule(:delete_button,
+  css_class(:delete_button,
     width: "2rem",
     height: "2rem",
     display: "flex",
@@ -284,24 +284,24 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Empty State
   # ============================================================================
 
-  css_rule(:empty_state,
+  css_class(:empty_state,
     text_align: "center",
     padding: css_var({Tokens, :space, :"8"}),
     color: css_var({Tokens, :colors, :gray_400})
   )
 
-  css_rule(:empty_icon,
+  css_class(:empty_icon,
     font_size: "3rem",
     margin_bottom: css_var({Tokens, :space, :"4"}),
     opacity: "0.5"
   )
 
-  css_rule(:empty_text,
+  css_class(:empty_text,
     font_size: css_var({Tokens, :font_size, :lg}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
-  css_rule(:empty_subtext,
+  css_class(:empty_subtext,
     font_size: css_var({Tokens, :font_size, :sm})
   )
 
@@ -309,14 +309,14 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Filter Buttons
   # ============================================================================
 
-  css_rule(:filter_group,
+  css_class(:filter_group,
     display: "flex",
     justify_content: "center",
     gap: css_var({Tokens, :space, :"2"}),
     margin_bottom: css_var({Tokens, :space, :"4"})
   )
 
-  css_rule(:filter_button,
+  css_class(:filter_button,
     padding_top: css_var({Tokens, :space, :"2"}),
     padding_bottom: css_var({Tokens, :space, :"2"}),
     padding_left: css_var({Tokens, :space, :"4"}),
@@ -332,7 +332,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     transition: "all 0.2s ease"
   )
 
-  css_rule(:filter_button_active,
+  css_class(:filter_button_active,
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     color: css_var({Tokens, :colors, :white}),
     border_color: "transparent"
@@ -342,7 +342,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Input Shake Animation
   # ============================================================================
 
-  css_rule(:input_shake,
+  css_class(:input_shake,
     animation_name: css_keyframes(:shake),
     animation_duration: "0.4s",
     animation_timing_function: "ease-out",
@@ -353,7 +353,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Footer Stats
   # ============================================================================
 
-  css_rule(:footer,
+  css_class(:footer,
     display: "flex",
     justify_content: "space-between",
     align_items: "center",
@@ -364,12 +364,12 @@ defmodule LiveStyleDemoWeb.TodoLive do
     margin_top: css_var({Tokens, :space, :"4"})
   )
 
-  css_rule(:stats,
+  css_class(:stats,
     font_size: css_var({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :colors, :gray_500})
   )
 
-  css_rule(:clear_button,
+  css_class(:clear_button,
     font_size: css_var({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :colors, :gray_500}),
     background: "none",
