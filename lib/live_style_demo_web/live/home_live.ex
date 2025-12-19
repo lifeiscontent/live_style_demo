@@ -485,14 +485,11 @@ defmodule LiveStyleDemoWeb.HomeLive do
     # Fixed positioning relative to viewport, anchored to the button
     position: "fixed",
     position_anchor: "--demo-anchor",
-    # Default position: below the anchor
-    top: "anchor(bottom)",
-    left: "anchor(center)",
-    margin_top: "8px",
-    margin_left: "-75px",
-    # Fallback positions when default doesn't fit (inline anonymous @position-try)
-    position_try_fallbacks:
-      "#{css_position_try(bottom: "anchor(top)", left: "anchor(center)", margin_bottom: "8px", margin_left: "-75px")}, #{css_position_try(right: "anchor(left)", top: "anchor(center)", margin_right: "8px", margin_top: "-16px")}, #{css_position_try(left: "anchor(right)", top: "anchor(center)", margin_left: "8px", margin_top: "-16px")}",
+    # Default position: below the anchor, centered using position-area
+    position_area: "bottom center",
+    margin: "8px",
+    # Fallback positions using position-area values directly
+    position_try_fallbacks: "flip-block",
     # Hidden by default, shown on hover via sibling selector
     opacity: %{
       :default => "0",
@@ -504,7 +501,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     },
     transition: "opacity 0.15s ease",
     # Styling
-    width: "150px",
+    width: "max-content",
     text_align: "center",
     padding_top: css_var({Tokens, :space, :"2"}),
     padding_bottom: css_var({Tokens, :space, :"2"}),
@@ -514,7 +511,6 @@ defmodule LiveStyleDemoWeb.HomeLive do
     color: css_var({Tokens, :colors, :white}),
     font_size: css_var({Tokens, :font_size, :sm}),
     border_radius: css_var({Tokens, :radius, :md}),
-    white_space: "nowrap",
     box_shadow: css_var({Tokens, :shadow, :lg}),
     z_index: "50"
   )
