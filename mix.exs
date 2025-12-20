@@ -47,6 +47,8 @@ defmodule LiveStyleDemo.MixProject do
       {:lazy_html, ">= 0.1.0", only: :test},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
       {:live_style, path: "../live_style"},
+      {:autoprefixer_ex, path: "../autoprefixer_ex"},
+      {:css_compat_data_ex, path: "../css_compat_data_ex"},
       {:heroicons,
        github: "tailwindlabs/heroicons",
        tag: "v2.2.0",

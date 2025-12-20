@@ -61,14 +61,14 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    padding_top: css_var({Tokens, :space, :"3"}),
-    padding_bottom: css_var({Tokens, :space, :"3"}),
-    padding_left: css_var({Tokens, :space, :"6"}),
-    padding_right: css_var({Tokens, :space, :"6"}),
-    font_size: css_var({Tokens, :font_size, :base}),
-    font_weight: css_var({Tokens, :font_weight, :medium}),
-    border_radius: css_var({Tokens, :radius, :lg}),
+    gap: css_const({Tokens, :space, :"2"}),
+    padding_top: css_const({Tokens, :space, :"3"}),
+    padding_bottom: css_const({Tokens, :space, :"3"}),
+    padding_left: css_const({Tokens, :space, :"6"}),
+    padding_right: css_const({Tokens, :space, :"6"}),
+    font_size: css_const({Tokens, :font_size, :base}),
+    font_weight: css_const({Tokens, :font_weight, :medium}),
+    border_radius: css_const({Tokens, :radius, :lg}),
     text_decoration: "none",
     border: "none",
     cursor: "pointer",
@@ -84,8 +84,8 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   # Base card styles - background, padding, rounded corners, border, shadow.
   css_class(:card_base,
     background_color: css_var({Tokens, :semantic, :fill_card}),
-    padding: css_var({Tokens, :space, :"6"}),
-    border_radius: css_var({Tokens, :radius, :xl}),
+    padding: css_const({Tokens, :space, :"6"}),
+    border_radius: css_const({Tokens, :radius, :xl}),
     border_width: "1px",
     border_style: "solid",
     border_color: css_var({Tokens, :semantic, :border_subtle}),
@@ -101,8 +101,8 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     max_width: "80rem",
     margin_left: "auto",
     margin_right: "auto",
-    padding_left: css_var({Tokens, :space, :"6"}),
-    padding_right: css_var({Tokens, :space, :"6"})
+    padding_left: css_const({Tokens, :space, :"6"}),
+    padding_right: css_const({Tokens, :space, :"6"})
   )
 
   # Narrower container for content like articles.
@@ -110,8 +110,8 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     max_width: "64rem",
     margin_left: "auto",
     margin_right: "auto",
-    padding_left: css_var({Tokens, :space, :"6"}),
-    padding_right: css_var({Tokens, :space, :"6"})
+    padding_left: css_const({Tokens, :space, :"6"}),
+    padding_right: css_const({Tokens, :space, :"6"})
   )
 
   # ============================================================================
@@ -120,8 +120,8 @@ defmodule LiveStyleDemoWeb.BaseStyles do
 
   # Standard section with vertical padding.
   css_class(:section,
-    padding_top: css_var({Tokens, :space, :"16"}),
-    padding_bottom: css_var({Tokens, :space, :"16"})
+    padding_top: css_const({Tokens, :space, :"16"}),
+    padding_bottom: css_const({Tokens, :space, :"16"})
   )
 
   # ============================================================================
@@ -130,16 +130,16 @@ defmodule LiveStyleDemoWeb.BaseStyles do
 
   # Base heading styles.
   css_class(:heading,
-    font_weight: css_var({Tokens, :font_weight, :bold}),
+    font_weight: css_const({Tokens, :font_weight, :bold}),
     color: css_var({Tokens, :semantic, :text_primary}),
-    line_height: css_var({Tokens, :leading, :tight})
+    line_height: css_const({Tokens, :leading, :tight})
   )
 
   # Base body text styles.
   css_class(:body_text,
-    font_size: css_var({Tokens, :font_size, :base}),
+    font_size: css_const({Tokens, :font_size, :base}),
     color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_var({Tokens, :leading, :relaxed})
+    line_height: css_const({Tokens, :leading, :relaxed})
   )
 
   # ============================================================================

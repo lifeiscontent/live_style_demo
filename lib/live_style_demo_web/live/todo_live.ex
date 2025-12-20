@@ -33,32 +33,32 @@ defmodule LiveStyleDemoWeb.TodoLive do
   css_class(:page,
     min_height: "100vh",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    font_family: css_var({Tokens, :font, :sans})
+    font_family: css_const({Tokens, :font, :sans})
   )
 
   css_class(:back_link,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"2"}),
+    gap: css_const({Tokens, :space, :"2"}),
     color: "rgba(255, 255, 255, 0.8)",
-    font_size: css_var({Tokens, :font_size, :sm}),
-    font_weight: css_var({Tokens, :font_weight, :medium}),
+    font_size: css_const({Tokens, :font_size, :sm}),
+    font_weight: css_const({Tokens, :font_weight, :medium}),
     text_decoration: "none",
-    padding: css_var({Tokens, :space, :"4"}),
+    padding: css_const({Tokens, :space, :"4"}),
     transition: "color 0.2s ease"
   )
 
   css_class(:content,
-    padding_top: css_var({Tokens, :space, :"8"}),
-    padding_bottom: css_var({Tokens, :space, :"16"})
+    padding_top: css_const({Tokens, :space, :"8"}),
+    padding_bottom: css_const({Tokens, :space, :"16"})
   )
 
   css_class(:container,
     max_width: "32rem",
     margin_left: "auto",
     margin_right: "auto",
-    padding_left: css_var({Tokens, :space, :"6"}),
-    padding_right: css_var({Tokens, :space, :"6"})
+    padding_left: css_const({Tokens, :space, :"6"}),
+    padding_right: css_const({Tokens, :space, :"6"})
   )
 
   # ============================================================================
@@ -67,34 +67,34 @@ defmodule LiveStyleDemoWeb.TodoLive do
 
   css_class(:card,
     background_color: css_var({Tokens, :colors, :white}),
-    border_radius: css_var({Tokens, :radius, :"2xl"}),
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     box_shadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
     overflow: "hidden"
   )
 
   css_class(:card_header,
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
-    padding: css_var({Tokens, :space, :"6"}),
+    padding: css_const({Tokens, :space, :"6"}),
     color: css_var({Tokens, :colors, :white})
   )
 
   css_class(:card_title,
-    font_size: css_var({Tokens, :font_size, :"2xl"}),
-    font_weight: css_var({Tokens, :font_weight, :bold}),
+    font_size: css_const({Tokens, :font_size, :"2xl"}),
+    font_weight: css_const({Tokens, :font_weight, :bold}),
     margin: "0",
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"3"})
+    gap: css_const({Tokens, :space, :"3"})
   )
 
   css_class(:card_subtitle,
-    font_size: css_var({Tokens, :font_size, :sm}),
+    font_size: css_const({Tokens, :font_size, :sm}),
     opacity: "0.9",
-    margin_top: css_var({Tokens, :space, :"1"})
+    margin_top: css_const({Tokens, :space, :"1"})
   )
 
   css_class(:card_body,
-    padding: css_var({Tokens, :space, :"6"})
+    padding: css_const({Tokens, :space, :"6"})
   )
 
   # ============================================================================
@@ -103,18 +103,18 @@ defmodule LiveStyleDemoWeb.TodoLive do
 
   css_class(:form,
     display: "flex",
-    gap: css_var({Tokens, :space, :"3"}),
-    margin_bottom: css_var({Tokens, :space, :"6"})
+    gap: css_const({Tokens, :space, :"3"}),
+    margin_bottom: css_const({Tokens, :space, :"6"})
   )
 
   css_class(:input,
     flex: "1",
-    padding: css_var({Tokens, :space, :"3"}),
-    font_size: css_var({Tokens, :font_size, :base}),
+    padding: css_const({Tokens, :space, :"3"}),
+    font_size: css_const({Tokens, :font_size, :base}),
     border_width: "2px",
     border_style: "solid",
     border_color: css_var({Tokens, :colors, :gray_200}),
-    border_radius: css_var({Tokens, :radius, :lg}),
+    border_radius: css_const({Tokens, :radius, :lg}),
     outline: "none",
     transition: "border-color 0.2s ease, box-shadow 0.2s ease"
   )
@@ -130,12 +130,12 @@ defmodule LiveStyleDemoWeb.TodoLive do
     justify_content: "center",
     background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
     color: css_var({Tokens, :colors, :white}),
-    padding_top: css_var({Tokens, :space, :"3"}),
-    padding_bottom: css_var({Tokens, :space, :"3"}),
-    padding_left: css_var({Tokens, :space, :"5"}),
-    padding_right: css_var({Tokens, :space, :"5"}),
-    font_weight: css_var({Tokens, :font_weight, :semibold}),
-    border_radius: css_var({Tokens, :radius, :lg}),
+    padding_top: css_const({Tokens, :space, :"3"}),
+    padding_bottom: css_const({Tokens, :space, :"3"}),
+    padding_left: css_const({Tokens, :space, :"5"}),
+    padding_right: css_const({Tokens, :space, :"5"}),
+    font_weight: css_const({Tokens, :font_weight, :semibold}),
+    border_radius: css_const({Tokens, :radius, :lg}),
     border: "none",
     cursor: "pointer",
     box_shadow: "0 4px 14px 0 rgba(102, 126, 234, 0.4)",
@@ -155,10 +155,10 @@ defmodule LiveStyleDemoWeb.TodoLive do
   css_class(:todo_item,
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"3"}),
-    padding: css_var({Tokens, :space, :"4"}),
-    border_radius: css_var({Tokens, :radius, :lg}),
-    margin_bottom: css_var({Tokens, :space, :"2"}),
+    gap: css_const({Tokens, :space, :"3"}),
+    padding: css_const({Tokens, :space, :"4"}),
+    border_radius: css_const({Tokens, :radius, :lg}),
+    margin_bottom: css_const({Tokens, :space, :"2"}),
     background_color: css_var({Tokens, :colors, :gray_50}),
     transition: "background-color 0.2s ease",
     contain: "layout"
@@ -198,7 +198,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     border_width: "2px",
     border_style: "solid",
     border_color: css_var({Tokens, :colors, :gray_300}),
-    border_radius: css_var({Tokens, :radius, :md}),
+    border_radius: css_const({Tokens, :radius, :md}),
     background_color: css_var({Tokens, :colors, :white}),
     transition: "all 0.2s ease",
     display: "flex",
@@ -238,7 +238,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   css_class(:todo_text,
-    font_size: css_var({Tokens, :font_size, :base}),
+    font_size: css_const({Tokens, :font_size, :base}),
     color: css_var({Tokens, :colors, :gray_700}),
     transition: "color 0.2s ease"
   )
@@ -269,11 +269,11 @@ defmodule LiveStyleDemoWeb.TodoLive do
     display: "flex",
     align_items: "center",
     justify_content: "center",
-    border_radius: css_var({Tokens, :radius, :full}),
+    border_radius: css_const({Tokens, :radius, :full}),
     color: css_var({Tokens, :colors, :gray_400}),
     background_color: "transparent",
     border: "none",
-    font_size: css_var({Tokens, :font_size, :lg}),
+    font_size: css_const({Tokens, :font_size, :lg}),
     opacity: "0",
     transform: "scale(0.8)",
     transition: "all 0.2s ease",
@@ -286,23 +286,23 @@ defmodule LiveStyleDemoWeb.TodoLive do
 
   css_class(:empty_state,
     text_align: "center",
-    padding: css_var({Tokens, :space, :"8"}),
+    padding: css_const({Tokens, :space, :"8"}),
     color: css_var({Tokens, :colors, :gray_400})
   )
 
   css_class(:empty_icon,
     font_size: "3rem",
-    margin_bottom: css_var({Tokens, :space, :"4"}),
+    margin_bottom: css_const({Tokens, :space, :"4"}),
     opacity: "0.5"
   )
 
   css_class(:empty_text,
-    font_size: css_var({Tokens, :font_size, :lg}),
-    margin_bottom: css_var({Tokens, :space, :"2"})
+    font_size: css_const({Tokens, :font_size, :lg}),
+    margin_bottom: css_const({Tokens, :space, :"2"})
   )
 
   css_class(:empty_subtext,
-    font_size: css_var({Tokens, :font_size, :sm})
+    font_size: css_const({Tokens, :font_size, :sm})
   )
 
   # ============================================================================
@@ -312,22 +312,22 @@ defmodule LiveStyleDemoWeb.TodoLive do
   css_class(:filter_group,
     display: "flex",
     justify_content: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    margin_bottom: css_var({Tokens, :space, :"4"})
+    gap: css_const({Tokens, :space, :"2"}),
+    margin_bottom: css_const({Tokens, :space, :"4"})
   )
 
   css_class(:filter_button,
-    padding_top: css_var({Tokens, :space, :"2"}),
-    padding_bottom: css_var({Tokens, :space, :"2"}),
-    padding_left: css_var({Tokens, :space, :"4"}),
-    padding_right: css_var({Tokens, :space, :"4"}),
-    font_size: css_var({Tokens, :font_size, :sm}),
+    padding_top: css_const({Tokens, :space, :"2"}),
+    padding_bottom: css_const({Tokens, :space, :"2"}),
+    padding_left: css_const({Tokens, :space, :"4"}),
+    padding_right: css_const({Tokens, :space, :"4"}),
+    font_size: css_const({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :colors, :gray_500}),
     background_color: "transparent",
     border_width: "1px",
     border_style: "solid",
     border_color: css_var({Tokens, :colors, :gray_200}),
-    border_radius: css_var({Tokens, :radius, :full}),
+    border_radius: css_const({Tokens, :radius, :full}),
     cursor: "pointer",
     transition: "all 0.2s ease"
   )
@@ -357,20 +357,20 @@ defmodule LiveStyleDemoWeb.TodoLive do
     display: "flex",
     justify_content: "space-between",
     align_items: "center",
-    padding_top: css_var({Tokens, :space, :"4"}),
+    padding_top: css_const({Tokens, :space, :"4"}),
     border_top_width: "1px",
     border_top_style: "solid",
     border_top_color: css_var({Tokens, :colors, :gray_200}),
-    margin_top: css_var({Tokens, :space, :"4"})
+    margin_top: css_const({Tokens, :space, :"4"})
   )
 
   css_class(:stats,
-    font_size: css_var({Tokens, :font_size, :sm}),
+    font_size: css_const({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :colors, :gray_500})
   )
 
   css_class(:clear_button,
-    font_size: css_var({Tokens, :font_size, :sm}),
+    font_size: css_const({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :colors, :gray_500}),
     background: "none",
     border: "none",

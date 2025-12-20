@@ -32,40 +32,40 @@ defmodule LiveStyleDemoWeb.TableLive do
   css_class(:page,
     min_height: "100vh",
     background_color: "light-dark(#f3f4f6, #111827)",
-    font_family: css_var({Tokens, :font, :sans})
+    font_family: css_const({Tokens, :font, :sans})
   )
 
   css_class(:back_link,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"2"}),
+    gap: css_const({Tokens, :space, :"2"}),
     color: "light-dark(#6b7280, #9ca3af)",
-    font_size: css_var({Tokens, :font_size, :sm}),
-    font_weight: css_var({Tokens, :font_weight, :medium}),
+    font_size: css_const({Tokens, :font_size, :sm}),
+    font_weight: css_const({Tokens, :font_weight, :medium}),
     text_decoration: "none",
-    padding: css_var({Tokens, :space, :"4"}),
+    padding: css_const({Tokens, :space, :"4"}),
     transition: "color 0.2s ease"
   )
 
   css_class(:content,
-    padding_bottom: css_var({Tokens, :space, :"16"})
+    padding_bottom: css_const({Tokens, :space, :"16"})
   )
 
   css_class(:header,
     text_align: "center",
-    padding_top: css_var({Tokens, :space, :"8"}),
-    padding_bottom: css_var({Tokens, :space, :"4"})
+    padding_top: css_const({Tokens, :space, :"8"}),
+    padding_bottom: css_const({Tokens, :space, :"4"})
   )
 
   css_class(:title,
-    font_size: css_var({Tokens, :font_size, :"2xl"}),
-    font_weight: css_var({Tokens, :font_weight, :bold}),
+    font_size: css_const({Tokens, :font_size, :"2xl"}),
+    font_weight: css_const({Tokens, :font_weight, :bold}),
     color: "light-dark(#111827, #f9fafb)",
-    margin_bottom: css_var({Tokens, :space, :"2"})
+    margin_bottom: css_const({Tokens, :space, :"2"})
   )
 
   css_class(:subtitle,
-    font_size: css_var({Tokens, :font_size, :base}),
+    font_size: css_const({Tokens, :font_size, :base}),
     color: "light-dark(#6b7280, #9ca3af)",
     max_width: "32rem",
     margin_left: "auto",

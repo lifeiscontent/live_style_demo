@@ -33,10 +33,16 @@ config :esbuild,
 
 # Configure LiveStyle
 config :live_style,
+  prefix_css: &AutoprefixerEx.prefix_css/2,
+  deprecated?: &CSSCompatDataEx.deprecated?/1,
   default: [
     output: "priv/static/assets/live.css",
     cd: Path.expand("..", __DIR__)
   ]
+
+# Configure AutoprefixerEx
+config :autoprefixer_ex,
+  browserslist: ["defaults"]
 
 # Configure Elixir's Logger
 config :logger, :default_formatter,

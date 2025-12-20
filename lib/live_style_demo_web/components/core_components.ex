@@ -20,17 +20,28 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
-    padding_top: css_var({Tokens, :space, :"2"}),
-    padding_bottom: css_var({Tokens, :space, :"2"}),
-    padding_left: css_var({Tokens, :space, :"4"}),
-    padding_right: css_var({Tokens, :space, :"4"}),
-    font_size: css_var({Tokens, :font_size, :sm}),
-    font_weight: css_var({Tokens, :font_weight, :medium}),
-    border_radius: css_var({Tokens, :radius, :md}),
+    padding_top: css_const({Tokens, :space, :"2"}),
+    padding_bottom: css_const({Tokens, :space, :"2"}),
+    padding_left: css_const({Tokens, :space, :"4"}),
+    padding_right: css_const({Tokens, :space, :"4"}),
+    font_size: css_const({Tokens, :font_size, :sm}),
+    font_weight: css_const({Tokens, :font_weight, :medium}),
+    border_radius: css_const({Tokens, :radius, :md}),
     cursor: "pointer",
     text_decoration: "none",
     border: "none",
-    transition: "all 0.2s ease"
+    transition: "all 0.2s ease",
+    user_select: "none"
+  )
+
+  # Demo: mask-image will be autoprefixed with -webkit- for Safari
+  css_class(:icon_mask,
+    mask_image: "url(/images/icon.svg)",
+    mask_size: "contain",
+    mask_repeat: "no-repeat",
+    background_color: "currentColor",
+    width: "24px",
+    height: "24px"
   )
 
   css_class(:btn_primary,
@@ -49,18 +60,18 @@ defmodule LiveStyleDemoWeb.CoreComponents do
 
   css_class(:flash_container,
     position: "fixed",
-    top: css_var({Tokens, :space, :"4"}),
-    right: css_var({Tokens, :space, :"4"}),
+    top: css_const({Tokens, :space, :"4"}),
+    right: css_const({Tokens, :space, :"4"}),
     z_index: "50"
   )
 
   css_class(:flash_alert,
     display: "flex",
     align_items: "flex-start",
-    gap: css_var({Tokens, :space, :"3"}),
-    padding: css_var({Tokens, :space, :"4"}),
-    border_radius: css_var({Tokens, :radius, :lg}),
-    box_shadow: css_var({Tokens, :shadow, :lg}),
+    gap: css_const({Tokens, :space, :"3"}),
+    padding: css_const({Tokens, :space, :"4"}),
+    border_radius: css_const({Tokens, :radius, :lg}),
+    box_shadow: css_const({Tokens, :shadow, :lg}),
     max_width: "24rem"
   )
 
@@ -83,8 +94,8 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   )
 
   css_class(:flash_title,
-    font_weight: css_var({Tokens, :font_weight, :semibold}),
-    margin_bottom: css_var({Tokens, :space, :"1"})
+    font_weight: css_const({Tokens, :font_weight, :semibold}),
+    margin_bottom: css_const({Tokens, :space, :"1"})
   )
 
   css_class(:flash_close,
@@ -119,29 +130,29 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # ============================================================================
 
   css_class(:input_wrapper,
-    margin_bottom: css_var({Tokens, :space, :"4"})
+    margin_bottom: css_const({Tokens, :space, :"4"})
   )
 
   css_class(:input_label,
     display: "block",
-    font_size: css_var({Tokens, :font_size, :sm}),
-    font_weight: css_var({Tokens, :font_weight, :medium}),
+    font_size: css_const({Tokens, :font_size, :sm}),
+    font_weight: css_const({Tokens, :font_weight, :medium}),
     color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_var({Tokens, :space, :"1"})
+    margin_bottom: css_const({Tokens, :space, :"1"})
   )
 
   css_class(:input_field,
     display: "block",
     width: "100%",
-    padding_top: css_var({Tokens, :space, :"2"}),
-    padding_bottom: css_var({Tokens, :space, :"2"}),
-    padding_left: css_var({Tokens, :space, :"3"}),
-    padding_right: css_var({Tokens, :space, :"3"}),
-    font_size: css_var({Tokens, :font_size, :base}),
+    padding_top: css_const({Tokens, :space, :"2"}),
+    padding_bottom: css_const({Tokens, :space, :"2"}),
+    padding_left: css_const({Tokens, :space, :"3"}),
+    padding_right: css_const({Tokens, :space, :"3"}),
+    font_size: css_const({Tokens, :font_size, :base}),
     border_width: "1px",
     border_style: "solid",
     border_color: css_var({Tokens, :semantic, :border_default}),
-    border_radius: css_var({Tokens, :radius, :md}),
+    border_radius: css_const({Tokens, :radius, :md}),
     background_color: css_var({Tokens, :semantic, :fill_page}),
     outline: "none",
     transition: "border-color 0.2s ease"
@@ -154,9 +165,9 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   css_class(:error_message,
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"1"}),
-    margin_top: css_var({Tokens, :space, :"1"}),
-    font_size: css_var({Tokens, :font_size, :sm}),
+    gap: css_const({Tokens, :space, :"1"}),
+    margin_top: css_const({Tokens, :space, :"1"}),
+    font_size: css_const({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :colors, :red_600})
   )
 
@@ -165,26 +176,26 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # ============================================================================
 
   css_class(:header_wrapper,
-    padding_bottom: css_var({Tokens, :space, :"4"})
+    padding_bottom: css_const({Tokens, :space, :"4"})
   )
 
   css_class(:header_with_actions,
     display: "flex",
     align_items: "center",
     justify_content: "space-between",
-    gap: css_var({Tokens, :space, :"6"})
+    gap: css_const({Tokens, :space, :"6"})
   )
 
   css_class(:header_title,
-    font_size: css_var({Tokens, :font_size, :lg}),
-    font_weight: css_var({Tokens, :font_weight, :semibold}),
-    line_height: css_var({Tokens, :leading, :tight})
+    font_size: css_const({Tokens, :font_size, :lg}),
+    font_weight: css_const({Tokens, :font_weight, :semibold}),
+    line_height: css_const({Tokens, :leading, :tight})
   )
 
   css_class(:header_subtitle,
-    font_size: css_var({Tokens, :font_size, :sm}),
+    font_size: css_const({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :semantic, :text_secondary}),
-    margin_top: css_var({Tokens, :space, :"1"})
+    margin_top: css_const({Tokens, :space, :"1"})
   )
 
   # ============================================================================

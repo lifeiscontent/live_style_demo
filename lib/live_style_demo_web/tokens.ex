@@ -14,7 +14,7 @@ defmodule LiveStyleDemoWeb.Tokens do
       css_class :button,
         color: css_var({LiveStyleDemoWeb.Tokens, :semantic, :text_primary}),
         background: css_var({LiveStyleDemoWeb.Tokens, :semantic, :fill_primary}),
-        padding: css_var({LiveStyleDemoWeb.Tokens, :space, :"4"})
+        padding: css_const({LiveStyleDemoWeb.Tokens, :space, :"4"})
 
       # Apply dark theme:
       <div class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :dark})}>
@@ -151,7 +151,7 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Spacing
   # ===========================================================================
 
-  css_vars(:space,
+  css_consts(:space,
     px: "1px",
     "0": "0",
     "1": "0.25rem",
@@ -170,19 +170,19 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Typography
   # ===========================================================================
 
-  css_vars(:font,
+  css_consts(:font,
     sans: "'Inter', system-ui, -apple-system, sans-serif",
     mono: "ui-monospace, monospace"
   )
 
-  css_vars(:font_weight,
+  css_consts(:font_weight,
     normal: "400",
     medium: "500",
     semibold: "600",
     bold: "700"
   )
 
-  css_vars(:font_size,
+  css_consts(:font_size,
     xs: "0.75rem",
     sm: "0.875rem",
     base: "1rem",
@@ -194,7 +194,7 @@ defmodule LiveStyleDemoWeb.Tokens do
     "5xl": "3rem"
   )
 
-  css_vars(:leading,
+  css_consts(:leading,
     none: "1",
     tight: "1.25",
     normal: "1.5",
@@ -205,7 +205,7 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Border radius
   # ===========================================================================
 
-  css_vars(:radius,
+  css_consts(:radius,
     none: "0",
     sm: "0.125rem",
     default: "0.25rem",
@@ -221,7 +221,7 @@ defmodule LiveStyleDemoWeb.Tokens do
   # Shadows
   # ===========================================================================
 
-  css_vars(:shadow,
+  css_consts(:shadow,
     sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
     default: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
     md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",

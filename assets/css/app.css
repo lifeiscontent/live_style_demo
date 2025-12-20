@@ -1,10 +1,8 @@
 /*
  * CSS Reset and base styles.
- * Wrapped in @layer reset so live_style rules take precedence.
+ * Wrapped in @layer reset so LiveStyle rules take precedence.
+ * LiveStyle uses `:not(#\#)` specificity hack by default (use_css_layers: false).
  */
-
-/* Declare layer order: reset < live_style */
-@layer reset, live_style;
 
 @layer reset {
   /* Box sizing reset */
