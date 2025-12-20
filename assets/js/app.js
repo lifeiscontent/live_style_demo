@@ -2,21 +2,6 @@
 // to get started and then uncomment the line below.
 // import "./user_socket.js"
 
-// You can include dependencies in two ways.
-//
-// The simplest option is to put them in assets/vendor and
-// import them using relative paths:
-//
-//     import "../vendor/some-package.js"
-//
-// Alternatively, you can `npm install some-package --prefix assets` and import
-// them using a path starting with the package name:
-//
-//     import "some-package"
-//
-// If you have dependencies that try to import CSS, esbuild will generate a separate `app.css` file.
-// To load it, simply add a second `<link>` to your `root.html.heex` file.
-
 // Include phoenix_html to handle method=PUT/DELETE in forms and buttons.
 import "phoenix_html"
 // Establish Phoenix Socket and LiveView configuration.
@@ -24,72 +9,15 @@ import {Socket} from "phoenix"
 import {LiveSocket} from "phoenix_live_view"
 import {hooks as colocatedHooks} from "phoenix-colocated/live_style_demo"
 import topbar from "../vendor/topbar"
+import {createViewTransitionDom} from "./view-transitions"
 
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
-
-// View Transitions API integration
-// Uses the onDocumentPatch callback added in phoenix_live_view 1.1.18+
-// See: https://github.com/phoenixframework/phoenix_live_view/pull/4043
-
-let transitionTypes = []
-let transitionEls = []
-let scheduleTransition = null
-
-const viewTransitionDom = {
-  // Called before updating an element - return false to skip morphdom's update
-  onBeforeElUpdated(fromEl, toEl) {
-    // Preserve view-transition-name during updates
-    if (fromEl.style.viewTransitionName) {
-      toEl.style.viewTransitionName = fromEl.style.viewTransitionName
-    }
-    return true
-  },
-
-  // Called before the document is patched - allows wrapping in View Transitions
-  onDocumentPatch(start) {
-    const update = () => {
-      // Reset transitionEls
-      transitionEls.forEach((el) => el.style.viewTransitionName = "")
-      transitionEls = []
-      transitionTypes = []
-      scheduleTransition = null
-      start()
-    }
-
-    if (transitionEls.length !== 0 || scheduleTransition) {
-      // Firefox 144 doesn't support the callbackOptions yet, so fallback to the basic version
-      try {
-        document.startViewTransition({
-          update,
-          types: transitionTypes.length ? transitionTypes : ["same-document"],
-        })
-      } catch (error) {
-        document.startViewTransition(update)
-      }
-    } else {
-      update()
-    }
-  }
-}
-
-// Listen for view transition events from LiveView
-window.addEventListener("phx:start-view-transition", (e) => {
-  const opts = e.detail
-  if (opts.temp_name && e.target !== window) {
-    e.target.style.viewTransitionName = opts.temp_name
-    transitionEls.push(e.target)
-  }
-  if (opts.type) {
-    transitionTypes.push(opts.type)
-  }
-  scheduleTransition = true
-})
 
 const liveSocket = new LiveSocket("/live", Socket, {
   longPollFallbackMs: 2500,
   params: {_csrf_token: csrfToken},
   hooks: colocatedHooks,
-  dom: viewTransitionDom,
+  dom: createViewTransitionDom(),
 })
 
 // Show progress bar on live navigation and form submits

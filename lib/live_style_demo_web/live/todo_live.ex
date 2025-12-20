@@ -5,6 +5,8 @@ defmodule LiveStyleDemoWeb.TodoLive do
   require LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens
 
+  import LiveStyleDemoWeb.ViewTransition
+
   # ============================================================================
   # Keyframes
   # ============================================================================
@@ -27,12 +29,23 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   # ============================================================================
+  # View Transitions
+  # ============================================================================
+
+  css_view_transition(:todo_item,
+    group: [
+      animation_duration: ".3s",
+      animation_timing_function: "ease-out"
+    ]
+  )
+
+  # ============================================================================
   # Page Layout
   # ============================================================================
 
   css_class(:page,
     min_height: "100vh",
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    background: css_const({Tokens, :gradient, :accent}),
     font_family: css_const({Tokens, :font, :sans})
   )
 
@@ -73,7 +86,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   css_class(:card_header,
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    background: css_const({Tokens, :gradient, :accent}),
     padding: css_const({Tokens, :space, :"6"}),
     color: css_var({Tokens, :colors, :white})
   )
@@ -128,7 +141,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    background: css_const({Tokens, :gradient, :accent}),
     color: css_var({Tokens, :colors, :white}),
     padding_top: css_const({Tokens, :space, :"3"}),
     padding_bottom: css_const({Tokens, :space, :"3"}),
@@ -207,7 +220,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   css_class(:checkbox_custom_checked,
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    background: css_const({Tokens, :gradient, :accent}),
     border_color: "transparent",
     animation_name: css_keyframes(:check_bounce),
     animation_duration: "0.3s",
@@ -270,8 +283,14 @@ defmodule LiveStyleDemoWeb.TodoLive do
     align_items: "center",
     justify_content: "center",
     border_radius: css_const({Tokens, :radius, :full}),
-    color: css_var({Tokens, :colors, :gray_400}),
-    background_color: "transparent",
+    color: [
+      default: css_var({Tokens, :colors, :gray_400}),
+      ":hover": css_var({Tokens, :colors, :red_500})
+    ],
+    background_color: [
+      default: "transparent",
+      ":hover": css_var({Tokens, :colors, :red_50})
+    ],
     border: "none",
     font_size: css_const({Tokens, :font_size, :lg}),
     opacity: "0",
@@ -333,7 +352,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   css_class(:filter_button_active,
-    background: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    background: css_const({Tokens, :gradient, :accent}),
     color: css_var({Tokens, :colors, :white}),
     border_color: "transparent"
   )
@@ -508,9 +527,6 @@ defmodule LiveStyleDemoWeb.TodoLive do
   defp filtered_todos(todos, :active), do: Enum.filter(todos, &(not &1.completed))
   defp filtered_todos(todos, :completed), do: Enum.filter(todos, & &1.completed)
 
-  # View transition class
-  defp vt_class, do: css_view_transition({Tokens, :todo_transition})
-
   # ============================================================================
   # Render
   # ============================================================================
@@ -594,10 +610,10 @@ defmodule LiveStyleDemoWeb.TodoLive do
               <% else %>
                 <ul class={css_class([:todo_list])}>
                   <%= for todo <- filtered_todos(@todos, @filter) do %>
-                    <li
+                    <.view_transition
                       id={"todo-#{todo.id}"}
-                      class={todo_item_class(todo)}
-                      style={"view-transition-name: todo-#{todo.id}"}
+                      class={css_class([:todo_item, todo.completed && :todo_item_completed])}
+                      view-transition-class={css_view_transition(:todo_item)}
                     >
                       <%!-- Checkbox --%>
                       <div class={css_class([:checkbox_wrapper])}>
@@ -635,7 +651,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
                       >
                         &#10005;
                       </button>
-                    </li>
+                    </.view_transition>
                   <% end %>
                 </ul>
 
@@ -675,14 +691,6 @@ defmodule LiveStyleDemoWeb.TodoLive do
       }
     </script>
     """
-  end
-
-  # Class composition helpers
-  defp todo_item_class(todo) do
-    base = [:todo_item]
-    base = if todo.completed, do: base ++ [:todo_item_completed], else: base
-    # Add view transition class for animations
-    css_class(base) <> " " <> vt_class()
   end
 
   defp checkbox_class(completed) do

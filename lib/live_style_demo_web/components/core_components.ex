@@ -8,51 +8,11 @@ defmodule LiveStyleDemoWeb.CoreComponents do
 
   alias Phoenix.LiveView.JS
 
-  # Ensure Tokens is compiled first
+  # Ensure Tokens and BaseStyles are compiled first
   require LiveStyleDemoWeb.Tokens
+  require LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
-
-  # ============================================================================
-  # Button Styles
-  # ============================================================================
-
-  css_class(:btn_base,
-    display: "inline-flex",
-    align_items: "center",
-    justify_content: "center",
-    padding_top: css_const({Tokens, :space, :"2"}),
-    padding_bottom: css_const({Tokens, :space, :"2"}),
-    padding_left: css_const({Tokens, :space, :"4"}),
-    padding_right: css_const({Tokens, :space, :"4"}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    border_radius: css_const({Tokens, :radius, :md}),
-    cursor: "pointer",
-    text_decoration: "none",
-    border: "none",
-    transition: "all 0.2s ease",
-    user_select: "none"
-  )
-
-  # Demo: mask-image will be autoprefixed with -webkit- for Safari
-  css_class(:icon_mask,
-    mask_image: "url(/images/icon.svg)",
-    mask_size: "contain",
-    mask_repeat: "no-repeat",
-    background_color: "currentColor",
-    width: "24px",
-    height: "24px"
-  )
-
-  css_class(:btn_primary,
-    background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_inverse})
-  )
-
-  css_class(:btn_secondary,
-    background_color: css_var({Tokens, :semantic, :fill_secondary}),
-    color: css_var({Tokens, :semantic, :text_primary})
-  )
+  alias LiveStyleDemoWeb.BaseStyles
 
   # ============================================================================
   # Flash Styles
@@ -265,9 +225,10 @@ defmodule LiveStyleDemoWeb.CoreComponents do
       <.link
         class={
           css_class([
-            :btn_base,
-            @variant == :primary && :btn_primary,
-            @variant == :secondary && :btn_secondary
+            {BaseStyles, :btn_base},
+            {BaseStyles, :btn_sm},
+            @variant == :primary && {BaseStyles, :btn_primary},
+            @variant == :secondary && {BaseStyles, :btn_secondary}
           ])
         }
         {@rest}
@@ -281,9 +242,10 @@ defmodule LiveStyleDemoWeb.CoreComponents do
         type={@type}
         class={
           css_class([
-            :btn_base,
-            @variant == :primary && :btn_primary,
-            @variant == :secondary && :btn_secondary
+            {BaseStyles, :btn_base},
+            {BaseStyles, :btn_sm},
+            @variant == :primary && {BaseStyles, :btn_primary},
+            @variant == :secondary && {BaseStyles, :btn_secondary}
           ])
         }
         {@rest}

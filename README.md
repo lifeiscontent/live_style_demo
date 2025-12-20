@@ -9,15 +9,17 @@ A demonstration application showcasing [LiveStyle](https://github.com/lifeiscont
 Centralized design system with semantic tokens for colors, spacing, typography, and more:
 
 ```elixir
-defvars(:color, %{
+# Define raw color palette
+css_vars(:colors,
   gray_500: "#6b7280",
   indigo_600: "#4f46e5"
-})
+)
 
-defvars(:text, %{
-  primary: var(:color_gray_900),
-  accent: var(:color_indigo_600)
-})
+# Define semantic tokens that reference colors
+css_vars(:semantic,
+  text_primary: css_var({:colors, :gray_900}),
+  text_accent: css_var({:colors, :indigo_600})
+)
 ```
 
 ### Atomic CSS Generation
@@ -25,13 +27,13 @@ defvars(:text, %{
 Zero-runtime CSS with compile-time extraction:
 
 ```elixir
-props(%{
+css_class(:card,
   display: "flex",
-  gap: var(:space_4),
-  padding: var(:space_6),
-  background_color: var(:fill_card),
-  border_radius: var(:radius_lg)
-})
+  gap: css_const({Tokens, :space, :"4"}),
+  padding: css_const({Tokens, :space, :"6"}),
+  background_color: css_var({Tokens, :semantic, :fill_card}),
+  border_radius: css_const({Tokens, :radius, :lg})
+)
 ```
 
 ### View Transitions API
@@ -39,24 +41,23 @@ props(%{
 Smooth animations for LiveView DOM updates with the View Transitions API:
 
 ```elixir
-defkeyframes(:vt_scale_in, %{
-  from: %{opacity: "0", transform: "scale(0.8)"},
-  to: %{opacity: "1", transform: "scale(1)"}
-})
+css_keyframes(:vt_scale_in,
+  from: [opacity: "0", transform: "scale(0.8)"],
+  to: [opacity: "1", transform: "scale(1)"]
+)
 
-view_transition("todo-*", %{
-  old_only_child: %{
-    animation_name: %{
-      :default => :vt_scale_out,
-      "@media (prefers-reduced-motion: reduce)" => "none"
-    },
-    animation_duration: "250ms"
-  },
-  new_only_child: %{
-    animation_name: :vt_scale_in,
-    animation_duration: "250ms"
-  }
-})
+css_view_transition(:todo_transition,
+  old: [
+    animation_name: css_keyframes(:vt_scale_out),
+    animation_duration: "250ms",
+    animation_timing_function: "ease-out"
+  ],
+  new: [
+    animation_name: css_keyframes(:vt_scale_in),
+    animation_duration: "250ms",
+    animation_timing_function: "ease-out"
+  ]
+)
 ```
 
 ### Theming
@@ -64,18 +65,18 @@ view_transition("todo-*", %{
 Runtime theme switching with CSS custom properties:
 
 ```elixir
-create_theme(:dark_fill, :fill, %{
-  page: "#030712",
-  surface: "#111827",
-  card: "#1f2937"
-})
+css_theme(:semantic, :dark,
+  text_primary: css_var({:colors, :gray_50}),
+  fill_page: css_var({:colors, :gray_950}),
+  fill_surface: css_var({:colors, :gray_900})
+)
 ```
 
 ## Demo Pages
 
 - **Home** (`/`) - Animated gradient hero with design token showcase
-- **Todo App** (`/todos`) - View Transitions API demo with add/remove/reorder animations
-- **Data Table** (`/table`) - Interactive table with hover effects and sorting
+- **Todo App** (`/todo`) - View Transitions API demo with add/remove/reorder animations
+- **Data Table** (`/table`) - Interactive table with cross-highlight effects using When selectors
 
 ## Getting Started
 
@@ -124,12 +125,12 @@ Design tokens are defined in `tokens.ex` using LiveStyle macros:
 ```elixir
 defmodule LiveStyleDemoWeb.Tokens do
   use LiveStyle.Tokens
-  use LiveStyle.ViewTransitions
 
-  defvars(:color, %{...})
-  defvars(:space, %{...})
-  defkeyframes(:spin, %{...})
-  view_transition("todo-*", %{...})
+  css_vars(:colors, gray_500: "#6b7280", ...)
+  css_vars(:semantic, text_primary: css_var({:colors, :gray_900}), ...)
+  css_consts(:space, "4": "1rem", ...)
+  css_keyframes(:spin, from: [...], to: [...])
+  css_view_transition(:todo_transition, old: [...], new: [...])
 end
 ```
 
@@ -138,13 +139,15 @@ end
 Reference tokens in your LiveView components:
 
 ```elixir
+css_class(:card,
+  padding: css_const({Tokens, :space, :"4"}),
+  color: css_var({Tokens, :semantic, :text_primary}),
+  background: css_var({Tokens, :semantic, :fill_card})
+)
+
 def render(assigns) do
   ~H"""
-  <div class={props(%{
-    padding: var(:space_4),
-    color: var(:text_primary),
-    background: var(:fill_card)
-  })}>
+  <div class={css_class([:card])}>
     Content here
   </div>
   """
@@ -153,18 +156,19 @@ end
 
 ### 3. View Transitions
 
-For animated DOM updates, add `view-transition-name` to elements:
+For animated DOM updates, apply the view transition class to elements:
 
 ```elixir
 <div
-  class={props(%{view_transition_name: "todo-#{todo.id}"})}
+  class={css_view_transition({Tokens, :todo_transition})}
+  style={"view-transition-name: todo-#{todo.id}"}
   id={"todo-#{todo.id}"}
 >
   {todo.title}
 </div>
 ```
 
-The CSS for transitions is generated from `view_transition/2` definitions.
+The CSS for transitions is generated from `css_view_transition/2` definitions.
 
 ## Related
 

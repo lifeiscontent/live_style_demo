@@ -41,22 +41,11 @@ defmodule LiveStyleDemoWeb.BaseStyles do
   alias LiveStyleDemoWeb.Tokens
 
   # ============================================================================
-  # Interactive Base Styles
-  # ============================================================================
-
-  # Base interactive element styles - cursor, transition, and focus outline removal.
-  css_class(:interactive,
-    cursor: "pointer",
-    transition: "all 0.2s ease",
-    outline: "none",
-    "-webkit-tap-highlight-color": "transparent"
-  )
-
-  # ============================================================================
   # Button Base Styles
   # ============================================================================
 
   # Core button styles - flex layout, padding, rounded corners.
+  # Size: default (use :btn_sm for smaller buttons)
   css_class(:btn_base,
     display: "inline-flex",
     align_items: "center",
@@ -74,7 +63,57 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     cursor: "pointer",
     transition: "all 0.2s ease",
     outline: "none",
+    user_select: "none",
     "-webkit-tap-highlight-color": "transparent"
+  )
+
+  # Small button size modifier
+  css_class(:btn_sm,
+    padding_top: css_const({Tokens, :space, :"2"}),
+    padding_bottom: css_const({Tokens, :space, :"2"}),
+    padding_left: css_const({Tokens, :space, :"4"}),
+    padding_right: css_const({Tokens, :space, :"4"}),
+    font_size: css_const({Tokens, :font_size, :sm}),
+    border_radius: css_const({Tokens, :radius, :md})
+  )
+
+  # Primary button variant - gradient with glow
+  css_class(:btn_primary,
+    background: css_const({Tokens, :gradient, :primary}),
+    color: css_var({Tokens, :colors, :white}),
+    box_shadow: [
+      default: "0 4px 14px 0 rgba(99, 102, 241, 0.4)",
+      ":hover": "0 6px 20px 0 rgba(99, 102, 241, 0.5)"
+    ],
+    transform: [
+      default: "translateY(0)",
+      ":hover": "translateY(-2px)",
+      ":active": "translateY(0)"
+    ]
+  )
+
+  # Secondary button variant - outlined
+  css_class(:btn_secondary,
+    background_color: [
+      default: css_var({Tokens, :semantic, :fill_page}),
+      ":hover": css_var({Tokens, :semantic, :fill_secondary})
+    ],
+    color: css_var({Tokens, :semantic, :text_primary}),
+    border_width: "1px",
+    border_style: "solid",
+    border_color: [
+      default: css_var({Tokens, :semantic, :border_default}),
+      ":hover": css_var({Tokens, :semantic, :border_focus})
+    ]
+  )
+
+  # Ghost button variant - minimal
+  css_class(:btn_ghost,
+    background_color: [
+      default: "transparent",
+      ":hover": css_var({Tokens, :semantic, :fill_muted})
+    ],
+    color: css_var({Tokens, :semantic, :text_secondary})
   )
 
   # ============================================================================

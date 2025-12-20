@@ -20,6 +20,13 @@ defmodule LiveStyleDemoWeb.Router do
     live("/", HomeLive)
     live("/todo", TodoLive)
     live("/table", TableLive)
+    live("/anchor", AnchorLive)
+    live("/scroll", ScrollLive)
+    live("/container", ContainerLive)
+    live("/has", HasLive)
+    live("/popover", PopoverLive)
+    live("/transitions", TransitionsLive)
+    live("/starting-style", StartingStyleLive)
   end
 
   # Other scopes may use custom stacks.

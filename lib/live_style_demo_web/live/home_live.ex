@@ -4,9 +4,11 @@ defmodule LiveStyleDemoWeb.HomeLive do
   alias LiveStyle.Marker
   alias LiveStyle.When
 
-  # Ensure Tokens is compiled first
+  # Ensure Tokens and BaseStyles are compiled first
   require LiveStyleDemoWeb.Tokens
+  require LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.BaseStyles
 
   # ============================================================================
   # Animated Gradient Demo (using typed CSS variables)
@@ -71,7 +73,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   css_class(:logo_icon,
     width: "2rem",
     height: "2rem",
-    background: "linear-gradient(135deg, #6366f1 0%, #a855f7 100%)",
+    background: css_const({Tokens, :gradient, :primary}),
     border_radius: css_const({Tokens, :radius, :lg})
   )
 
@@ -166,7 +168,11 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_class(:hero_title,
-    font_size: css_const({Tokens, :font_size, :"3xl"}),
+    font_size: [
+      default: css_const({Tokens, :font_size, :"2xl"}),
+      "@media (min-width: 640px)": css_const({Tokens, :font_size, :"3xl"}),
+      "@media (min-width: 1024px)": css_const({Tokens, :font_size, :"4xl"})
+    ],
     font_weight: css_const({Tokens, :font_weight, :bold}),
     color: css_var({Tokens, :semantic, :text_primary}),
     line_height: css_const({Tokens, :leading, :tight}),
@@ -174,7 +180,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   css_class(:hero_gradient,
-    background: "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
+    background: css_const({Tokens, :gradient, :hero}),
     background_clip: "text",
     "-webkit-text-fill-color": "transparent"
   )
@@ -196,37 +202,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
     justify_content: "center"
   )
 
-  css_class(:btn,
-    display: "inline-flex",
-    align_items: "center",
-    justify_content: "center",
-    gap: css_const({Tokens, :space, :"2"}),
-    padding_top: css_const({Tokens, :space, :"3"}),
-    padding_bottom: css_const({Tokens, :space, :"3"}),
-    padding_left: css_const({Tokens, :space, :"6"}),
-    padding_right: css_const({Tokens, :space, :"6"}),
-    font_size: css_const({Tokens, :font_size, :base}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    text_decoration: "none",
-    border: "none",
-    cursor: "pointer",
-    transition: "all 0.2s ease"
-  )
-
-  css_class(:btn_primary,
-    background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-    color: css_var({Tokens, :colors, :white}),
-    box_shadow: "0 4px 14px 0 rgba(99, 102, 241, 0.4)"
-  )
-
-  css_class(:btn_secondary,
-    color: css_var({Tokens, :semantic, :text_primary}),
-    border_width: "1px",
-    border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default}),
-    background_color: css_var({Tokens, :semantic, :fill_page})
-  )
+  # Buttons use BaseStyles - see :btn_base, :btn_primary, :btn_secondary
 
   # ============================================================================
   # Features Section
@@ -267,7 +243,11 @@ defmodule LiveStyleDemoWeb.HomeLive do
   css_class(:features_grid,
     display: "grid",
     gap: css_const({Tokens, :space, :"8"}),
-    grid_template_columns: "repeat(1, 1fr)"
+    grid_template_columns: [
+      default: "repeat(1, 1fr)",
+      "@media (min-width: 640px)": "repeat(2, 1fr)",
+      "@media (min-width: 1024px)": "repeat(3, 1fr)"
+    ]
   )
 
   css_class(:feature_card,
@@ -276,9 +256,19 @@ defmodule LiveStyleDemoWeb.HomeLive do
     border_radius: css_const({Tokens, :radius, :xl}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    border_color: [
+      default: css_var({Tokens, :semantic, :border_subtle}),
+      ":hover": css_var({Tokens, :semantic, :border_accent})
+    ],
     transition: "all 0.2s ease",
-    box_shadow: css_const({Tokens, :shadow, :sm})
+    box_shadow: [
+      default: css_const({Tokens, :shadow, :sm}),
+      ":hover": css_const({Tokens, :shadow, :md})
+    ],
+    transform: [
+      default: "translateY(0)",
+      ":hover": "translateY(-4px)"
+    ]
   )
 
   # Demo: When selectors - icon transforms when parent card is hovered
@@ -424,104 +414,6 @@ defmodule LiveStyleDemoWeb.HomeLive do
   )
 
   # ============================================================================
-  # Anchor Positioning Demo (@position-try)
-  # ============================================================================
-
-  css_class(:anchor_demo_section,
-    padding_top: css_const({Tokens, :space, :"16"}),
-    padding_bottom: css_const({Tokens, :space, :"16"}),
-    background_color: css_var({Tokens, :semantic, :fill_surface})
-  )
-
-  css_class(:anchor_demo_inner,
-    max_width: "64rem",
-    margin_left: "auto",
-    margin_right: "auto",
-    padding_left: css_const({Tokens, :space, :"6"}),
-    padding_right: css_const({Tokens, :space, :"6"})
-  )
-
-  css_class(:anchor_demo_content,
-    display: "flex",
-    flex_direction: "column",
-    align_items: "center",
-    gap: css_const({Tokens, :space, :"8"})
-  )
-
-  css_class(:anchor_demo_container,
-    display: "flex",
-    justify_content: "center",
-    align_items: "center",
-    min_height: "200px",
-    width: "100%"
-  )
-
-  # The anchor element (button that the tooltip is anchored to)
-  css_class(:anchor_button,
-    anchor_name: "--demo-anchor",
-    display: "inline-flex",
-    align_items: "center",
-    justify_content: "center",
-    gap: css_const({Tokens, :space, :"2"}),
-    padding_top: css_const({Tokens, :space, :"3"}),
-    padding_bottom: css_const({Tokens, :space, :"3"}),
-    padding_left: css_const({Tokens, :space, :"6"}),
-    padding_right: css_const({Tokens, :space, :"6"}),
-    font_size: css_const({Tokens, :font_size, :base}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    color: css_var({Tokens, :colors, :white}),
-    background: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
-    border: "none",
-    border_radius: css_const({Tokens, :radius, :lg}),
-    cursor: "pointer",
-    box_shadow: "0 4px 14px 0 rgba(99, 102, 241, 0.4)"
-  )
-
-  # The positioned tooltip element with inline @position-try fallbacks
-  # Hidden by default, shown when button is hovered
-  # Note: @position-try only allows positioning/sizing properties (not transform/translate)
-  css_class(:anchor_tooltip,
-    # Fixed positioning relative to viewport, anchored to the button
-    position: "fixed",
-    position_anchor: "--demo-anchor",
-    # Default position: below the anchor, centered using position-area
-    position_area: "bottom center",
-    margin: "8px",
-    # Fallback positions using position-area values directly
-    position_try_fallbacks: "flip-block",
-    # Hidden by default, shown on hover via sibling selector
-    opacity: %{
-      :default => "0",
-      When.sibling_before(":hover") => "1"
-    },
-    pointer_events: %{
-      :default => "none",
-      When.sibling_before(":hover") => "auto"
-    },
-    transition: "opacity 0.15s ease",
-    # Styling
-    width: "max-content",
-    text_align: "center",
-    padding_top: css_const({Tokens, :space, :"2"}),
-    padding_bottom: css_const({Tokens, :space, :"2"}),
-    padding_left: css_const({Tokens, :space, :"3"}),
-    padding_right: css_const({Tokens, :space, :"3"}),
-    background_color: css_var({Tokens, :colors, :gray_900}),
-    color: css_var({Tokens, :colors, :white}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    border_radius: css_const({Tokens, :radius, :md}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
-    z_index: "50"
-  )
-
-  css_class(:anchor_note,
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_muted}),
-    text_align: "center",
-    max_width: "32rem"
-  )
-
-  # ============================================================================
   # Footer
   # ============================================================================
 
@@ -550,7 +442,10 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   css_class(:footer_link,
     color: css_var({Tokens, :semantic, :text_link}),
-    text_decoration: "none"
+    text_decoration: [
+      default: "none",
+      ":hover": "underline"
+    ]
   )
 
   # ============================================================================
@@ -639,11 +534,59 @@ defmodule LiveStyleDemoWeb.HomeLive do
             LiveStyle brings the power of StyleX to Elixir. Define your styles with atomic CSS, design tokens, and themes - all resolved at compile time.
           </p>
           <div class={css_class([:hero_buttons])}>
-            <.link navigate="/todo" class={css_class([:btn, :btn_primary])}>
-              <span>&#9745;</span> Todo Demo
+            <.link
+              navigate="/todo"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
+            >
+              Todo
             </.link>
-            <.link navigate="/table" class={css_class([:btn, :btn_secondary])}>
-              <span>&#128200;</span> Table Demo
+            <.link
+              navigate="/table"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              Table
+            </.link>
+            <.link
+              navigate="/anchor"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              Anchor
+            </.link>
+            <.link
+              navigate="/scroll"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              Scroll
+            </.link>
+            <.link
+              navigate="/container"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              Container
+            </.link>
+            <.link
+              navigate="/has"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              :has()
+            </.link>
+            <.link
+              navigate="/popover"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              Popover
+            </.link>
+            <.link
+              navigate="/transitions"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              Transitions
+            </.link>
+            <.link
+              navigate="/starting-style"
+              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
+            >
+              @starting-style
             </.link>
           </div>
         </div>
@@ -752,34 +695,6 @@ defmodule LiveStyleDemoWeb.HomeLive do
         </div>
       </section>
 
-      <%!-- Anchor Positioning Demo --%>
-      <section class={css_class([:anchor_demo_section])}>
-        <div class={css_class([:anchor_demo_inner])}>
-          <div class={css_class([:section_header])}>
-            <h2 class={css_class([:section_title])}>CSS Anchor Positioning</h2>
-            <p class={css_class([:section_subtitle])}>Smart tooltips with @position-try fallbacks</p>
-          </div>
-          <div class={css_class([:anchor_demo_content])}>
-            <div class={css_class([:anchor_demo_container])}>
-              <button class={"#{css_class([:anchor_button])} #{Marker.default()}"}>
-                &#128205; Hover me
-              </button>
-              <div class={css_class([:anchor_tooltip])}>
-                I'm anchored! Try resizing the window.
-              </div>
-            </div>
-            <p class={css_class([:anchor_note])}>
-              This tooltip uses CSS Anchor Positioning with <code>@position-try</code>
-              fallbacks.
-              When the preferred position doesn't fit, the browser automatically tries alternative positions.
-              <br /><br />
-              <strong>Note:</strong>
-              Requires Chrome 125+ or other browsers with anchor positioning support.
-            </p>
-          </div>
-        </div>
-      </section>
-
       <%!-- Code Example Section --%>
       <section class={css_class([:code_section])}>
         <div class={css_class([:code_inner])}>
@@ -817,7 +732,7 @@ defmodule LiveStyleDemoWeb.HomeLive do
 
   defp theme_classes(dark_mode, base_classes) do
     if dark_mode do
-      "#{base_classes} #{css_theme({Tokens, :semantic, :dark})} #{css_theme({Tokens, :semantic, :dark})} #{css_theme({Tokens, :semantic, :dark})}"
+      "#{base_classes} #{css_theme({Tokens, :semantic, :dark})}"
     else
       base_classes
     end

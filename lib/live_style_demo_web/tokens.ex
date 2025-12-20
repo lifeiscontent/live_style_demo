@@ -76,7 +76,25 @@ defmodule LiveStyleDemoWeb.Tokens do
     amber_50: "#fffbeb",
     amber_200: "#fde68a",
     amber_500: "#f59e0b",
-    amber_600: "#d97706"
+    amber_600: "#d97706",
+    # Pink (for gradients)
+    pink_500: "#ec4899",
+    # Violet
+    violet_500: "#8b5cf6",
+    violet_600: "#7c3aed"
+  )
+
+  # ===========================================================================
+  # Gradients - Tokenized gradient colors
+  # ===========================================================================
+
+  css_consts(:gradient,
+    # Primary brand gradient (indigo -> violet)
+    primary: "linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%)",
+    # Hero gradient (indigo -> violet -> pink)
+    hero: "linear-gradient(135deg, #6366f1 0%, #a855f7 50%, #ec4899 100%)",
+    # Todo app gradient (slightly different purple tones)
+    accent: "linear-gradient(135deg, #667eea 0%, #764ba2 100%)"
   )
 
   # ===========================================================================
