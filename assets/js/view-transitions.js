@@ -14,12 +14,27 @@
  * import { LiveSocket } from "phoenix_live_view"
  * import { createViewTransitionDom } from "./view-transitions"
  * 
+ * // Always animate (recommended for apps with view-transition-name on elements)
  * const liveSocket = new LiveSocket("/live", Socket, {
- *   dom: createViewTransitionDom()
+ *   dom: createViewTransitionDom({ animate: "always" })
+ * })
+ * 
+ * // Only animate when explicitly triggered via push_event
+ * const liveSocket = new LiveSocket("/live", Socket, {
+ *   dom: createViewTransitionDom({ animate: "explicit" })
  * })
  * ```
  * 
- * ## Triggering Transitions
+ * ## Modes
+ * 
+ * - `animate: "always"` - Every LiveView DOM patch is wrapped in a view transition.
+ *   Elements with `view-transition-name` will animate automatically. This is the
+ *   recommended mode as it requires no server-side coordination.
+ * 
+ * - `animate: "explicit"` - Only patches preceded by a `start-view-transition` event
+ *   are animated. Use this for fine-grained control.
+ * 
+ * ## Triggering Transitions (explicit mode only)
  * 
  * From your LiveView, push an event before the DOM update:
  * 
@@ -28,44 +43,28 @@
  *   {:noreply,
  *    socket
  *    |> assign(items: Enum.shuffle(socket.assigns.items))
- *    |> push_event("start-view-transition", %{}, dispatch: :before)}
+ *    |> push_event("start-view-transition", %{})}
  * end
  * ```
  * 
- * ## Options
- * 
- * The `start-view-transition` event accepts these options:
- * 
- * - `types` - Array of transition types for CSS matching (e.g., ["shuffle"])
- * 
  * ## Styling Transitions
  * 
- * Elements participate in transitions when they have `view-transition-name` set
- * in their inline style:
+ * Elements participate in transitions when they have `view-transition-name` set.
+ * Use `view-transition-class` for shared animation styles:
  * 
  * ```html
- * <div style="view-transition-class: x1abc; view-transition-name: card-1">Card 1</div>
+ * <div style="view-transition-class: card; view-transition-name: card-1">Card 1</div>
  * ```
  * 
- * Style transitions with CSS using view-transition-class:
- * 
  * ```css
- * ::view-transition-group(.x1abc) {
+ * ::view-transition-group(.card) {
  *   animation-duration: 0.3s;
- * }
- * 
- * ::view-transition-old(.x1abc) {
- *   animation: fade-out 0.2s ease-out;
- * }
- * 
- * ::view-transition-new(.x1abc) {
- *   animation: fade-in 0.3s ease-out;
  * }
  * ```
  * 
  * ## Browser Support
  * 
- * View Transitions are supported in Chrome 111+, Edge 111+, and Safari 18+.
+ * View Transitions are supported in Chrome 111+, Edge 111+, Safari 18+, and Firefox 144+.
  * In unsupported browsers, DOM updates happen immediately without animation.
  */
 
@@ -73,27 +72,9 @@
  * Creates a DOM adapter for Phoenix LiveSocket that enables View Transitions.
  * 
  * @param {Object} [options] - Configuration options
+ * @param {string} [options.animate="always"] - When to animate: "always" or "explicit"
  * @param {Object} [options.dom] - Existing DOM callbacks to merge with
  * @returns {Object} DOM configuration object for LiveSocket
- * 
- * @example
- * // Basic usage
- * const liveSocket = new LiveSocket("/live", Socket, {
- *   dom: createViewTransitionDom()
- * })
- * 
- * @example
- * // With existing DOM callbacks
- * const liveSocket = new LiveSocket("/live", Socket, {
- *   dom: createViewTransitionDom({
- *     dom: {
- *       onBeforeElUpdated(from, to) {
- *         // your custom logic
- *         return true
- *       }
- *     }
- *   })
- * })
  */
 // Global state exposed for hooks to check
 window.__viewTransitionPending = false
@@ -101,12 +82,13 @@ window.__vtCounter = 0
 
 export function createViewTransitionDom(options = {}) {
   const existingDom = options.dom || {}
+  const animateMode = options.animate || "always"
   
-  // State for pending transitions
+  // State for pending transitions (used in explicit mode)
   let transitionTypes = []
+  let explicitTransitionPending = false
 
-  // Listen for view transition events from LiveView
-  // Event is dispatched before the DOM patch when using `dispatch: :before`
+  // Listen for view transition events from LiveView (explicit mode)
   window.addEventListener("phx:start-view-transition", (e) => {
     const opts = e.detail || {}
     
@@ -115,6 +97,7 @@ export function createViewTransitionDom(options = {}) {
       transitionTypes.push(...opts.types)
     }
     
+    explicitTransitionPending = true
     window.__viewTransitionPending = true
   })
 
@@ -123,16 +106,16 @@ export function createViewTransitionDom(options = {}) {
     
     /**
      * Called before the document is patched.
-     * Wraps the DOM update in a View Transition when one is scheduled.
+     * Wraps the DOM update in a View Transition.
      */
     onDocumentPatch(start) {
-      // Call existing onDocumentPatch if present
       const existingOnDocumentPatch = existingDom.onDocumentPatch
       
       const update = () => {
         // Reset state
         const types = transitionTypes
         transitionTypes = []
+        explicitTransitionPending = false
         
         // Run the DOM update (morphdom)
         if (existingOnDocumentPatch) {
@@ -141,12 +124,13 @@ export function createViewTransitionDom(options = {}) {
           start()
         }
         
-        // Reset pending flag after DOM update
         window.__viewTransitionPending = false
       }
 
-      // Only use View Transitions if one was scheduled
-      if (!window.__viewTransitionPending) {
+      // Check if we should animate this patch
+      const shouldAnimate = animateMode === "always" || explicitTransitionPending
+      
+      if (!shouldAnimate) {
         update()
         return
       }
@@ -157,8 +141,10 @@ export function createViewTransitionDom(options = {}) {
         return
       }
 
+      // Mark as pending for hooks
+      window.__viewTransitionPending = true
+
       // Start the view transition
-      // Names are already applied by hooks on mount
       // Firefox 144+ doesn't support callbackOptions yet, so fallback to basic version
       try {
         document.startViewTransition({

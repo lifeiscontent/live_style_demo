@@ -419,9 +419,12 @@ defmodule LiveStyleDemoWeb.TodoLive do
        next_id: 5,
        filter: :all,
        input_error: false
-     )
-     |> push_event("start-view-transition", %{type: "page"}, dispatch: :before)}
+     )}
   end
+
+  # Event handlers - no push_event needed!
+  # With animate: "always" mode, all DOM patches are automatically
+  # wrapped in view transitions.
 
   @impl true
   def handle_event("update_input", %{"text" => text}, socket) do
@@ -445,14 +448,12 @@ defmodule LiveStyleDemoWeb.TodoLive do
       }
 
       {:noreply,
-       socket
-       |> assign(
+       assign(socket,
          todos: socket.assigns.todos ++ [new_todo],
          new_todo: "",
          next_id: socket.assigns.next_id + 1,
          input_error: false
-       )
-       |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
+       )}
     end
   end
 
@@ -463,12 +464,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
 
   @impl true
   def handle_event("set_filter", %{"filter" => filter}, socket) do
-    filter = String.to_existing_atom(filter)
-
-    {:noreply,
-     socket
-     |> assign(filter: filter)
-     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
+    {:noreply, assign(socket, filter: String.to_existing_atom(filter))}
   end
 
   @impl true
@@ -484,31 +480,20 @@ defmodule LiveStyleDemoWeb.TodoLive do
         end
       end)
 
-    {:noreply,
-     socket
-     |> assign(todos: todos)
-     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
+    {:noreply, assign(socket, todos: todos)}
   end
 
   @impl true
   def handle_event("delete_todo", %{"id" => id}, socket) do
     id = String.to_integer(id)
     todos = Enum.reject(socket.assigns.todos, &(&1.id == id))
-
-    {:noreply,
-     socket
-     |> assign(todos: todos)
-     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
+    {:noreply, assign(socket, todos: todos)}
   end
 
   @impl true
   def handle_event("clear_completed", _params, socket) do
     todos = Enum.reject(socket.assigns.todos, & &1.completed)
-
-    {:noreply,
-     socket
-     |> assign(todos: todos)
-     |> push_event("start-view-transition", %{type: "same-document"}, dispatch: :before)}
+    {:noreply, assign(socket, todos: todos)}
   end
 
   # ============================================================================

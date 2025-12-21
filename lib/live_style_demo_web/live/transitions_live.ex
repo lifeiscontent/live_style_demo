@@ -320,36 +320,28 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     ]
   end
 
+  # Event handlers - no push_event needed!
+  # With animate: "always" mode, all DOM patches are automatically
+  # wrapped in view transitions. Elements with view-transition-name
+  # will animate smoothly.
+
   @impl true
   def handle_event("shuffle_cards", _params, socket) do
-    shuffled = Enum.shuffle(socket.assigns.cards)
-
-    {:noreply,
-     socket
-     |> assign(cards: shuffled)
-     |> push_event("start-view-transition", %{}, dispatch: :before)}
+    {:noreply, assign(socket, cards: Enum.shuffle(socket.assigns.cards))}
   end
 
   @impl true
   def handle_event("add_card", _params, socket) do
     max_id = socket.assigns.cards |> Enum.map(& &1.id) |> Enum.max(fn -> 0 end)
     new_card = %{id: max_id + 1, title: "Card #{max_id + 1}", text: "New card"}
-
-    {:noreply,
-     socket
-     |> assign(cards: socket.assigns.cards ++ [new_card])
-     |> push_event("start-view-transition", %{}, dispatch: :before)}
+    {:noreply, assign(socket, cards: socket.assigns.cards ++ [new_card])}
   end
 
   @impl true
   def handle_event("remove_card", %{"id" => id}, socket) do
     id = String.to_integer(id)
     cards = Enum.reject(socket.assigns.cards, &(&1.id == id))
-
-    {:noreply,
-     socket
-     |> assign(cards: cards)
-     |> push_event("start-view-transition", %{}, dispatch: :before)}
+    {:noreply, assign(socket, cards: cards)}
   end
 
   @impl true
@@ -364,11 +356,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     if text != "" do
       max_id = socket.assigns.todos |> Enum.map(& &1.id) |> Enum.max(fn -> 0 end)
       new_todo = %{id: max_id + 1, text: text, done: false}
-
-      {:noreply,
-       socket
-       |> assign(todos: [new_todo | socket.assigns.todos], new_todo: "")
-       |> push_event("start-view-transition", %{}, dispatch: :before)}
+      {:noreply, assign(socket, todos: [new_todo | socket.assigns.todos], new_todo: "")}
     else
       {:noreply, socket}
     end
@@ -383,21 +371,14 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
         if todo.id == id, do: %{todo | done: not todo.done}, else: todo
       end)
 
-    {:noreply,
-     socket
-     |> assign(todos: todos)
-     |> push_event("start-view-transition", %{}, dispatch: :before)}
+    {:noreply, assign(socket, todos: todos)}
   end
 
   @impl true
   def handle_event("delete_todo", %{"id" => id}, socket) do
     id = String.to_integer(id)
     todos = Enum.reject(socket.assigns.todos, &(&1.id == id))
-
-    {:noreply,
-     socket
-     |> assign(todos: todos)
-     |> push_event("start-view-transition", %{}, dispatch: :before)}
+    {:noreply, assign(socket, todos: todos)}
   end
 
   @impl true
