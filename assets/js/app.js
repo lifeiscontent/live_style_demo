@@ -14,7 +14,9 @@ import {createViewTransitionDom} from "./view-transitions"
 const csrfToken = document.querySelector("meta[name='csrf-token']").getAttribute("content")
 
 const liveSocket = new LiveSocket("/live", Socket, {
-  longPollFallbackMs: 2500,
+  // If websocket connect is slow (or `localhost` resolves oddly),
+  // avoid immediately falling back to longpoll.
+  longPollFallbackMs: 10000,
   params: {_csrf_token: csrfToken},
   hooks: colocatedHooks,
   dom: createViewTransitionDom(),
@@ -33,6 +35,8 @@ liveSocket.connect()
 // >> liveSocket.enableLatencySim(1000)  // enabled for duration of browser session
 // >> liveSocket.disableLatencySim()
 window.liveSocket = liveSocket
+
+
 
 // The lines below enable quality of life phoenix_live_reload
 // development features:

@@ -18,6 +18,10 @@ defmodule LiveStyleDemoWeb.Router do
     pipe_through(:browser)
 
     live("/", HomeLive)
+    live("/six-month-test", SixMonthTestLive)
+    live("/clean-heex", CleanHeexLive)
+    live("/demos", DemosLive)
+
     live("/todo", TodoLive)
     live("/table", TableLive)
     live("/anchor", AnchorLive)
@@ -27,6 +31,8 @@ defmodule LiveStyleDemoWeb.Router do
     live("/popover", PopoverLive)
     live("/transitions", TransitionsLive)
     live("/starting-style", StartingStyleLive)
+    live("/color", ColorLive)
+    live("/hologram", HologramLive)
   end
 
   # Other scopes may use custom stacks.

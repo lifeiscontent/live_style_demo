@@ -11,8 +11,8 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # Ensure Tokens and BaseStyles are compiled first
   require LiveStyleDemoWeb.Tokens
   require LiveStyleDemoWeb.BaseStyles
-  alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.BaseStyles
+  alias LiveStyleDemoWeb.Tokens
 
   # ============================================================================
   # Flash Styles
@@ -20,33 +20,33 @@ defmodule LiveStyleDemoWeb.CoreComponents do
 
   css_class(:flash_container,
     position: "fixed",
-    top: css_const({Tokens, :space, :"4"}),
-    right: css_const({Tokens, :space, :"4"}),
+    top: css_var({Tokens, :space, :"4"}),
+    right: css_var({Tokens, :space, :"4"}),
     z_index: "50"
   )
 
   css_class(:flash_alert,
     display: "flex",
     align_items: "flex-start",
-    gap: css_const({Tokens, :space, :"3"}),
-    padding: css_const({Tokens, :space, :"4"}),
+    gap: css_var({Tokens, :space, :"3"}),
+    padding: css_var({Tokens, :space, :"4"}),
     border_radius: css_const({Tokens, :radius, :lg}),
     box_shadow: css_const({Tokens, :shadow, :lg}),
     max_width: "24rem"
   )
 
   css_class(:flash_info,
-    background_color: css_var({Tokens, :colors, :blue_50}),
+    background_color: css_var({Tokens, :semantic, :fill_tint_info}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :colors, :blue_500})
+    border_color: css_var({Tokens, :semantic, :border_info})
   )
 
   css_class(:flash_error,
-    background_color: css_var({Tokens, :colors, :red_50}),
+    background_color: css_var({Tokens, :semantic, :fill_tint_danger}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :colors, :red_500})
+    border_color: css_var({Tokens, :semantic, :border_danger})
   )
 
   css_class(:flash_content,
@@ -55,7 +55,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
 
   css_class(:flash_title,
     font_weight: css_const({Tokens, :font_weight, :semibold}),
-    margin_bottom: css_const({Tokens, :space, :"1"})
+    margin_bottom: css_var({Tokens, :space, :"1"})
   )
 
   css_class(:flash_close,
@@ -90,7 +90,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # ============================================================================
 
   css_class(:input_wrapper,
-    margin_bottom: css_const({Tokens, :space, :"4"})
+    margin_bottom: css_var({Tokens, :space, :"4"})
   )
 
   css_class(:input_label,
@@ -98,37 +98,48 @@ defmodule LiveStyleDemoWeb.CoreComponents do
     font_size: css_const({Tokens, :font_size, :sm}),
     font_weight: css_const({Tokens, :font_weight, :medium}),
     color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_const({Tokens, :space, :"1"})
+    margin_bottom: css_var({Tokens, :space, :"1"})
   )
 
   css_class(:input_field,
     display: "block",
     width: "100%",
-    padding_top: css_const({Tokens, :space, :"2"}),
-    padding_bottom: css_const({Tokens, :space, :"2"}),
-    padding_left: css_const({Tokens, :space, :"3"}),
-    padding_right: css_const({Tokens, :space, :"3"}),
+    padding_top: css_var({Tokens, :space, :"2"}),
+    padding_bottom: css_var({Tokens, :space, :"2"}),
+    padding_left: css_var({Tokens, :space, :"3"}),
+    padding_right: css_var({Tokens, :space, :"3"}),
     font_size: css_const({Tokens, :font_size, :base}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default}),
+    border_color: [
+      default: css_var({Tokens, :semantic, :border_default}),
+      ":focus-visible": css_var({Tokens, :semantic, :border_focus})
+    ],
     border_radius: css_const({Tokens, :radius, :md}),
     background_color: css_var({Tokens, :semantic, :fill_page}),
-    outline: "none",
-    transition: "border-color 0.2s ease"
+    outline: [
+      default: "none",
+      ":focus-visible": "2px solid #{css_var({Tokens, :semantic, :focus_ring})}"
+    ],
+    outline_offset: [default: "0", ":focus-visible": "2px"],
+    box_shadow: [
+      default: "none",
+      ":focus-visible": "0 0 0 6px #{css_var({Tokens, :semantic, :glow_primary})}"
+    ],
+    transition: "border-color 0.2s ease, box-shadow 0.2s ease"
   )
 
   css_class(:input_error,
-    border_color: css_var({Tokens, :colors, :red_500})
+    border_color: css_var({Tokens, :semantic, :border_danger})
   )
 
   css_class(:error_message,
     display: "flex",
     align_items: "center",
-    gap: css_const({Tokens, :space, :"1"}),
-    margin_top: css_const({Tokens, :space, :"1"}),
+    gap: css_var({Tokens, :space, :"1"}),
+    margin_top: css_var({Tokens, :space, :"1"}),
     font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :colors, :red_600})
+    color: css_var({Tokens, :semantic, :text_danger})
   )
 
   # ============================================================================
@@ -136,14 +147,14 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   # ============================================================================
 
   css_class(:header_wrapper,
-    padding_bottom: css_const({Tokens, :space, :"4"})
+    padding_bottom: css_var({Tokens, :space, :"4"})
   )
 
   css_class(:header_with_actions,
     display: "flex",
     align_items: "center",
     justify_content: "space-between",
-    gap: css_const({Tokens, :space, :"6"})
+    gap: css_var({Tokens, :space, :"6"})
   )
 
   css_class(:header_title,
@@ -155,7 +166,7 @@ defmodule LiveStyleDemoWeb.CoreComponents do
   css_class(:header_subtitle,
     font_size: css_const({Tokens, :font_size, :sm}),
     color: css_var({Tokens, :semantic, :text_secondary}),
-    margin_top: css_const({Tokens, :space, :"1"})
+    margin_top: css_var({Tokens, :space, :"1"})
   )
 
   # ============================================================================

@@ -31,6 +31,9 @@ live_style_demo-*.tar
 # Ignore digested assets cache.
 /priv/static/cache_manifest.json
 
+# Dialyzer PLTs are machine-specific and large.
+/priv/plts/
+
 # In case you use Node.js/npm, you want to ignore these.
 npm-debug.log
 /assets/node_modules/

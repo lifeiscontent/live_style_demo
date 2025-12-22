@@ -19,78 +19,45 @@ defmodule LiveStyleDemoWeb.TableLive do
   require LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens
 
-  # Colors matching StyleX demo
-  @teal "#2266cc77"
+  # Theme-aware table highlight (replaces StyleX demo's hardcoded teal)
+  @highlight css_var({Tokens, :semantic, :highlight_primary})
 
   # Get the ROW marker from Tokens
   @row_marker Tokens.row_marker()
-
-  # ============================================================================
-  # Page Layout
-  # ============================================================================
-
-  css_class(:page,
-    min_height: "100vh",
-    background_color: "light-dark(#f3f4f6, #111827)",
-    font_family: css_const({Tokens, :font, :sans})
-  )
-
-  css_class(:back_link,
-    display: "inline-flex",
-    align_items: "center",
-    gap: css_const({Tokens, :space, :"2"}),
-    color: "light-dark(#6b7280, #9ca3af)",
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    text_decoration: "none",
-    padding: css_const({Tokens, :space, :"4"}),
-    transition: "color 0.2s ease"
-  )
-
-  css_class(:content,
-    padding_bottom: css_const({Tokens, :space, :"16"})
-  )
-
-  css_class(:header,
-    text_align: "center",
-    padding_top: css_const({Tokens, :space, :"8"}),
-    padding_bottom: css_const({Tokens, :space, :"4"})
-  )
-
-  css_class(:title,
-    font_size: css_const({Tokens, :font_size, :"2xl"}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
-    color: "light-dark(#111827, #f9fafb)",
-    margin_bottom: css_const({Tokens, :space, :"2"})
-  )
-
-  css_class(:subtitle,
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: "light-dark(#6b7280, #9ca3af)",
-    max_width: "32rem",
-    margin_left: "auto",
-    margin_right: "auto"
-  )
 
   # ============================================================================
   # Container styles (matching StyleX)
   # ============================================================================
 
   css_class(:container,
-    background_color: "light-dark(#fff, #000)",
-    padding: "32px",
-    margin: "16px",
-    margin_left: "auto",
-    margin_right: "auto",
+    padding: [
+      default: css_var({Tokens, :space, :"4"}),
+      "@media (min-width: 640px)": css_var({Tokens, :space, :"8"})
+    ],
+    margin_block: [
+      default: "0",
+      "@media (min-width: 640px)": css_var({Tokens, :space, :"4"})
+    ],
+    margin_inline: "auto",
     max_width: "64rem",
-    border_radius: "12px"
+    border_radius: "12px",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
+    box_shadow: css_var({Tokens, :semantic, :shadow_card})
+  )
+
+  css_class(:table_scroll,
+    width: "100%",
+    overflow_x: "auto",
+    overscroll_behavior_x: "contain",
+    "-webkit-overflow-scrolling": "touch"
   )
 
   css_class(:table,
     width: "100%",
+    min_width: "560px",
     border_width: "1px",
     border_style: "solid",
-    border_color: "light-dark(rgba(0,0,0,0.1), rgba(255,255,255,0.1))",
+    border_color: css_var({Tokens, :semantic, :border_default}),
     border_radius: "4px"
   )
 
@@ -111,7 +78,7 @@ defmodule LiveStyleDemoWeb.TableLive do
                        {":nth-child(#{n})",
                         %{
                           :default => nil,
-                          When.ancestor(":has(td:nth-of-type(#{n}):hover)") => @teal
+                          When.ancestor(":has(td:nth-of-type(#{n}):hover)") => @highlight
                         }}
                      end)
 
@@ -120,9 +87,9 @@ defmodule LiveStyleDemoWeb.TableLive do
       :default => "center",
       ":first-child" => "right"
     },
-    padding: "4px",
-    padding_inline: "8px",
-    color: "light-dark(#333, #aaa)",
+    padding_block: css_var({Tokens, :space, :"1"}),
+    padding_inline: css_var({Tokens, :space, :"2"}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
     font_weight: "200",
     opacity:
       Map.merge(
@@ -143,10 +110,11 @@ defmodule LiveStyleDemoWeb.TableLive do
         %{
           :default => "transparent",
           # Highlight row on hover
-          When.ancestor(":hover", @row_marker) => @teal,
+          When.ancestor(":hover", @row_marker) => @highlight,
+
           # Highlight hovered cell
           ":hover" => %{
-            :default => @teal,
+            :default => @highlight,
             ":nth-child(1)" => "transparent"
           },
           # First column never gets background
@@ -159,7 +127,7 @@ defmodule LiveStyleDemoWeb.TableLive do
 
   # Header cell style
   css_class(:th,
-    color: "light-dark(#000, #fff)",
+    color: css_var({Tokens, :semantic, :text_primary}),
     font_weight: "800",
     background_color: "transparent"
   )
@@ -179,19 +147,13 @@ defmodule LiveStyleDemoWeb.TableLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class={css_class([:page])}>
-      <.link navigate="/" class={css_class([:back_link])}>
-        &#8592; Back to Home
-      </.link>
-      <div class={css_class([:content])}>
-        <div class={css_class([:header])}>
-          <h1 class={css_class([:title])}>Price Table</h1>
-          <p class={css_class([:subtitle])}>
-            A styled table demo using LiveStyle with cross-highlight effects.
-            Hover over cells to see row and column highlighting.
-          </p>
-        </div>
-        <div class={container_class()}>
+    <.shell
+      active="table"
+      page_title="Price Table"
+      page_subtitle="A dense table with :has()-powered cross-highlighting."
+    >
+      <div class={container_class()}>
+        <div class={css_class([:table_scroll])}>
           <table class={css_class([:table])}>
             <thead>
               <.tr>
@@ -270,7 +232,7 @@ defmodule LiveStyleDemoWeb.TableLive do
           </table>
         </div>
       </div>
-    </div>
+    </.shell>
     """
   end
 

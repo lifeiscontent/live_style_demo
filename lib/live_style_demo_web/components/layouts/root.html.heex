@@ -1,9 +1,104 @@
 <!DOCTYPE html>
-<html lang="en">
+<html
+  lang="en"
+  data-theme="light"
+  data-theme-dark-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :dark})}
+  data-style-zen-brutalist-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_brutalist})}
+  data-style-zen-paper-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_paper})}
+  data-style-zen-neon-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_neon})}
+  data-style-zen-terminal-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_terminal})}
+  data-space-compact-class={css_theme({LiveStyleDemoWeb.Tokens, :space, :compact})}
+  data-space-cozy-class={css_theme({LiveStyleDemoWeb.Tokens, :space, :cozy})}
+>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="color-scheme" content="light dark" />
     <meta name="csrf-token" content={get_csrf_token()} />
+
+    <script>
+      ;(() => {
+        const root = document.documentElement
+        const splitClasses = (value) => (value || "").split(/\s+/).filter(Boolean)
+
+        const themeClasses = {
+          "zen-brutalist": root.dataset.styleZenBrutalistClass,
+          "zen-paper": root.dataset.styleZenPaperClass,
+          "zen-neon": root.dataset.styleZenNeonClass,
+          "zen-terminal": root.dataset.styleZenTerminalClass,
+        }
+
+        const spaceClasses = {
+          compact: root.dataset.spaceCompactClass,
+          cozy: root.dataset.spaceCozyClass,
+        }
+
+        // Migrate old keys -> new single key.
+        const appearance = (() => {
+          const stored = window.localStorage?.getItem("ls-appearance")
+          if (stored) return stored
+
+          const legacyStyle = window.localStorage?.getItem("ls-style") || "default"
+          const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches
+          const legacyTheme = window.localStorage?.getItem("ls-theme") || (prefersDark ? "dark" : "light")
+
+          const value =
+            legacyStyle !== "default"
+              ? legacyStyle
+              : legacyTheme === "dark"
+                ? "default-dark"
+                : "default-light"
+
+          try {
+            window.localStorage?.setItem("ls-appearance", value)
+          } catch (_err) {
+            // ignore
+          }
+
+          return value
+        })()
+
+        const applyAppearance = (value) => {
+          const darkClass = root.dataset.themeDarkClass
+
+          Object.values(themeClasses).forEach((cls) => {
+            splitClasses(cls).forEach((c) => root.classList.remove(c))
+          })
+
+          if (darkClass) root.classList.remove(darkClass)
+
+          let colorScheme = "light"
+
+          if (value === "default-dark") {
+            if (darkClass) root.classList.add(darkClass)
+            colorScheme = "dark"
+          } else if (value === "default-light") {
+            colorScheme = "light"
+          } else {
+            splitClasses(themeClasses[value]).forEach((c) => root.classList.add(c))
+            colorScheme = value === "zen-neon" || value === "zen-terminal" ? "dark" : "light"
+          }
+
+          root.dataset.theme = colorScheme
+          root.style.colorScheme = colorScheme
+          root.dataset.styleTheme = value
+        }
+
+        const applySpacing = (value) => {
+          Object.values(spaceClasses).forEach((cls) => {
+            splitClasses(cls).forEach((c) => root.classList.remove(c))
+          })
+
+          splitClasses(spaceClasses[value]).forEach((c) => root.classList.add(c))
+          root.dataset.spaceScale = value
+        }
+
+        applyAppearance(appearance)
+
+        const space = window.localStorage?.getItem("ls-space") || "default"
+        applySpacing(space)
+      })()
+    </script>
     <.live_title default="LiveStyle Demo" suffix=" · LiveStyle">
       {assigns[:page_title]}
     </.live_title>

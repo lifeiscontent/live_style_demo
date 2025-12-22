@@ -3,88 +3,13 @@ defmodule LiveStyleDemoWeb.HasLive do
 
   require LiveStyleDemoWeb.Tokens
   require LiveStyleDemoWeb.BaseStyles
+  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
-
-  # ============================================================================
-  # Page Layout
-  # ============================================================================
-
-  css_class(:page,
-    min_height: "100vh",
-    background_color: css_var({Tokens, :semantic, :fill_surface}),
-    font_family: css_const({Tokens, :font, :sans}),
-    "-webkit-font-smoothing": "antialiased"
-  )
-
-  css_class(:header,
-    padding: css_const({Tokens, :space, :"4"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border_bottom: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle})
-  )
-
-  css_class(:header_inner,
-    max_width: "80rem",
-    margin_left: "auto",
-    margin_right: "auto",
-    display: "flex",
-    align_items: "center",
-    justify_content: "space-between"
-  )
-
-  css_class(:back_link,
-    display: "inline-flex",
-    align_items: "center",
-    gap: css_const({Tokens, :space, :"2"}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    text_decoration: "none"
-  )
-
-  css_class(:page_title,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
-    color: css_var({Tokens, :semantic, :text_primary})
-  )
-
-  css_class(:main,
-    padding: css_const({Tokens, :space, :"8"})
-  )
-
-  css_class(:section,
-    max_width: "64rem",
-    margin_left: "auto",
-    margin_right: "auto",
-    margin_bottom: css_const({Tokens, :space, :"12"})
-  )
-
-  css_class(:section_title,
-    font_size: css_const({Tokens, :font_size, :xl}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_const({Tokens, :space, :"2"})
-  )
-
-  css_class(:section_description,
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    margin_bottom: css_const({Tokens, :space, :"6"}),
-    line_height: css_const({Tokens, :leading, :relaxed})
-  )
-
-  css_class(:code_inline,
-    font_family: css_const({Tokens, :font, :mono}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    background_color: css_var({Tokens, :semantic, :fill_muted}),
-    padding: "2px 6px",
-    border_radius: css_const({Tokens, :radius, :sm})
-  )
 
   css_class(:demo_grid,
     display: "grid",
     grid_template_columns: "repeat(auto-fill, minmax(280px, 1fr))",
-    gap: css_const({Tokens, :space, :"6"})
+    gap: css_var({Tokens, :space, :"6"})
   )
 
   # ============================================================================
@@ -113,14 +38,14 @@ defmodule LiveStyleDemoWeb.HasLive do
   )
 
   css_class(:card_body,
-    padding: css_const({Tokens, :space, :"4"})
+    padding: css_var({Tokens, :space, :"4"})
   )
 
   css_class(:card_title,
     font_size: css_const({Tokens, :font_size, :lg}),
     font_weight: css_const({Tokens, :font_weight, :semibold}),
     color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_const({Tokens, :space, :"2"})
+    margin_bottom: css_var({Tokens, :space, :"2"})
   )
 
   css_class(:card_text,
@@ -138,12 +63,12 @@ defmodule LiveStyleDemoWeb.HasLive do
     border: "1px solid",
     border_color: css_var({Tokens, :semantic, :border_subtle}),
     border_radius: css_const({Tokens, :radius, :lg}),
-    padding: css_const({Tokens, :space, :"6"}),
+    padding: css_var({Tokens, :space, :"6"}),
     max_width: "400px"
   )
 
   css_class(:form_group,
-    margin_bottom: css_const({Tokens, :space, :"4"})
+    margin_bottom: css_var({Tokens, :space, :"4"})
   )
 
   css_class(:label,
@@ -151,13 +76,14 @@ defmodule LiveStyleDemoWeb.HasLive do
     font_size: css_const({Tokens, :font_size, :sm}),
     font_weight: css_const({Tokens, :font_weight, :medium}),
     color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_const({Tokens, :space, :"1"}),
+    margin_bottom: css_var({Tokens, :space, :"1"}),
     transition: "color 0.2s ease"
   )
 
   css_class(:input,
     width: "100%",
-    padding: "10px 12px",
+    padding_block: css_var({Tokens, :space, :"2.5"}),
+    padding_inline: css_var({Tokens, :space, :"3"}),
     border: "1px solid",
     border_color: css_var({Tokens, :semantic, :border_subtle}),
     border_radius: css_const({Tokens, :radius, :md}),
@@ -172,21 +98,23 @@ defmodule LiveStyleDemoWeb.HasLive do
     background_color: %{
       :default => css_var({Tokens, :semantic, :fill_page}),
       ":focus" => css_var({Tokens, :semantic, :fill_page}),
-      ":invalid:not(:placeholder-shown)" => css_var({Tokens, :colors, :red_50}),
-      ":valid:not(:placeholder-shown)" => css_var({Tokens, :colors, :green_50})
+      ":invalid:not(:placeholder-shown)" =>
+        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 12%, #{css_var({Tokens, :semantic, :fill_page})})",
+      ":valid:not(:placeholder-shown)" =>
+        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_success})} 12%, #{css_var({Tokens, :semantic, :fill_page})})"
     },
     border_color: %{
       :default => css_var({Tokens, :semantic, :border_subtle}),
-      ":focus" => css_var({Tokens, :colors, :indigo_500}),
-      ":invalid:not(:placeholder-shown)" => css_var({Tokens, :colors, :red_500}),
-      ":valid:not(:placeholder-shown)" => css_var({Tokens, :colors, :green_500})
+      ":focus" => css_var({Tokens, :semantic, :border_focus}),
+      ":invalid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :border_danger}),
+      ":valid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :border_success})
     }
   )
 
   css_class(:error_message,
     font_size: css_const({Tokens, :font_size, :xs}),
-    color: css_var({Tokens, :colors, :red_600}),
-    margin_top: css_const({Tokens, :space, :"1"}),
+    color: css_var({Tokens, :semantic, :text_danger}),
+    margin_top: css_var({Tokens, :space, :"1"}),
     # Hidden by default, shown via JavaScript or :has() on parent
     display: "none"
   )
@@ -207,8 +135,8 @@ defmodule LiveStyleDemoWeb.HasLive do
   css_class(:task_item,
     display: "flex",
     align_items: "center",
-    gap: css_const({Tokens, :space, :"3"}),
-    padding: css_const({Tokens, :space, :"4"}),
+    gap: css_var({Tokens, :space, :"3"}),
+    padding: css_var({Tokens, :space, :"4"}),
     border_bottom: "1px solid",
     border_color: css_var({Tokens, :semantic, :border_subtle}),
     transition: "background-color 0.2s ease",
@@ -216,7 +144,8 @@ defmodule LiveStyleDemoWeb.HasLive do
     # Style the item when its checkbox is checked using :has()
     background_color: %{
       :default => "transparent",
-      ":has(input:checked)" => css_var({Tokens, :colors, :green_50})
+      ":has(input:checked)" =>
+        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_success})} 12%, #{css_var({Tokens, :semantic, :fill_page})})"
     }
   )
 
@@ -227,7 +156,7 @@ defmodule LiveStyleDemoWeb.HasLive do
   css_class(:task_checkbox,
     width: "20px",
     height: "20px",
-    accent_color: css_var({Tokens, :colors, :green_600}),
+    accent_color: css_var({Tokens, :semantic, :fill_success}),
     cursor: "pointer"
   )
 
@@ -255,8 +184,9 @@ defmodule LiveStyleDemoWeb.HasLive do
   css_class(:search_box,
     display: "flex",
     align_items: "center",
-    gap: css_const({Tokens, :space, :"2"}),
-    padding: "10px 14px",
+    gap: css_var({Tokens, :space, :"2"}),
+    padding_block: css_var({Tokens, :space, :"2.5"}),
+    padding_inline: css_var({Tokens, :space, :"3.5"}),
     background_color: css_var({Tokens, :semantic, :fill_page}),
     border: "2px solid",
     border_radius: css_const({Tokens, :radius, :lg}),
@@ -264,11 +194,11 @@ defmodule LiveStyleDemoWeb.HasLive do
     # Use :has(input:focus) to style container when input is focused
     border_color: %{
       :default => css_var({Tokens, :semantic, :border_subtle}),
-      ":has(input:focus)" => css_var({Tokens, :colors, :indigo_500})
+      ":has(input:focus)" => css_var({Tokens, :semantic, :border_focus})
     },
     box_shadow: %{
       :default => "none",
-      ":has(input:focus)" => "0 0 0 3px #{css_var({Tokens, :colors, :indigo_100})}"
+      ":has(input:focus)" => "0 0 0 3px #{css_var({Tokens, :semantic, :focus_ring})}"
     }
   )
 
@@ -324,146 +254,142 @@ defmodule LiveStyleDemoWeb.HasLive do
   @impl true
   def render(assigns) do
     ~H"""
-    <div class={css_class([:page])}>
-      <header class={css_class([:header])}>
-        <div class={css_class([:header_inner])}>
-          <.link navigate="/" class={css_class([:back_link])}>
-            ← Back to Home
-          </.link>
-          <h1 class={css_class([:page_title])}>:has() Selector</h1>
-          <div></div>
+    <.shell
+      active="has"
+      page_title=":has()"
+      page_subtitle="The parent selector: conditional styling from descendants."
+    >
+      <section class={css_class([{BaseStyles, :demo_section}])}>
+        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Cards with Optional Images</h2>
+        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+          Cards that contain images get a shadow using
+          <code class={css_class([{BaseStyles, :demo_code_inline}])}>:has(img)</code>
+          as a condition.
+          The "parent selector" finally exists in CSS!
+        </p>
+
+        <div class={css_class([:demo_grid])}>
+          <div class={css_class([:card])}>
+            <img
+              src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop"
+              alt="Mountains"
+              class={css_class([:card_image])}
+            />
+            <div class={css_class([:card_body])}>
+              <h3 class={css_class([:card_title])}>Card with Image</h3>
+              <p class={css_class([:card_text])}>This card has an image, so it gets a shadow.</p>
+            </div>
+          </div>
+
+          <div class={css_class([:card])}>
+            <div class={css_class([:card_body])}>
+              <h3 class={css_class([:card_title])}>Card without Image</h3>
+              <p class={css_class([:card_text])}>
+                This card has no image, so no shadow is applied.
+              </p>
+            </div>
+          </div>
+
+          <div class={css_class([:card])}>
+            <img
+              src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=200&fit=crop"
+              alt="Nature"
+              class={css_class([:card_image])}
+            />
+            <div class={css_class([:card_body])}>
+              <h3 class={css_class([:card_title])}>Another Image Card</h3>
+              <p class={css_class([:card_text])}>
+                Images trigger the shadow styling automatically.
+              </p>
+            </div>
+          </div>
         </div>
-      </header>
+      </section>
 
-      <main class={css_class([:main])}>
-        <section class={css_class([:section])}>
-          <h2 class={css_class([:section_title])}>Cards with Optional Images</h2>
-          <p class={css_class([:section_description])}>
-            Cards that contain images get a shadow using
-            <code class={css_class([:code_inline])}>:has(img)</code>
-            as a condition.
-            The "parent selector" finally exists in CSS!
-          </p>
+      <section class={css_class([{BaseStyles, :demo_section}])}>
+        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Form Validation</h2>
+        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+          Input fields change color based on validation state using
+          <code class={css_class([{BaseStyles, :demo_code_inline}])}>
+            :invalid:not(:placeholder-shown)
+          </code>
+          and <code class={css_class([{BaseStyles, :demo_code_inline}])}>:valid:not(:placeholder-shown)</code>.
+        </p>
 
-          <div class={css_class([:demo_grid])}>
-            <div class={css_class([:card])}>
-              <img
-                src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=400&h=200&fit=crop"
-                alt="Mountains"
-                class={css_class([:card_image])}
-              />
-              <div class={css_class([:card_body])}>
-                <h3 class={css_class([:card_title])}>Card with Image</h3>
-                <p class={css_class([:card_text])}>This card has an image, so it gets a shadow.</p>
-              </div>
-            </div>
-
-            <div class={css_class([:card])}>
-              <div class={css_class([:card_body])}>
-                <h3 class={css_class([:card_title])}>Card without Image</h3>
-                <p class={css_class([:card_text])}>
-                  This card has no image, so no shadow is applied.
-                </p>
-              </div>
-            </div>
-
-            <div class={css_class([:card])}>
-              <img
-                src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=400&h=200&fit=crop"
-                alt="Nature"
-                class={css_class([:card_image])}
-              />
-              <div class={css_class([:card_body])}>
-                <h3 class={css_class([:card_title])}>Another Image Card</h3>
-                <p class={css_class([:card_text])}>
-                  Images trigger the shadow styling automatically.
-                </p>
-              </div>
-            </div>
+        <form class={css_class([:form])} onsubmit="return false;">
+          <div class={css_class([:form_group])}>
+            <label class={css_class([:label])}>Email</label>
+            <input type="email" class={css_class([:input])} placeholder="you@example.com" required />
           </div>
-        </section>
 
-        <section class={css_class([:section])}>
-          <h2 class={css_class([:section_title])}>Form Validation</h2>
-          <p class={css_class([:section_description])}>
-            Input fields change color based on validation state using
-            <code class={css_class([:code_inline])}>:invalid:not(:placeholder-shown)</code>
-            and <code class={css_class([:code_inline])}>:valid:not(:placeholder-shown)</code>.
-          </p>
+          <div class={css_class([:form_group])}>
+            <label class={css_class([:label])}>Password (min 8 chars)</label>
+            <input
+              type="password"
+              class={css_class([:input])}
+              placeholder="••••••••"
+              minlength="8"
+              required
+            />
+          </div>
+        </form>
+      </section>
 
-          <form class={css_class([:form])} onsubmit="return false;">
-            <div class={css_class([:form_group])}>
-              <label class={css_class([:label])}>Email</label>
-              <input type="email" class={css_class([:input])} placeholder="you@example.com" required />
-            </div>
+      <section class={css_class([{BaseStyles, :demo_section}])}>
+        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Interactive Checklist</h2>
+        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+          Task items style themselves when checked using <code class={
+            css_class([{BaseStyles, :demo_code_inline}])
+          }>:has(input:checked)</code>.
+          Click the checkboxes to see the effect!
+        </p>
 
-            <div class={css_class([:form_group])}>
-              <label class={css_class([:label])}>Password (min 8 chars)</label>
+        <div class={css_class([:task_list])}>
+          <%= for {task, index} <- Enum.with_index(@tasks) do %>
+            <label class={css_class([:task_item]) <> if(index == length(@tasks) - 1, do: " " <> css_class([:task_item_last]), else: "")}>
               <input
-                type="password"
-                class={css_class([:input])}
-                placeholder="••••••••"
-                minlength="8"
-                required
+                type="checkbox"
+                class={css_class([:task_checkbox])}
+                checked={task.checked}
+                phx-click="toggle_task"
+                phx-value-id={task.id}
               />
-            </div>
-          </form>
-        </section>
+              <span class={css_class([:task_text]) <> if(task.checked, do: " " <> css_class([:task_text_checked]), else: "")}>
+                {task.text}
+              </span>
+            </label>
+          <% end %>
+        </div>
+      </section>
 
-        <section class={css_class([:section])}>
-          <h2 class={css_class([:section_title])}>Interactive Checklist</h2>
-          <p class={css_class([:section_description])}>
-            Task items style themselves when checked using <code class={css_class([:code_inline])}>:has(input:checked)</code>.
-            Click the checkboxes to see the effect!
-          </p>
+      <section class={css_class([{BaseStyles, :demo_section}])}>
+        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Focus Within</h2>
+        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+          The search wrapper highlights when its input has focus using <code class={
+            css_class([{BaseStyles, :demo_code_inline}])
+          }>:has(input:focus)</code>.
+        </p>
 
-          <div class={css_class([:task_list])}>
-            <%= for {task, index} <- Enum.with_index(@tasks) do %>
-              <label class={css_class([:task_item]) <> if(index == length(@tasks) - 1, do: " " <> css_class([:task_item_last]), else: "")}>
-                <input
-                  type="checkbox"
-                  class={css_class([:task_checkbox])}
-                  checked={task.checked}
-                  phx-click="toggle_task"
-                  phx-value-id={task.id}
-                />
-                <span class={css_class([:task_text]) <> if(task.checked, do: " " <> css_class([:task_text_checked]), else: "")}>
-                  {task.text}
-                </span>
-              </label>
-            <% end %>
+        <div class={css_class([:search_wrapper])}>
+          <div class={css_class([:search_box])}>
+            <svg
+              class={css_class([:search_icon])}
+              fill="none"
+              stroke="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path
+                stroke-linecap="round"
+                stroke-linejoin="round"
+                stroke-width="2"
+                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
+              />
+            </svg>
+            <input type="text" class={css_class([:search_input])} placeholder="Search..." />
           </div>
-        </section>
-
-        <section class={css_class([:section])}>
-          <h2 class={css_class([:section_title])}>Focus Within</h2>
-          <p class={css_class([:section_description])}>
-            The search wrapper highlights when its input has focus using <code class={
-              css_class([:code_inline])
-            }>:has(input:focus)</code>.
-          </p>
-
-          <div class={css_class([:search_wrapper])}>
-            <div class={css_class([:search_box])}>
-              <svg
-                class={css_class([:search_icon])}
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                  stroke-width="2"
-                  d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-                />
-              </svg>
-              <input type="text" class={css_class([:search_input])} placeholder="Search..." />
-            </div>
-          </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </section>
+    </.shell>
     """
   end
 end

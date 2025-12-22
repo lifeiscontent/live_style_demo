@@ -88,6 +88,11 @@ export function createViewTransitionDom(options = {}) {
   let transitionTypes = []
   let explicitTransitionPending = false
 
+  // Avoid queuing view transitions on rapid patches.
+  // Browsers serialize `startViewTransition` calls; if a patch happens while a
+  // transition is still running, we prefer to apply the patch immediately.
+  let transitionRunning = false
+
   // Listen for view transition events from LiveView (explicit mode)
   window.addEventListener("phx:start-view-transition", (e) => {
     const opts = e.detail || {}
@@ -144,15 +149,31 @@ export function createViewTransitionDom(options = {}) {
       // Mark as pending for hooks
       window.__viewTransitionPending = true
 
+      // If a transition is already in-flight, avoid queueing another.
+      if (transitionRunning) {
+        update()
+        return
+      }
+
+      transitionRunning = true
+
       // Start the view transition
       // Firefox 144+ doesn't support callbackOptions yet, so fallback to basic version
       try {
-        document.startViewTransition({
+        const transition = document.startViewTransition({
           update,
           types: transitionTypes.length ? transitionTypes : ["same-document"],
         })
+
+        transition.finished.finally(() => {
+          transitionRunning = false
+        })
       } catch (error) {
-        document.startViewTransition(update)
+        const transition = document.startViewTransition(update)
+
+        transition.finished.finally(() => {
+          transitionRunning = false
+        })
       }
     },
 

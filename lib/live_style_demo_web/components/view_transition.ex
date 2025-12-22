@@ -81,7 +81,7 @@ defmodule LiveStyleDemoWeb.ViewTransition do
     assigns = assign_new(assigns, :id, fn -> "view-transition-hook-def" end)
 
     ~H"""
-    <div id={@id} style="display:none;">
+    <div id={@id} hidden>
       <script :type={Phoenix.LiveView.ColocatedHook} name=".ViewTransition">
         export default {
           mounted() {

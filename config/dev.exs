@@ -7,9 +7,10 @@ import Config
 # watchers to your application. For example, we can use it
 # to bundle .js and .css sources.
 config :live_style_demo, LiveStyleDemoWeb.Endpoint,
-  # Binding to loopback ipv4 address prevents access from other machines.
-  # Change to `ip: {0, 0, 0, 0}` to allow access from other machines.
-  http: [ip: {127, 0, 0, 1}],
+  # Bind to IPv6 any (`::`) so `localhost` can upgrade to WebSockets.
+  # On many machines, `localhost` resolves to `::1` first.
+  http: [ip: {0, 0, 0, 0, 0, 0, 0, 0}],
+  url: [host: "localhost"],
   check_origin: false,
   code_reloader: true,
   debug_errors: true,
@@ -73,10 +74,12 @@ config :phoenix, :stacktrace_depth, 20
 # Initialize plugs at runtime for faster development compilation
 config :phoenix, :plug_init_mode, :runtime
 
+lv_debug? = System.get_env("LIVE_STYLE_DEMO_LV_DEBUG") in ["1", "true"]
+
 config :phoenix_live_view,
   # Include debug annotations and locations in rendered markup.
   # Changing this configuration will require mix clean and a full recompile.
-  debug_heex_annotations: true,
-  debug_attributes: true,
+  debug_heex_annotations: lv_debug?,
+  debug_attributes: lv_debug?,
   # Enable helpful, but potentially expensive runtime checks
-  enable_expensive_runtime_checks: true
+  enable_expensive_runtime_checks: false
