@@ -110,7 +110,10 @@ defmodule LiveStyleDemoWeb.BaseStyles do
       default: css_var({Tokens, :semantic, :fill_primary}),
       ":hover": css_var({Tokens, :semantic, :fill_primary_hover})
     ],
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    color: [
+      default: css_var({Tokens, :semantic, :text_on_primary}),
+      ":hover": css_var({Tokens, :semantic, :text_on_primary_hover})
+    ],
     box_shadow: "none",
     border: "1px solid transparent",
     transform: [
