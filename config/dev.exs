@@ -83,3 +83,6 @@ config :phoenix_live_view,
   debug_attributes: lv_debug?,
   # Enable helpful, but potentially expensive runtime checks
   enable_expensive_runtime_checks: false
+
+# Enable LiveStyle debug class names in development
+config :live_style, debug_class_names: true
