@@ -62,15 +62,17 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # ============================================================================
 
   css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_card}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
-    border_radius: css_var({Tokens, :semantic, :radius_surface}),
-    box_shadow: css_var({Tokens, :semantic, :shadow_card}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     overflow: "hidden"
   )
 
   css_class(:card_header,
-    background: css_const({Tokens, :gradient, :accent}),
+    background: css_var({Tokens, :semantic, :fill_primary}),
     padding: css_var({Tokens, :space, :"6"}),
     color: css_var({Tokens, :semantic, :text_inverse})
   )
@@ -127,7 +129,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
-    background: css_const({Tokens, :gradient, :accent}),
+    background: css_var({Tokens, :semantic, :fill_primary}),
     color: css_var({Tokens, :semantic, :text_inverse}),
     padding_top: css_var({Tokens, :space, :"3"}),
     padding_bottom: css_var({Tokens, :space, :"3"}),
@@ -208,7 +210,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   css_class(:checkbox_custom_checked,
-    background: css_const({Tokens, :gradient, :accent}),
+    background: css_var({Tokens, :semantic, :fill_primary}),
     border_color: "transparent",
     animation_name: css_keyframes(:check_bounce),
     animation_duration: "0.3s",
@@ -348,7 +350,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   css_class(:filter_button_active,
-    background: css_const({Tokens, :gradient, :accent}),
+    background: css_var({Tokens, :semantic, :fill_primary}),
     color: css_var({Tokens, :semantic, :text_inverse}),
     border_color: "transparent"
   )

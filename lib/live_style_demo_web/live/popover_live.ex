@@ -18,12 +18,14 @@ defmodule LiveStyleDemoWeb.PopoverLive do
   # ============================================================================
 
   css_class(:popover,
-    padding: css_var({Tokens, :space, :"4"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
+    padding: css_var({Tokens, :space, :"6"}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    border_color: css_var({Tokens, :semantic, :border_glass}),
     border_radius: css_const({Tokens, :radius, :lg}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     max_width: "min(300px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))",
     # Center the popover
     position: "fixed",
@@ -56,11 +58,13 @@ defmodule LiveStyleDemoWeb.PopoverLive do
 
   css_class(:manual_popover,
     padding: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    border_color: css_var({Tokens, :semantic, :border_glass}),
     border_radius: css_const({Tokens, :radius, :lg}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     max_width: "min(350px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))",
     # Center the popover
     position: "fixed",
@@ -115,11 +119,13 @@ defmodule LiveStyleDemoWeb.PopoverLive do
 
   css_class(:menu_popover,
     padding: css_var({Tokens, :space, :"2"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    border_color: css_var({Tokens, :semantic, :border_glass}),
     border_radius: css_const({Tokens, :radius, :lg}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     min_width: "180px",
     # Anchor position below the trigger button
     position: "fixed",

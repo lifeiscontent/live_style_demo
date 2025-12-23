@@ -79,11 +79,12 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
   # Dialog using popover with @starting-style
   css_class(:dialog,
     padding: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
     border_radius: css_const({Tokens, :radius, :lg}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     max_width: "min(400px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))",
     # Center the dialog
     position: "fixed",

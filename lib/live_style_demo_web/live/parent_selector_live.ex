@@ -1,4 +1,4 @@
-defmodule LiveStyleDemoWeb.HasLive do
+defmodule LiveStyleDemoWeb.ParentSelectorLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.Tokens
@@ -18,16 +18,18 @@ defmodule LiveStyleDemoWeb.HasLive do
 
   # StyleX pattern: use conditional values on each property
   css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     overflow: "hidden",
-    transition: "box-shadow 0.2s ease",
-    # Cards with images get a shadow - using :has() as a condition
+    transition: "box-shadow 0.2s ease, transform 0.2s ease",
+    # Cards with images get a stronger shadow
     box_shadow: %{
-      :default => "none",
-      ":has(img)" => css_const({Tokens, :shadow, :lg})
+      :default =>
+        "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 4px 12px -8px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+      ":has(img)" =>
+        "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
     }
   )
 
@@ -38,12 +40,12 @@ defmodule LiveStyleDemoWeb.HasLive do
   )
 
   css_class(:card_body,
-    padding: css_var({Tokens, :space, :"4"})
+    padding: css_var({Tokens, :space, :"6"})
   )
 
   css_class(:card_title,
     font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
+    font_weight: css_const({Tokens, :font_weight, :bold}),
     color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
@@ -59,11 +61,13 @@ defmodule LiveStyleDemoWeb.HasLive do
   # ============================================================================
 
   css_class(:form,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    padding: css_var({Tokens, :space, :"6"}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+    padding: css_var({Tokens, :space, :"8"}),
     max_width: "400px"
   )
 
@@ -124,10 +128,12 @@ defmodule LiveStyleDemoWeb.HasLive do
   # ============================================================================
 
   css_class(:task_list,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     overflow: "hidden",
     max_width: "400px"
   )
@@ -187,7 +193,8 @@ defmodule LiveStyleDemoWeb.HasLive do
     gap: css_var({Tokens, :space, :"2"}),
     padding_block: css_var({Tokens, :space, :"2.5"}),
     padding_inline: css_var({Tokens, :space, :"3.5"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
     border: "2px solid",
     border_radius: css_const({Tokens, :radius, :lg}),
     transition: "border-color 0.2s ease, box-shadow 0.2s ease",
@@ -255,7 +262,7 @@ defmodule LiveStyleDemoWeb.HasLive do
   def render(assigns) do
     ~H"""
     <.shell
-      active="has"
+      active="parent-selector"
       page_title=":has()"
       page_subtitle="The parent selector: conditional styling from descendants."
     >

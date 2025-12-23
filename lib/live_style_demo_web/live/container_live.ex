@@ -25,7 +25,7 @@ defmodule LiveStyleDemoWeb.ContainerLive do
     padding: css_var({Tokens, :space, :"4"}),
     border: "2px dashed",
     border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     # Make it a container for queries
     container_type: "inline-size",
     container_name: "card-container"
@@ -40,10 +40,12 @@ defmodule LiveStyleDemoWeb.ContainerLive do
 
   # Card that responds to container size
   css_class(:responsive_card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
     border_radius: css_const({Tokens, :radius, :lg}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     overflow: "hidden"
   )
 
@@ -66,7 +68,7 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:card_image,
     width: [default: "100%", "@container card-container (min-width: 400px)": "120px"],
     height: "120px",
-    background: css_const({Tokens, :gradient, :accent}),
+    background: css_var({Tokens, :semantic, :fill_accent}),
     border_radius: css_const({Tokens, :radius, :md}),
     flex_shrink: "0"
   )
@@ -127,10 +129,10 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:sidebar,
     container_type: "inline-size",
     container_name: "sidebar",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     padding: css_var({Tokens, :space, :"4"})
   )
 
@@ -161,10 +163,10 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:main_content,
     container_type: "inline-size",
     container_name: "main",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     padding: css_var({Tokens, :space, :"6"})
   )
 
@@ -203,10 +205,10 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:cq_units_demo,
     container_type: "inline-size",
     container_name: "units-demo",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     padding: css_var({Tokens, :space, :"6"}),
     resize: "horizontal",
     overflow: "auto",
@@ -225,8 +227,7 @@ defmodule LiveStyleDemoWeb.ContainerLive do
     # Width based on container
     width: "50cqi",
     height: "20cqi",
-    background:
-      "linear-gradient(135deg, #{css_var({Tokens, :semantic, :fill_success})}, #{css_var({Tokens, :semantic, :fill_primary})})",
+    background: css_var({Tokens, :semantic, :fill_primary}),
     border_radius: css_const({Tokens, :radius, :lg}),
     display: "flex",
     align_items: "center",

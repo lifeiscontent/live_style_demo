@@ -40,9 +40,12 @@ defmodule LiveStyleDemoWeb.TableLive do
     ],
     margin_inline: "auto",
     max_width: "64rem",
-    border_radius: "12px",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
-    box_shadow: css_var({Tokens, :semantic, :shadow_card})
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
   )
 
   css_class(:table_scroll,
@@ -57,8 +60,8 @@ defmodule LiveStyleDemoWeb.TableLive do
     min_width: "560px",
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default}),
-    border_radius: "4px"
+    border_color: css_var({Tokens, :semantic, :border_glass}),
+    border_radius: css_const({Tokens, :radius, :lg})
   )
 
   # ============================================================================
