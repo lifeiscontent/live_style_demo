@@ -1,4 +1,4 @@
-defmodule LiveStyleDemoWeb.SixMonthTestLive do
+defmodule LiveStyleDemoWeb.ThemingLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.BaseStyles
@@ -10,7 +10,7 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
   css_class(:intro,
     display: "grid",
     gap: css_var({Tokens, :space, :"3"}),
-    margin_bottom: css_var({Tokens, :space, :"8"})
+    margin_bottom: css_var({Tokens, :space, :"12"})
   )
 
   css_class(:intro_text,
@@ -156,14 +156,14 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
   )
 
   css_class(:toggle_btn_active,
-    background_image: css_const({Tokens, :gradient, :accent}),
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
     color: css_var({Tokens, :semantic, :text_inverse}),
     border_color: "transparent"
   )
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Six-Month Test", scale: :default)}
+    {:ok, assign(socket, page_title: "Theming", scale: :default)}
   end
 
   @impl true
@@ -265,9 +265,9 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
   def render(assigns) do
     ~H"""
     <.shell
-      active="six-month-test"
+      active="theming"
       show_footer
-      page_title="The Six-Month Test"
+      page_title="Theming"
       page_subtitle="Change spacing scales with tokens—not template refactors."
     >
       <div class={css_class([:intro])}>

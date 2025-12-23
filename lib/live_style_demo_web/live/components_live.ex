@@ -1,4 +1,4 @@
-defmodule LiveStyleDemoWeb.CleanHeexLive do
+defmodule LiveStyleDemoWeb.ComponentsLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.Tokens
@@ -7,19 +7,8 @@ defmodule LiveStyleDemoWeb.CleanHeexLive do
 
   css_class(:grid,
     display: "grid",
-    gap: css_var({Tokens, :space, :"6"}),
+    gap: css_var({Tokens, :space, :"8"}),
     grid_template_columns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))"
-  )
-
-  css_class(:panel,
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
-    backdrop_filter: "blur(12px) saturate(1.1)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    border_radius: css_const({Tokens, :radius, :"2xl"}),
-    padding: css_var({Tokens, :space, :"6"}),
-    display: "grid",
-    gap: css_var({Tokens, :space, :"4"}),
-    min_width: "0"
   )
 
   css_class(:title,
@@ -53,7 +42,7 @@ defmodule LiveStyleDemoWeb.CleanHeexLive do
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Clean HEEx")}
+    {:ok, assign(socket, page_title: "Components")}
   end
 
   defp tailwind_example do
@@ -61,8 +50,7 @@ defmodule LiveStyleDemoWeb.CleanHeexLive do
     <button
       class=\"inline-flex items-center justify-center gap-2 rounded-lg px-6 py-3\
              text-sm font-medium text-white shadow-lg shadow-indigo-500/20\
-             bg-gradient-to-br from-indigo-500 via-violet-500 to-pink-500\
-             hover:brightness-110 focus:outline-none focus:ring-2\
+             bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2\
              focus:ring-indigo-400 focus:ring-offset-2\"
     >
       Create
@@ -87,31 +75,35 @@ defmodule LiveStyleDemoWeb.CleanHeexLive do
   def render(assigns) do
     ~H"""
     <.shell
-      active="clean-heex"
+      active="components"
       show_footer
-      page_title="Clean HEEx"
+      page_title="Components"
       page_subtitle="Atomic output without turning templates into class strings."
     >
       <div class={css_class([:grid])}>
-        <section class={css_class([:panel])}>
-          <h2 class={css_class([:title])}>Utility markup (typical)</h2>
-          <p class={css_class([:text])}>
-            Utility classes are fast early on, but they spread design decisions across markup.
-            Later refactors (spacing, typography, semantics) become a search-and-rewrite problem.
-          </p>
-          <div class={css_class([:code])}>
-            <pre class={css_class([:pre])}>{tailwind_example()}</pre>
+        <section class={css_class([{LiveStyleDemoWeb.BaseStyles, :panel_base}])}>
+          <div style={"padding: #{css_var({Tokens, :space, :"6"})}; display: grid; gap: #{css_var({Tokens, :space, :"4"})}"}>
+            <h2 class={css_class([:title])}>Utility markup (typical)</h2>
+            <p class={css_class([:text])}>
+              Utility classes are fast early on, but they spread design decisions across markup.
+              Later refactors (spacing, typography, semantics) become a search-and-rewrite problem.
+            </p>
+            <div class={css_class([:code])}>
+              <pre class={css_class([:pre])}>{tailwind_example()}</pre>
+            </div>
           </div>
         </section>
 
-        <section class={css_class([:panel])}>
-          <h2 class={css_class([:title])}>LiveStyle markup (clean)</h2>
-          <p class={css_class([:text])}>
-            Styles live in Elixir modules, compile to atomic CSS, and get reused like any other code.
-            Your templates describe structure, not implementation details.
-          </p>
-          <div class={css_class([:code])}>
-            <pre class={css_class([:pre])}>{livestyle_example()}</pre>
+        <section class={css_class([{LiveStyleDemoWeb.BaseStyles, :panel_base}])}>
+          <div style={"padding: #{css_var({Tokens, :space, :"6"})}; display: grid; gap: #{css_var({Tokens, :space, :"4"})}"}>
+            <h2 class={css_class([:title])}>LiveStyle markup (clean)</h2>
+            <p class={css_class([:text])}>
+              Styles live in Elixir modules, compile to atomic CSS, and get reused like any other code.
+              Your templates describe structure, not implementation details.
+            </p>
+            <div class={css_class([:code])}>
+              <pre class={css_class([:pre])}>{livestyle_example()}</pre>
+            </div>
           </div>
         </section>
       </div>

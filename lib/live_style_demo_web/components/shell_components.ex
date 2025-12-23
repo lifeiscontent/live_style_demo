@@ -35,19 +35,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     color: css_var({Tokens, :semantic, :text_primary}),
     font_family: css_var({Tokens, :semantic, :font_body}),
     transition: "background-color 200ms ease, color 200ms ease",
-    scrollbar_gutter: "stable both-edges",
-    "::before": %{
-      content: "''",
-      position: "fixed",
-      inset: "0",
-      z_index: "-1",
-      pointer_events: "none",
-      background_image:
-        "radial-gradient(1100px circle at 15% 0%, #{css_var({Tokens, :semantic, :glow_primary})}, transparent 55%), radial-gradient(900px circle at 95% 10%, #{css_var({Tokens, :semantic, :glow_secondary})}, transparent 60%), radial-gradient(1400px circle at 50% 115%, color-mix(in oklab, #{css_var({Tokens, :semantic, :text_accent})} 12%, transparent), transparent 70%)",
-      filter: "saturate(1.15)",
-      opacity: "0.95",
-      transform: "translateZ(0)"
-    }
+    scrollbar_gutter: "stable both-edges"
   )
 
   css_class(:topbar,
@@ -114,9 +102,8 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     width: [default: "2.25rem", "@media (max-width: 420px)": "2rem"],
     height: [default: "2.25rem", "@media (max-width: 420px)": "2rem"],
     border_radius: css_const({Tokens, :radius, :xl}),
-    background_image: css_const({Tokens, :gradient, :primary}),
-    box_shadow:
-      "0 18px 50px -42px #{css_var({Tokens, :semantic, :glow_primary})}, 0 18px 55px -48px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
+    box_shadow: "none"
   )
 
   css_class(:brand_text,
@@ -238,7 +225,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   )
 
   css_class(:style_btn_active,
-    background_image: css_const({Tokens, :gradient, :accent}),
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
     border_color: "transparent",
     color: css_var({Tokens, :semantic, :text_inverse})
   )
@@ -387,14 +374,14 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
           <nav class={css_class([:nav])} aria-label="Primary">
             <div class={css_class([:nav_links])}>
-              <.nav_link to={~p"/six-month-test"} active={@active == "six-month-test"}>
-                Six-Month Test
+              <.nav_link to={~p"/theming"} active={@active == "theming"}>
+                Theming
               </.nav_link>
               <.nav_link to={~p"/transitions"} active={@active == "transitions"}>
                 Transitions
               </.nav_link>
-              <.nav_link to={~p"/clean-heex"} active={@active == "clean-heex"}>
-                Clean HEEx
+              <.nav_link to={~p"/components"} active={@active == "components"}>
+                Components
               </.nav_link>
               <.nav_link to={~p"/demos"} active={@active == "demos"}>Demos</.nav_link>
               <a class={css_class([:nav_link])} href="https://github.com/lifeiscontent/live_style">
@@ -409,7 +396,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
               <div class={css_class([:style_panel])} data-spacing-panel>
                 <button type="button" class={css_class([:style_btn])} data-space="default">
-                  Default spacing
+                  Default
                 </button>
                 <button type="button" class={css_class([:style_btn])} data-space="compact">
                   Compact
@@ -426,27 +413,30 @@ defmodule LiveStyleDemoWeb.ShellComponents do
               </summary>
 
               <div class={css_class([:style_panel])} data-appearance-panel>
-                <button type="button" class={css_class([:style_btn])} data-appearance="default-light">
-                  Default (Light)
+                <button type="button" class={css_class([:style_btn])} data-appearance="default">
+                  Swiss
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="default-dark">
-                  Default (Dark)
-                </button>
-
-                <div class={css_class([:menu_divider])} />
-
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-paper">
-                  Paper
-                </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-neon">
-                  Neon Night
-                </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-terminal">
+                <button type="button" class={css_class([:style_btn])} data-appearance="terminal">
                   Terminal
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-brutalist">
-                  Brutalist
+                <button type="button" class={css_class([:style_btn])} data-appearance="blueprint">
+                  Blueprint
                 </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="solar">
+                  Solar
+                </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="navy">
+                  Navy
+                </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="forest">
+                  Forest
+                </button>
+            <button type="button" class={css_class([:style_btn])} data-appearance="lavender">
+              Lavender
+            </button>
+            <button type="button" class={css_class([:style_btn])} data-appearance="brutal">
+              Brutal
+            </button>
               </div>
             </details>
 
@@ -457,14 +447,14 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
               <div class={css_class([:menu_backdrop])} data-mobile-menu-backdrop aria-hidden="true" />
               <div class={css_class([:menu_panel])} data-mobile-menu-panel role="menu">
-                <.nav_link to={~p"/six-month-test"} active={@active == "six-month-test"}>
-                  Six-Month Test
+                <.nav_link to={~p"/theming"} active={@active == "theming"}>
+                  Theming
                 </.nav_link>
                 <.nav_link to={~p"/transitions"} active={@active == "transitions"}>
                   Transitions
                 </.nav_link>
-                <.nav_link to={~p"/clean-heex"} active={@active == "clean-heex"}>
-                  Clean HEEx
+                <.nav_link to={~p"/components"} active={@active == "components"}>
+                  Components
                 </.nav_link>
                 <.nav_link to={~p"/demos"} active={@active == "demos"}>Demos</.nav_link>
 
@@ -540,61 +530,36 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         }
 
         function normalizeAppearance() {
-          // Migrate from older keys if present.
           const stored = window.localStorage?.getItem(APPEARANCE_KEY)
           if (stored) return stored
-
-          const legacyStyle = window.localStorage?.getItem("ls-style") || "default"
-          const legacyTheme = window.localStorage?.getItem("ls-theme") || "light"
-
-          const value =
-            legacyStyle !== "default"
-              ? legacyStyle
-              : legacyTheme === "dark"
-                ? "default-dark"
-                : "default-light"
-
-          try {
-            window.localStorage?.setItem(APPEARANCE_KEY, value)
-          } catch (_err) {
-            // ignore
-          }
-
-          return value
+          return "default"
         }
 
         function applyAppearance(value) {
           const root = document.documentElement
-          const darkClass = root.dataset.themeDarkClass
+          
+        const themeClasses = {
+          "terminal": root.dataset.styleTerminalClass,
+          "blueprint": root.dataset.styleBlueprintClass,
+          "solar": root.dataset.styleSolarClass,
+          "navy": root.dataset.styleNavyClass,
+          "forest": root.dataset.styleForestClass,
+          "lavender": root.dataset.styleLavenderClass,
+          "brutal": root.dataset.styleBrutalClass,
+        }
 
-          const themeClasses = {
-            "zen-brutalist": root.dataset.styleZenBrutalistClass,
-            "zen-paper": root.dataset.styleZenPaperClass,
-            "zen-neon": root.dataset.styleZenNeonClass,
-            "zen-terminal": root.dataset.styleZenTerminalClass,
-          }
-
-          // Remove all zen theme classes.
+          // Remove all theme classes
           Object.values(themeClasses).forEach((classString) => {
-            splitClasses(classString).forEach((cls) => root.classList.remove(cls))
+            if (classString) {
+              splitClasses(classString).forEach((cls) => root.classList.remove(cls))
+            }
           })
 
-          if (darkClass) root.classList.remove(darkClass)
-
-          let colorScheme = "light"
-
-          if (value === "default-dark") {
-            if (darkClass) root.classList.add(darkClass)
-            colorScheme = "dark"
-          } else if (value === "default-light") {
-            colorScheme = "light"
-          } else {
-            splitClasses(themeClasses[value]).forEach((cls) => root.classList.add(cls))
-            colorScheme = value === "zen-neon" || value === "zen-terminal" ? "dark" : "light"
+          if (value !== "default" && themeClasses[value]) {
+             splitClasses(themeClasses[value]).forEach((cls) => root.classList.add(cls))
           }
-
-          root.dataset.theme = colorScheme
-          root.style.colorScheme = colorScheme
+          
+          root.dataset.theme = value
 
           try {
             window.localStorage?.setItem(APPEARANCE_KEY, value)
@@ -629,7 +594,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
               if (!btn) return
 
               event.preventDefault()
-              const next = btn.getAttribute("data-appearance") || "default-light"
+              const next = btn.getAttribute("data-appearance") || "default"
               applyAppearance(next)
               setActive(this.panel, next)
               this.el.open = false

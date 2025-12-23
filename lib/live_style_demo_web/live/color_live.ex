@@ -43,17 +43,43 @@ defmodule LiveStyleDemoWeb.ColorLive do
     font_size: css_const({Tokens, :font_size, :sm})
   )
 
-  css_class(:swatch,
-    height: "min(46vh, 420px)",
-    border_radius: css_const({Tokens, :radius, :"2xl"}),
+  css_class(:palette_grid,
+    display: "grid",
+    grid_template_columns: "repeat(3, 1fr)",
+    grid_template_rows: "repeat(2, 1fr)",
+    gap: css_var({Tokens, :space, :"4"}),
+    height: "min(46vh, 420px)"
+  )
+
+  css_class(:color_block,
+    border_radius: css_const({Tokens, :radius, :xl}),
     border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    overflow: "hidden",
-    position: "relative",
-    background_color: css_var({Tokens, :semantic, :fill_surface}),
-    background_image:
-      "radial-gradient(700px circle at 10% 10%, color-mix(in oklab, oklch(70% #{css_var({Tokens, :anim, :chroma})} #{css_var({Tokens, :anim, :hue})}) 45%, transparent), transparent 55%), radial-gradient(700px circle at 90% 20%, color-mix(in oklab, oklch(74% #{css_var({Tokens, :anim, :chroma})} calc(#{css_var({Tokens, :anim, :hue})} + 60deg)) 42%, transparent), transparent 60%), linear-gradient(180deg, color-mix(in oklab, oklch(20% 0.06 calc(#{css_var({Tokens, :anim, :hue})} + 200deg)) 65%, transparent), transparent)",
-    box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})} inset, 0 22px 80px -72px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
+    display: "flex",
+    align_items: "center",
+    justify_content: "center",
+    font_size: css_const({Tokens, :font_size, :sm}),
+    color: css_var({Tokens, :semantic, :text_inverse}),
+    font_family: css_const({Tokens, :font, :mono}),
+    transition: "background-color 200ms ease"
+  )
+
+  # Color Variants (calculated via color-mix)
+  css_class(:color_base,
+    grid_column: "span 2",
+    grid_row: "span 2",
+    background_color:
+      "oklch(70% #{css_var({Tokens, :anim, :chroma})} #{css_var({Tokens, :anim, :hue})})"
+  )
+
+  css_class(:color_dark,
+    background_color:
+      "color-mix(in oklab, oklch(70% #{css_var({Tokens, :anim, :chroma})} #{css_var({Tokens, :anim, :hue})}) 60%, black)"
+  )
+
+  css_class(:color_light,
+    background_color:
+      "color-mix(in oklab, oklch(70% #{css_var({Tokens, :anim, :chroma})} #{css_var({Tokens, :anim, :hue})}) 60%, white)",
+    color: css_var({Tokens, :semantic, :text_primary})
   )
 
   css_class(:swatch_vars, fn hue, chroma ->
@@ -62,16 +88,6 @@ defmodule LiveStyleDemoWeb.ColorLive do
       {css_var({Tokens, :anim, :chroma}), chroma}
     ]
   end)
-
-  css_class(:swatch_overlay,
-    position: "absolute",
-    inset: "0",
-    background_image:
-      "linear-gradient(135deg, rgba(255, 255, 255, 0.20), transparent 40%), repeating-linear-gradient(90deg, rgba(255,255,255,0.08) 0 1px, transparent 1px 6px)",
-    mix_blend_mode: "overlay",
-    opacity: "0.85",
-    pointer_events: "none"
-  )
 
   css_class(:controls,
     display: "grid",
@@ -130,16 +146,22 @@ defmodule LiveStyleDemoWeb.ColorLive do
   defp code_snippet(assigns) do
     ~H"""
     <pre class={css_class([:code])}>
-    oklch(70% {Float.round(@chroma, 2)} {@hue}deg)
+    /* Base Color */
+    background: oklch(70% {Float.round(@chroma, 2)} {@hue}deg);
 
-    /* with CSS variables */
-    @property {LiveStyle.Vars.lookup!(Tokens, :anim, :hue)} &#123; syntax: "&lt;angle&gt;"; inherits: true; initial-value: 260deg; &#125;
-    @property {LiveStyle.Vars.lookup!(Tokens, :anim, :chroma)} &#123; syntax: "&lt;number&gt;"; inherits: true; initial-value: 0.22; &#125;
-    /* Set at runtime via dynamic css_class(:swatch_vars, ...) */
-    {LiveStyle.Vars.lookup!(Tokens, :anim, :hue)}: {@hue}deg;
-    {LiveStyle.Vars.lookup!(Tokens, :anim, :chroma)}: {Float.round(@chroma, 2)};
+    /* Darker Variant */
+    background: color-mix(
+      in oklab,
+      oklch(70% {Float.round(@chroma, 2)} {@hue}deg),
+      black 40%
+    );
 
-    color-mix(in oklab, oklch(70% {css_var({Tokens, :anim, :chroma})} {css_var({Tokens, :anim, :hue})}) 45%, transparent)
+    /* With CSS Variables */
+    @property {LiveStyle.Vars.lookup!(Tokens, :anim, :hue)} &#123;
+      syntax: "&lt;angle&gt;";
+      inherits: true;
+      initial-value: 260deg;
+    &#125;
     </pre>
     """
   end
@@ -158,15 +180,17 @@ defmodule LiveStyleDemoWeb.ColorLive do
     >
       <div class={css_class([:layout])}>
         <div class={css_class([:card])}>
-          <div class={css_class([:title])}>Interactive OKLCH palette</div>
+          <div class={css_class([:title])}>Palette Generator</div>
           <p class={css_class([:subtitle])}>
-            This swatch is built from layered gradients that use <code>oklch()</code>
-            and <code>color-mix(in oklab, ...)</code>.
-            The hue is stored in a typed custom property, so it animates smoothly.
+            Generate a color scale on the fly using <code>oklch()</code>
+            and <code>color-mix()</code>.
+            Solid colors only—no gradients.
           </p>
 
-          <div {css([:swatch, {:swatch_vars, ["#{@hue}deg", @chroma_string]}])}>
-            <div class={css_class([:swatch_overlay])} />
+          <div {css([:palette_grid, {:swatch_vars, ["#{@hue}deg", @chroma_string]}])}>
+            <div class={css_class([:color_block, :color_base])}>Base</div>
+            <div class={css_class([:color_block, :color_dark])}>Darker</div>
+            <div class={css_class([:color_block, :color_light])}>Lighter</div>
           </div>
 
           <form phx-change="update" phx-submit="update" class={css_class([:controls])}>
@@ -216,8 +240,7 @@ defmodule LiveStyleDemoWeb.ColorLive do
             rule that writes
             the hashed custom properties (using <code>css_var/1</code>
             as the property key), then reference
-
-            both variables inside the static gradient definition.
+            both variables inside the static color definition.
             LiveStyle generates the <code>@property</code>
             rule from typed tokens.
           </p>

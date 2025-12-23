@@ -74,13 +74,14 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
   )
 
   css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    border_color: css_var({Tokens, :semantic, :border_glass}),
     border_radius: css_const({Tokens, :radius, :lg}),
     padding: css_var({Tokens, :space, :"4"}),
     cursor: "pointer",
-    transition: "transform 0.18s ease-out, box-shadow 0.18s ease",
+    transition: "transform 0.18s ease-out, box-shadow 0.18s ease, border-color 0.18s ease",
     transform: %{
       :default => "scale(1)",
       ":hover" => "scale(1.02)"
@@ -88,6 +89,10 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     box_shadow: %{
       :default => "none",
       ":hover" => css_const({Tokens, :shadow, :md})
+    },
+    border_color: %{
+      :default => css_var({Tokens, :semantic, :border_glass}),
+      ":hover" => css_var({Tokens, :semantic, :border_focus})
     }
   )
 
@@ -119,7 +124,13 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
   # ============================================================================
 
   css_class(:feed_container,
-    max_width: "420px"
+    max_width: "420px",
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :xl}),
+    padding: css_var({Tokens, :space, :"6"}),
+    box_shadow: "0 4px 20px -12px #{css_var({Tokens, :semantic, :shadow_color})}"
   )
 
   css_class(:feed_input_row,

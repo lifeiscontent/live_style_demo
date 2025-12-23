@@ -2,11 +2,13 @@
 <html
   lang="en"
   data-theme="light"
-  data-theme-dark-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :dark})}
-  data-style-zen-brutalist-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_brutalist})}
-  data-style-zen-paper-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_paper})}
-  data-style-zen-neon-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_neon})}
-  data-style-zen-terminal-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :zen_terminal})}
+  data-style-terminal-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :terminal})}
+  data-style-blueprint-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :blueprint})}
+  data-style-solar-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :solar})}
+  data-style-navy-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :navy})}
+  data-style-forest-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :forest})}
+  data-style-lavender-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :lavender})}
+  data-style-brutal-class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :brutal})}
   data-space-compact-class={css_theme({LiveStyleDemoWeb.Tokens, :space, :compact})}
   data-space-cozy-class={css_theme({LiveStyleDemoWeb.Tokens, :space, :cozy})}
 >
@@ -22,10 +24,13 @@
         const splitClasses = (value) => (value || "").split(/\s+/).filter(Boolean)
 
         const themeClasses = {
-          "zen-brutalist": root.dataset.styleZenBrutalistClass,
-          "zen-paper": root.dataset.styleZenPaperClass,
-          "zen-neon": root.dataset.styleZenNeonClass,
-          "zen-terminal": root.dataset.styleZenTerminalClass,
+          "terminal": root.dataset.styleTerminalClass,
+          "blueprint": root.dataset.styleBlueprintClass,
+          "solar": root.dataset.styleSolarClass,
+          "navy": root.dataset.styleNavyClass,
+          "forest": root.dataset.styleForestClass,
+          "lavender": root.dataset.styleLavenderClass,
+          "brutal": root.dataset.styleBrutalClass,
         }
 
         const spaceClasses = {
@@ -33,50 +38,30 @@
           cozy: root.dataset.spaceCozyClass,
         }
 
-        // Migrate old keys -> new single key.
         const appearance = (() => {
           const stored = window.localStorage?.getItem("ls-appearance")
           if (stored) return stored
-
-          const legacyStyle = window.localStorage?.getItem("ls-style") || "default"
-          const prefersDark = window.matchMedia?.("(prefers-color-scheme: dark)")?.matches
-          const legacyTheme = window.localStorage?.getItem("ls-theme") || (prefersDark ? "dark" : "light")
-
-          const value =
-            legacyStyle !== "default"
-              ? legacyStyle
-              : legacyTheme === "dark"
-                ? "default-dark"
-                : "default-light"
-
-          try {
-            window.localStorage?.setItem("ls-appearance", value)
-          } catch (_err) {
-            // ignore
-          }
-
-          return value
+          return "default"
         })()
 
         const applyAppearance = (value) => {
-          const darkClass = root.dataset.themeDarkClass
-
           Object.values(themeClasses).forEach((cls) => {
             splitClasses(cls).forEach((c) => root.classList.remove(c))
           })
 
-          if (darkClass) root.classList.remove(darkClass)
-
           let colorScheme = "light"
 
-          if (value === "default-dark") {
-            if (darkClass) root.classList.add(darkClass)
-            colorScheme = "dark"
-          } else if (value === "default-light") {
+          if (value === "default") {
             colorScheme = "light"
-          } else {
+          } else if (themeClasses[value]) {
             splitClasses(themeClasses[value]).forEach((c) => root.classList.add(c))
-            colorScheme = value === "zen-neon" || value === "zen-terminal" ? "dark" : "light"
+            // Terminal (black) and Blueprint (dark blue) are dark themes
+            // Navy is dark, Solar is light
+            if (value === "solar" || value === "lavender" || value === "brutal") {
+                colorScheme = "light"
+            } else {
+                colorScheme = "dark"
+            }
           }
 
           root.dataset.theme = colorScheme
@@ -89,7 +74,9 @@
             splitClasses(cls).forEach((c) => root.classList.remove(c))
           })
 
-          splitClasses(spaceClasses[value]).forEach((c) => root.classList.add(c))
+          if (spaceClasses[value]) {
+            splitClasses(spaceClasses[value]).forEach((c) => root.classList.add(c))
+          }
           root.dataset.spaceScale = value
         }
 

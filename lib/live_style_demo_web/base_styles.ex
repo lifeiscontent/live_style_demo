@@ -73,7 +73,7 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     padding_left: css_var({Tokens, :space, :"6"}),
     padding_right: css_var({Tokens, :space, :"6"}),
     font_size: css_const({Tokens, :font_size, :base}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
+    font_weight: css_const({Tokens, :font_weight, :semibold}),
     line_height: css_const({Tokens, :leading, :none}),
     border_radius: css_const({Tokens, :radius, :lg}),
     text_decoration: "none",
@@ -83,6 +83,8 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     user_select: "none",
     touch_action: "manipulation",
     "-webkit-tap-highlight-color": "transparent",
+    "-webkit-font-smoothing": "antialiased",
+    "-moz-osx-font-smoothing": "grayscale",
     transition:
       "transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease, filter 160ms ease",
     outline: [
@@ -102,21 +104,18 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     border_radius: css_const({Tokens, :radius, :md})
   )
 
-  # Primary button variant - gradient with glow
+  # Primary button variant
   css_class(:btn_primary,
-    background_image: css_const({Tokens, :gradient, :primary}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
-    box_shadow: [
-      default:
-        "0 18px 50px -36px #{css_var({Tokens, :semantic, :glow_primary})}, 0 14px 40px -34px #{css_var({Tokens, :semantic, :shadow_color})}",
-      ":hover":
-        "0 26px 70px -44px #{css_var({Tokens, :semantic, :glow_primary})}, 0 18px 50px -40px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
+    background_color: [
+      default: css_var({Tokens, :semantic, :fill_primary}),
+      ":hover": css_var({Tokens, :semantic, :fill_primary_hover})
     ],
-    filter: [default: "saturate(1.05)", ":hover": "saturate(1.2) contrast(1.05)"],
+    color: css_var({Tokens, :semantic, :text_inverse}),
+    box_shadow: "none",
+    border: "1px solid transparent",
     transform: [
       default: "translateY(0)",
-      ":hover": "translateY(-2px)",
-      ":active": "translateY(0)"
+      ":active": "translateY(1px)"
     ]
   )
 
@@ -169,22 +168,39 @@ defmodule LiveStyleDemoWeb.BaseStyles do
     color: css_var({Tokens, :semantic, :text_secondary})
   )
 
-  # ============================================================================
-  # Card Base Styles
-  # ============================================================================
-
-  # Base card styles - background, padding, rounded corners, border, shadow.
-  css_class(:card_base,
+  # Panel/Card with glass effect (matches ThemingLive panel)
+  css_class(:panel_base,
     background_color: css_var({Tokens, :semantic, :fill_glass}),
-    backdrop_filter: "blur(10px) saturate(1.15)",
-    padding: css_var({Tokens, :space, :"6"}),
-    border_radius: css_const({Tokens, :radius, :xl}),
-    border_width: "1px",
-    border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 20px 60px -52px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
-    transition: "transform 180ms ease, box-shadow 180ms ease, border-color 180ms ease"
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+    overflow: "hidden"
+  )
+
+  # Interactive Card (lifts on hover)
+  css_class(:card_interactive,
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    padding: css_var({Tokens, :space, :"8"}),
+    display: "flex",
+    flex_direction: "column",
+    gap: css_var({Tokens, :space, :"4"}),
+    transition: "transform 180ms ease, border-color 180ms ease, box-shadow 180ms ease",
+    transform: [default: "translateY(0)", ":hover": "translateY(-4px)"],
+    border_color: [
+      default: css_var({Tokens, :semantic, :border_glass}),
+      ":hover": css_var({Tokens, :semantic, :border_focus})
+    ],
+    box_shadow: [
+      default:
+        "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+      ":hover":
+        "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 32px 90px -58px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
+    ]
   )
 
   # ============================================================================
@@ -265,7 +281,6 @@ defmodule LiveStyleDemoWeb.BaseStyles do
 
   css_class(:demo_section,
     max_width: "64rem",
-    margin_inline: "auto",
     margin_bottom: css_var({Tokens, :space, :"12"}),
     display: "grid",
     gap: css_var({Tokens, :space, :"4"})
