@@ -102,7 +102,8 @@ defmodule LiveStyleDemoWeb.Tokens do
 
     # Fill/background
     fill_primary: "#ff3e00",
-    fill_primary_hover: "#cc3100",
+    # Swiss Hover: Black (High contrast)
+    fill_primary_hover: "#000000",
     fill_secondary: "#f2f2f2",
     fill_secondary_hover: "#e5e5e5",
     fill_accent: "#ff3e00",
@@ -165,7 +166,8 @@ defmodule LiveStyleDemoWeb.Tokens do
     text_accent: "#ffffff",
     text_link: "#00ff00",
     fill_primary: "#00ff00",
-    fill_primary_hover: "#00cc00",
+    # Terminal Hover: White (Max contrast with Black text)
+    fill_primary_hover: "#ffffff",
     fill_secondary: "#002200",
     fill_secondary_hover: "#003300",
     fill_accent: "#ffffff",
@@ -250,7 +252,8 @@ defmodule LiveStyleDemoWeb.Tokens do
     text_accent: "#d33682",
     text_link: "#d33682",
     fill_primary: "#d33682",
-    fill_primary_hover: "#b32d6e",
+    # Solar Hover: Deep Teal (Base02)
+    fill_primary_hover: "#073642",
     fill_secondary: "#eee8d5",
     fill_secondary_hover: "#e3dbbf",
     fill_accent: "#d33682",
@@ -292,7 +295,8 @@ defmodule LiveStyleDemoWeb.Tokens do
     text_accent: "#64ffda",
     text_link: "#64ffda",
     fill_primary: "#64ffda",
-    fill_primary_hover: "#4cd6b3",
+    # Navy Hover: White
+    fill_primary_hover: "#ffffff",
     fill_secondary: "#112240",
     fill_secondary_hover: "#233554",
     fill_accent: "#64ffda",
@@ -334,7 +338,8 @@ defmodule LiveStyleDemoWeb.Tokens do
     text_accent: "#fbbf24",
     text_link: "#fbbf24",
     fill_primary: "#fbbf24",
-    fill_primary_hover: "#f59e0b",
+    # Forest Hover: Off-White
+    fill_primary_hover: "#ecfdf5",
     fill_secondary: "#064e3b",
     fill_secondary_hover: "#065f46",
     fill_accent: "#fbbf24",
@@ -377,7 +382,8 @@ defmodule LiveStyleDemoWeb.Tokens do
     text_accent: "#7c3aed",
     text_link: "#7c3aed",
     fill_primary: "#8b5cf6",
-    fill_primary_hover: "#7c3aed",
+    # Lavender Hover: Deep Purple
+    fill_primary_hover: "#5b21b6",
     fill_secondary: "#f5f3ff",
     fill_secondary_hover: "#ede9fe",
     fill_accent: "#8b5cf6",
@@ -419,7 +425,8 @@ defmodule LiveStyleDemoWeb.Tokens do
     text_accent: "#2563eb",
     text_link: "#2563eb",
     fill_primary: "#2563eb",
-    fill_primary_hover: "#1d4ed8",
+    # Brutal Hover: Black (High contrast)
+    fill_primary_hover: "#000000",
     fill_secondary: "#ffffff",
     fill_secondary_hover: "#f3f4f6",
     fill_accent: "#2563eb",
