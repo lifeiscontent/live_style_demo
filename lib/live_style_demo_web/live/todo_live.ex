@@ -62,17 +62,19 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # ============================================================================
 
   css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_card}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
-    border_radius: css_var({Tokens, :semantic, :radius_surface}),
-    box_shadow: css_var({Tokens, :semantic, :shadow_card}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     overflow: "hidden"
   )
 
   css_class(:card_header,
-    background: css_const({Tokens, :gradient, :accent}),
+    background: css_var({Tokens, :semantic, :fill_primary}),
     padding: css_var({Tokens, :space, :"6"}),
-    color: css_var({Tokens, :semantic, :text_inverse})
+    color: css_var({Tokens, :semantic, :text_on_primary})
   )
 
   css_class(:card_title,
@@ -104,42 +106,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
     margin_bottom: css_var({Tokens, :space, :"6"})
   )
 
-  css_class(:input,
-    flex: "1",
-    padding: css_var({Tokens, :space, :"3"}),
-    font_size: css_const({Tokens, :font_size, :base}),
-    border_width: "2px",
-    border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    outline: "none",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    transition: "border-color 0.2s ease, box-shadow 0.2s ease"
-  )
-
-  css_class(:input_focus,
-    border_color: css_var({Tokens, :semantic, :border_focus}),
-    box_shadow: "0 0 0 3px #{css_var({Tokens, :semantic, :focus_ring})}"
-  )
-
-  css_class(:add_button,
-    display: "inline-flex",
-    align_items: "center",
-    justify_content: "center",
-    background: css_const({Tokens, :gradient, :accent}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
-    padding_top: css_var({Tokens, :space, :"3"}),
-    padding_bottom: css_var({Tokens, :space, :"3"}),
-    padding_left: css_var({Tokens, :space, :"5"}),
-    padding_right: css_var({Tokens, :space, :"5"}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    border: "none",
-    cursor: "pointer",
-    box_shadow: "0 10px 30px -22px #{css_var({Tokens, :semantic, :glow_primary})}",
-    transition: "all 0.2s ease"
-  )
+  # Using BaseStyles for input and button, just need local overrides if any
 
   # ============================================================================
   # Task List
@@ -171,62 +138,10 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   # ============================================================================
-  # Checkbox
+  # Checkbox (Delegated to BaseStyles, but we need local helper for logic)
   # ============================================================================
 
-  css_class(:checkbox_wrapper,
-    position: "relative",
-    width: "1.5rem",
-    height: "1.5rem",
-    flex_shrink: "0"
-  )
-
-  css_class(:checkbox_input,
-    position: "absolute",
-    opacity: "0",
-    width: "100%",
-    height: "100%",
-    cursor: "pointer",
-    z_index: "1"
-  )
-
-  css_class(:checkbox_custom,
-    position: "absolute",
-    top: "0",
-    left: "0",
-    width: "100%",
-    height: "100%",
-    border_width: "2px",
-    border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default}),
-    border_radius: css_const({Tokens, :radius, :md}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    transition: "all 0.2s ease",
-    display: "flex",
-    align_items: "center",
-    justify_content: "center"
-  )
-
-  css_class(:checkbox_custom_checked,
-    background: css_const({Tokens, :gradient, :accent}),
-    border_color: "transparent",
-    animation_name: css_keyframes(:check_bounce),
-    animation_duration: "0.3s",
-    animation_timing_function: "ease-out"
-  )
-
-  css_class(:checkbox_icon,
-    color: css_var({Tokens, :semantic, :text_inverse}),
-    font_size: "0.75rem",
-    opacity: "0",
-    transform: "scale(0)",
-    transition: "all 0.2s ease"
-  )
-
-  css_class(:checkbox_icon_visible,
-    opacity: "1",
-    transform: "scale(1)"
-  )
+  # We use the BaseStyles classes directly in the render function
 
   # ============================================================================
   # Item Text
@@ -348,8 +263,8 @@ defmodule LiveStyleDemoWeb.TodoLive do
   )
 
   css_class(:filter_button_active,
-    background: css_const({Tokens, :gradient, :accent}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
+    color: css_var({Tokens, :semantic, :text_on_primary}),
     border_color: "transparent"
   )
 
@@ -361,7 +276,10 @@ defmodule LiveStyleDemoWeb.TodoLive do
     animation_name: css_keyframes(:shake),
     animation_duration: "0.4s",
     animation_timing_function: "ease-out",
-    border_color: css_var({Tokens, :semantic, :fill_danger})
+    border_color: [
+      default: css_var({Tokens, :semantic, :fill_danger}),
+      ":focus": css_var({Tokens, :semantic, :fill_danger})
+    ]
   )
 
   # ============================================================================
@@ -537,20 +455,18 @@ defmodule LiveStyleDemoWeb.TodoLive do
               <div class={css_class([:card_body])}>
                 <%!-- Input Form --%>
                 <form phx-submit="add_todo" class={css_class([:form])}>
-                  <input
-                    type="text"
+                  <.input
                     name="text"
                     value={@new_todo}
                     placeholder="What needs to be done?"
                     phx-change="update_input"
                     phx-hook=".ShakeInput"
                     id="todo-input"
-                    class={input_class(@input_error)}
                     autocomplete="off"
+                    error={@input_error}
+                    class={if @input_error, do: css_class([:input_shake])}
                   />
-                  <button type="submit" class={css_class([:add_button])}>
-                    Add
-                  </button>
+                  <.button type="submit" variant={:primary}>Add</.button>
                 </form>
 
                 <%!-- Filter Buttons --%>
@@ -599,20 +515,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
                         view-transition-class={css_view_transition(:todo_item)}
                       >
                         <%!-- Checkbox --%>
-                        <div class={css_class([:checkbox_wrapper])}>
-                          <input
-                            type="checkbox"
-                            checked={todo.completed}
-                            phx-click="toggle_todo"
-                            phx-value-id={todo.id}
-                            class={css_class([:checkbox_input])}
-                          />
-                          <div class={checkbox_class(todo.completed)}>
-                            <span class={checkbox_icon_class(todo.completed)}>
-                              {if todo.completed, do: "✓", else: ""}
-                            </span>
-                          </div>
-                        </div>
+                        <.input
+                          type="checkbox"
+                          checked={todo.completed}
+                          phx-click="toggle_todo"
+                          phx-value-id={todo.id}
+                          aria-label="Toggle todo"
+                        />
 
                         <%!-- Text --%>
                         <div class={css_class([:todo_text_wrapper])}>
@@ -677,35 +586,11 @@ defmodule LiveStyleDemoWeb.TodoLive do
     """
   end
 
-  defp checkbox_class(completed) do
-    if completed do
-      css_class([:checkbox_custom, :checkbox_custom_checked])
-    else
-      css_class([:checkbox_custom])
-    end
-  end
-
-  defp checkbox_icon_class(completed) do
-    if completed do
-      css_class([:checkbox_icon, :checkbox_icon_visible])
-    else
-      css_class([:checkbox_icon])
-    end
-  end
-
   defp todo_text_class(completed) do
     if completed do
       css_class([:todo_text, :todo_text_completed])
     else
       css_class([:todo_text])
-    end
-  end
-
-  defp input_class(error) do
-    if error do
-      css_class([:input, :input_shake])
-    else
-      css_class([:input])
     end
   end
 

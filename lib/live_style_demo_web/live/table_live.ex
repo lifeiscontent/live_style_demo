@@ -40,9 +40,12 @@ defmodule LiveStyleDemoWeb.TableLive do
     ],
     margin_inline: "auto",
     max_width: "64rem",
-    border_radius: "12px",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
-    box_shadow: css_var({Tokens, :semantic, :shadow_card})
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
   )
 
   css_class(:table_scroll,
@@ -57,8 +60,8 @@ defmodule LiveStyleDemoWeb.TableLive do
     min_width: "560px",
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default}),
-    border_radius: "4px"
+    border_color: css_var({Tokens, :semantic, :border_glass}),
+    border_radius: css_const({Tokens, :radius, :lg})
   )
 
   # ============================================================================
@@ -82,6 +85,15 @@ defmodule LiveStyleDemoWeb.TableLive do
                         }}
                      end)
 
+  @column_color Map.new(2..8, fn n ->
+                  {":nth-child(#{n})",
+                   %{
+                     :default => nil,
+                     When.ancestor(":has(td:nth-of-type(#{n}):hover)") =>
+                       css_var({Tokens, :semantic, :text_on_primary})
+                   }}
+                end)
+
   css_class(:td,
     text_align: %{
       :default => "center",
@@ -89,7 +101,21 @@ defmodule LiveStyleDemoWeb.TableLive do
     },
     padding_block: css_var({Tokens, :space, :"1"}),
     padding_inline: css_var({Tokens, :space, :"2"}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
+    color:
+      Map.merge(
+        %{
+          :default => css_var({Tokens, :semantic, :text_secondary}),
+          When.ancestor(":hover", @row_marker) => %{
+            :default => css_var({Tokens, :semantic, :text_on_primary}),
+            ":nth-child(1)" => css_var({Tokens, :semantic, :text_secondary})
+          },
+          ":hover" => %{
+            :default => css_var({Tokens, :semantic, :text_on_primary}),
+            ":nth-child(1)" => css_var({Tokens, :semantic, :text_secondary})
+          }
+        },
+        @column_color
+      ),
     font_weight: "200",
     opacity:
       Map.merge(

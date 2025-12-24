@@ -1,9 +1,7 @@
-defmodule LiveStyleDemoWeb.HasLive do
+defmodule LiveStyleDemoWeb.ParentSelectorLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.Tokens
-  require LiveStyleDemoWeb.BaseStyles
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
 
   css_class(:demo_grid,
@@ -18,16 +16,17 @@ defmodule LiveStyleDemoWeb.HasLive do
 
   # StyleX pattern: use conditional values on each property
   css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     overflow: "hidden",
-    transition: "box-shadow 0.2s ease",
-    # Cards with images get a shadow - using :has() as a condition
+    transition: "box-shadow 0.2s ease, transform 0.2s ease",
+    # Cards with images get a stronger shadow
     box_shadow: %{
       :default => "none",
-      ":has(img)" => css_const({Tokens, :shadow, :lg})
+      ":has(img)" =>
+        "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
     }
   )
 
@@ -38,12 +37,12 @@ defmodule LiveStyleDemoWeb.HasLive do
   )
 
   css_class(:card_body,
-    padding: css_var({Tokens, :space, :"4"})
+    padding: css_var({Tokens, :space, :"6"})
   )
 
   css_class(:card_title,
     font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
+    font_weight: css_const({Tokens, :font_weight, :bold}),
     color: css_var({Tokens, :semantic, :text_primary}),
     margin_bottom: css_var({Tokens, :space, :"2"})
   )
@@ -59,11 +58,13 @@ defmodule LiveStyleDemoWeb.HasLive do
   # ============================================================================
 
   css_class(:form,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    padding: css_var({Tokens, :space, :"6"}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+    padding: css_var({Tokens, :space, :"8"}),
     max_width: "400px"
   )
 
@@ -84,8 +85,9 @@ defmodule LiveStyleDemoWeb.HasLive do
     width: "100%",
     padding_block: css_var({Tokens, :space, :"2.5"}),
     padding_inline: css_var({Tokens, :space, :"3"}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    # Split shorthand to avoid overriding border-color
+    border_width: "1px",
+    border_style: "solid",
     border_radius: css_const({Tokens, :radius, :md}),
     font_size: css_const({Tokens, :font_size, :base}),
     transition: "border-color 0.2s ease, background-color 0.2s ease",
@@ -93,21 +95,17 @@ defmodule LiveStyleDemoWeb.HasLive do
       :default => nil,
       ":focus" => "none"
     },
-    # Note: :user-invalid and :user-valid are newer pseudo-classes
-    # that only apply after user interaction
-    background_color: %{
-      :default => css_var({Tokens, :semantic, :fill_page}),
-      ":focus" => css_var({Tokens, :semantic, :fill_page}),
-      ":invalid:not(:placeholder-shown)" =>
-        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 12%, #{css_var({Tokens, :semantic, :fill_page})})",
-      ":valid:not(:placeholder-shown)" =>
-        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_success})} 12%, #{css_var({Tokens, :semantic, :fill_page})})"
+    background_color: css_var({Tokens, :semantic, :fill_page}),
+    color: %{
+      :default => css_var({Tokens, :semantic, :text_primary}),
+      ":invalid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :text_danger}),
+      ":valid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :text_success})
     },
     border_color: %{
       :default => css_var({Tokens, :semantic, :border_subtle}),
       ":focus" => css_var({Tokens, :semantic, :border_focus}),
-      ":invalid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :border_danger}),
-      ":valid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :border_success})
+      ":invalid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :fill_danger}),
+      ":valid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :fill_success})
     }
   )
 
@@ -124,10 +122,12 @@ defmodule LiveStyleDemoWeb.HasLive do
   # ============================================================================
 
   css_class(:task_list,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     overflow: "hidden",
     max_width: "400px"
   )
@@ -143,58 +143,9 @@ defmodule LiveStyleDemoWeb.HasLive do
     cursor: "pointer",
     # Style the item when its checkbox is checked using :has()
     background_color: %{
-      :default => "transparent",
-      ":has(input:checked)" =>
-        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_success})} 12%, #{css_var({Tokens, :semantic, :fill_page})})"
-    }
-  )
-
-  css_class(:task_item_last,
-    border_bottom: "none"
-  )
-
-  css_class(:task_checkbox,
-    width: "20px",
-    height: "20px",
-    accent_color: css_var({Tokens, :semantic, :fill_success}),
-    cursor: "pointer"
-  )
-
-  css_class(:task_text,
-    flex: "1",
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    transition: "color 0.2s ease, text-decoration 0.2s ease"
-  )
-
-  # Separate class for checked state text styling
-  css_class(:task_text_checked,
-    text_decoration: "line-through",
-    color: css_var({Tokens, :semantic, :text_muted})
-  )
-
-  # ============================================================================
-  # Demo 4: Focus Within
-  # ============================================================================
-
-  css_class(:search_wrapper,
-    max_width: "400px"
-  )
-
-  css_class(:search_box,
-    display: "flex",
-    align_items: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    padding_block: css_var({Tokens, :space, :"2.5"}),
-    padding_inline: css_var({Tokens, :space, :"3.5"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "2px solid",
-    border_radius: css_const({Tokens, :radius, :lg}),
-    transition: "border-color 0.2s ease, box-shadow 0.2s ease",
-    # Use :has(input:focus) to style container when input is focused
-    border_color: %{
-      :default => css_var({Tokens, :semantic, :border_subtle}),
-      ":has(input:focus)" => css_var({Tokens, :semantic, :border_focus})
+      :default => css_var({Tokens, :semantic, :fill_page}),
+      ":invalid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :fill_danger}),
+      ":valid:not(:placeholder-shown)" => css_var({Tokens, :semantic, :fill_success})
     },
     box_shadow: %{
       :default => "none",
@@ -209,16 +160,45 @@ defmodule LiveStyleDemoWeb.HasLive do
     color: css_var({Tokens, :semantic, :text_muted})
   )
 
+  css_class(:search_wrapper,
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+    padding: css_var({Tokens, :space, :"6"}),
+    max_width: "420px"
+  )
+
+  css_class(:search_box,
+    display: "flex",
+    align_items: "center",
+    gap: css_var({Tokens, :space, :"3"}),
+    padding: css_var({Tokens, :space, :"3"}),
+    background_color: css_var({Tokens, :semantic, :fill_page}),
+    border: "1px solid",
+    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    border_radius: css_const({Tokens, :radius, :lg}),
+    transition: "box-shadow 0.2s ease, border-color 0.2s ease",
+    box_shadow: %{
+      :default => "none",
+      ":has(input:focus)" => "0 0 0 3px #{css_var({Tokens, :semantic, :focus_ring})}"
+    },
+    border_color: %{
+      :default => css_var({Tokens, :semantic, :border_subtle}),
+      ":has(input:focus)" => css_var({Tokens, :semantic, :border_focus})
+    }
+  )
+
   css_class(:search_input,
     flex: "1",
     border: "none",
     background: "transparent",
     font_size: css_const({Tokens, :font_size, :base}),
     color: css_var({Tokens, :semantic, :text_primary}),
-    outline: %{
-      :default => nil,
-      ":focus" => "none"
-    }
+    outline: "none",
+    min_width: "0"
   )
 
   # ============================================================================
@@ -255,18 +235,18 @@ defmodule LiveStyleDemoWeb.HasLive do
   def render(assigns) do
     ~H"""
     <.shell
-      active="has"
+      active="parent-selector"
       page_title=":has()"
       page_subtitle="The parent selector: conditional styling from descendants."
     >
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Cards with Optional Images</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+      <.demo_section>
+        <.demo_section_title>Cards with Optional Images</.demo_section_title>
+        <.demo_section_description>
           Cards that contain images get a shadow using
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>:has(img)</code>
+          <.code_inline>:has(img)</.code_inline>
           as a condition.
           The "parent selector" finally exists in CSS!
-        </p>
+        </.demo_section_description>
 
         <div class={css_class([:demo_grid])}>
           <div class={css_class([:card])}>
@@ -304,17 +284,15 @@ defmodule LiveStyleDemoWeb.HasLive do
             </div>
           </div>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Form Validation</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+      <.demo_section>
+        <.demo_section_title>Form Validation</.demo_section_title>
+        <.demo_section_description>
           Input fields change color based on validation state using
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>
-            :invalid:not(:placeholder-shown)
-          </code>
-          and <code class={css_class([{BaseStyles, :demo_code_inline}])}>:valid:not(:placeholder-shown)</code>.
-        </p>
+          <.code_inline>:invalid:not(:placeholder-shown)</.code_inline>
+          and <.code_inline>:valid:not(:placeholder-shown)</.code_inline>.
+        </.demo_section_description>
 
         <form class={css_class([:form])} onsubmit="return false;">
           <div class={css_class([:form_group])}>
@@ -333,42 +311,38 @@ defmodule LiveStyleDemoWeb.HasLive do
             />
           </div>
         </form>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Interactive Checklist</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          Task items style themselves when checked using <code class={
-            css_class([{BaseStyles, :demo_code_inline}])
-          }>:has(input:checked)</code>.
+      <.demo_section>
+        <.demo_section_title>Interactive Checklist</.demo_section_title>
+        <.demo_section_description>
+          Task items style themselves when checked using <.code_inline>:has(input:checked)</.code_inline>.
           Click the checkboxes to see the effect!
-        </p>
+        </.demo_section_description>
 
         <div class={css_class([:task_list])}>
           <%= for {task, index} <- Enum.with_index(@tasks) do %>
-            <label class={css_class([:task_item]) <> if(index == length(@tasks) - 1, do: " " <> css_class([:task_item_last]), else: "")}>
-              <input
+            <label class={css_class([:task_item, index == length(@tasks) - 1 && :task_item_last])}>
+              <.input
                 type="checkbox"
-                class={css_class([:task_checkbox])}
                 checked={task.checked}
                 phx-click="toggle_task"
                 phx-value-id={task.id}
+                aria-label="Toggle task"
               />
-              <span class={css_class([:task_text]) <> if(task.checked, do: " " <> css_class([:task_text_checked]), else: "")}>
+              <span class={css_class([:task_text, task.checked && :task_text_checked])}>
                 {task.text}
               </span>
             </label>
           <% end %>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Focus Within</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          The search wrapper highlights when its input has focus using <code class={
-            css_class([{BaseStyles, :demo_code_inline}])
-          }>:has(input:focus)</code>.
-        </p>
+      <.demo_section>
+        <.demo_section_title>Focus Within</.demo_section_title>
+        <.demo_section_description>
+          The search wrapper highlights when its input has focus using <.code_inline>:has(input:focus)</.code_inline>.
+        </.demo_section_description>
 
         <div class={css_class([:search_wrapper])}>
           <div class={css_class([:search_box])}>
@@ -388,7 +362,7 @@ defmodule LiveStyleDemoWeb.HasLive do
             <input type="text" class={css_class([:search_input])} placeholder="Search..." />
           </div>
         </div>
-      </section>
+      </.demo_section>
     </.shell>
     """
   end

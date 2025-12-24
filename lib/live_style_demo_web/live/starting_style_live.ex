@@ -2,8 +2,6 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.Tokens
-  require LiveStyleDemoWeb.BaseStyles
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
 
   css_class(:button_row,
@@ -76,24 +74,17 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
     gap: css_var({Tokens, :space, :"4"})
   )
 
-  # Dialog using popover with @starting-style
-  css_class(:dialog,
-    padding: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
-    max_width: "min(400px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))",
-    # Center the dialog
+  # Layout concern: where the modal appears.
+  css_class(:modal_center,
     position: "fixed",
     inset: "0",
     width: "fit-content",
     height: "fit-content",
-    margin: "auto",
-    # Transition for smooth open/close
+    margin: "auto"
+  )
+
+  css_class(:modal_popover,
     transition: "opacity 0.25s ease, transform 0.25s ease, display 0.25s allow-discrete",
-    # End state (open)
     opacity: %{
       :default => "1",
       ":not(:popover-open)" => "0",
@@ -104,33 +95,11 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
       ":not(:popover-open)" => "translateY(-10px)",
       "@starting-style" => "translateY(-10px)"
     },
-    # Backdrop
     "::backdrop": %{
-      background_color: css_var({Tokens, :semantic, :overlay_backdrop_strong}),
+      background_color: css_var({Tokens, :semantic, :overlay_backdrop}),
       backdrop_filter: "blur(4px)",
       transition: "opacity 0.25s ease"
     }
-  )
-
-  css_class(:dialog_title,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_var({Tokens, :space, :"2"})
-  )
-
-  css_class(:dialog_text,
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed}),
-    margin_bottom: css_var({Tokens, :space, :"4"})
-  )
-
-  css_class(:dialog_actions,
-    display: "flex",
-    flex_wrap: "wrap",
-    gap: css_var({Tokens, :space, :"2"}),
-    justify_content: "flex-end"
   )
 
   # ============================================================================
@@ -161,7 +130,7 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
     gap: css_var({Tokens, :space, :"3"}),
     padding: css_var({Tokens, :space, :"4"}),
     background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    color: css_var({Tokens, :semantic, :text_on_primary}),
     border_radius: css_const({Tokens, :radius, :lg}),
     box_shadow: css_const({Tokens, :shadow, :lg}),
     min_width: "280px",
@@ -294,33 +263,27 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
       page_title="@starting-style"
       page_subtitle="First-render transitions, no JS required."
     >
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Entry Animations</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>@starting-style</code>
+      <.demo_section>
+        <.demo_section_title>Entry Animations</.demo_section_title>
+        <.demo_section_description>
+          <.code_inline>@starting-style</.code_inline>
           defines the initial state
           for CSS transitions when an element is first rendered. This enables smooth entry animations
           without JavaScript.
-        </p>
+        </.demo_section_description>
 
-        <div class={css_class([{BaseStyles, :demo_browser_note}])}>
+        <.browser_note>
           <span>⚠️</span>
           <span>Requires Chrome 117+ or Safari 17.4+ with @starting-style support</span>
-        </div>
+        </.browser_note>
 
         <div class={css_class([:button_row, :button_row_top])}>
-          <button
-            class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
-            phx-click="add_card"
-          >
+          <.button variant={:primary} phx-click="add_card">
             Add Card
-          </button>
-          <button
-            class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
-            phx-click="clear_cards"
-          >
+          </.button>
+          <.button variant={:secondary} phx-click="clear_cards">
             Clear All
-          </button>
+          </.button>
         </div>
 
         <div class={css_class([:demo_grid])}>
@@ -335,75 +298,64 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
             </div>
           <% end %>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Dialog Animation</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+      <.demo_section>
+        <.demo_section_title>Dialog Animation</.demo_section_title>
+        <.demo_section_description>
           Dialogs can use
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>@starting-style</code>
+          <.code_inline>@starting-style</.code_inline>
           with
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>
-            transition-behavior: allow-discrete
-          </code>
-          to animate from <code class={css_class([{BaseStyles, :demo_code_inline}])}>display: none</code>.
-        </p>
+          <.code_inline>transition-behavior: allow-discrete</.code_inline>
+          to animate from <.code_inline>display: none</.code_inline>.
+        </.demo_section_description>
 
         <div class={css_class([:dialog_wrapper])}>
-          <button
-            class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
-            popovertarget="animated-dialog"
-          >
+          <.button variant={:primary} popovertarget="animated-dialog">
             Open Dialog
-          </button>
+          </.button>
         </div>
 
-        <div id="animated-dialog" popover="auto" class={css_class([:dialog])}>
-          <h3 class={css_class([:dialog_title])}>Animated Dialog</h3>
-          <p class={css_class([:dialog_text])}>
-            This dialog fades and slides in when opened, and fades out when closed.
-            The animation is powered entirely by CSS using @starting-style.
-          </p>
-          <div class={css_class([:dialog_actions])}>
-            <button
-              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
-              popovertarget="animated-dialog"
-              popovertargetaction="hide"
-            >
-              Close
-            </button>
-            <button
-              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
-              popovertarget="animated-dialog"
-              popovertargetaction="hide"
-            >
-              Confirm
-            </button>
-          </div>
-        </div>
-      </section>
+        <div id="animated-dialog" popover="auto" class={css_class([:modal_center, :modal_popover])}>
+          <.modal title="Animated Dialog">
+            <p>
+              This dialog fades and slides in when opened, and fades out when closed.
+              The animation is powered entirely by CSS using @starting-style.
+            </p>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Toast Notifications</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+            <:actions>
+              <.button
+                variant={:secondary}
+                popovertarget="animated-dialog"
+                popovertargetaction="hide"
+              >
+                Close
+              </.button>
+              <.button
+                variant={:primary}
+                popovertarget="animated-dialog"
+                popovertargetaction="hide"
+              >
+                Confirm
+              </.button>
+            </:actions>
+          </.modal>
+        </div>
+      </.demo_section>
+
+      <.demo_section>
+        <.demo_section_title>Toast Notifications</.demo_section_title>
+        <.demo_section_description>
           Notifications slide in from the right using @starting-style. They auto-dismiss after 3 seconds.
-        </p>
+        </.demo_section_description>
 
         <div class={css_class([:button_row])}>
-          <button
-            class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
-            phx-click="add_notification"
-            phx-value-type="success"
-          >
+          <.button variant={:primary} phx-click="add_notification" phx-value-type="success">
             Success Toast
-          </button>
-          <button
-            class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_danger}])}
-            phx-click="add_notification"
-            phx-value-type="error"
-          >
+          </.button>
+          <.button variant={:danger} phx-click="add_notification" phx-value-type="error">
             Error Toast
-          </button>
+          </.button>
         </div>
 
         <div class={css_class([:notification_area])}>
@@ -458,7 +410,7 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
             <% end %>
           </div>
         </div>
-      </section>
+      </.demo_section>
     </.shell>
     """
   end

@@ -90,7 +90,8 @@ defmodule LiveStyleDemoWeb do
       import Phoenix.HTML
 
       # Core UI components
-      import LiveStyleDemoWeb.CoreComponents
+      import LiveStyleDemoWeb.UIComponents
+      import LiveStyleDemoWeb.LayoutComponents
       import LiveStyleDemoWeb.ShellComponents
 
       # Common modules used in templates

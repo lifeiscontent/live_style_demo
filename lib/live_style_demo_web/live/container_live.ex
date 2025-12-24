@@ -2,8 +2,6 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.Tokens
-  require LiveStyleDemoWeb.BaseStyles
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
 
   # ============================================================================
@@ -25,7 +23,7 @@ defmodule LiveStyleDemoWeb.ContainerLive do
     padding: css_var({Tokens, :space, :"4"}),
     border: "2px dashed",
     border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     # Make it a container for queries
     container_type: "inline-size",
     container_name: "card-container"
@@ -40,10 +38,12 @@ defmodule LiveStyleDemoWeb.ContainerLive do
 
   # Card that responds to container size
   css_class(:responsive_card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
     border_radius: css_const({Tokens, :radius, :lg}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     overflow: "hidden"
   )
 
@@ -66,7 +66,7 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:card_image,
     width: [default: "100%", "@container card-container (min-width: 400px)": "120px"],
     height: "120px",
-    background: css_const({Tokens, :gradient, :accent}),
+    background_color: css_var({Tokens, :semantic, :fill_secondary}),
     border_radius: css_const({Tokens, :radius, :md}),
     flex_shrink: "0"
   )
@@ -127,10 +127,10 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:sidebar,
     container_type: "inline-size",
     container_name: "sidebar",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     padding: css_var({Tokens, :space, :"4"})
   )
 
@@ -161,10 +161,10 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:main_content,
     container_type: "inline-size",
     container_name: "main",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     padding: css_var({Tokens, :space, :"6"})
   )
 
@@ -203,10 +203,10 @@ defmodule LiveStyleDemoWeb.ContainerLive do
   css_class(:cq_units_demo,
     container_type: "inline-size",
     container_name: "units-demo",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     padding: css_var({Tokens, :space, :"6"}),
     resize: "horizontal",
     overflow: "auto",
@@ -225,13 +225,12 @@ defmodule LiveStyleDemoWeb.ContainerLive do
     # Width based on container
     width: "50cqi",
     height: "20cqi",
-    background:
-      "linear-gradient(135deg, #{css_var({Tokens, :semantic, :fill_success})}, #{css_var({Tokens, :semantic, :fill_primary})})",
+    background: css_var({Tokens, :semantic, :fill_primary}),
     border_radius: css_const({Tokens, :radius, :lg}),
     display: "flex",
     align_items: "center",
     justify_content: "center",
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    color: css_var({Tokens, :semantic, :text_on_primary}),
     font_weight: css_const({Tokens, :font_weight, :medium})
   )
 
@@ -252,13 +251,13 @@ defmodule LiveStyleDemoWeb.ContainerLive do
       page_title="Container Queries"
       page_subtitle="Responsive components that react to their own container."
     >
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Responsive Card</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+      <.demo_section>
+        <.demo_section_title>Responsive Card</.demo_section_title>
+        <.demo_section_description>
           Drag the resize handle to change the container width. The card layout adapts based on
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>@container</code>
+          <.code_inline>@container</.code_inline>
           queries, not viewport size.
-        </p>
+        </.demo_section_description>
 
         <div class={css_class([:resize_wrapper])}>
           <div>
@@ -297,15 +296,13 @@ defmodule LiveStyleDemoWeb.ContainerLive do
             <p class={css_class([:resize_hint])}>← Drag to resize →</p>
           </div>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Adaptive Grid</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          The grid inside the main content area changes columns based on its own width using <code class={
-            css_class([{BaseStyles, :demo_code_inline}])
-          }>@container main (min-width: ...)</code>.
-        </p>
+      <.demo_section>
+        <.demo_section_title>Adaptive Grid</.demo_section_title>
+        <.demo_section_description>
+          The grid inside the main content area changes columns based on its own width using <.code_inline>@container main (min-width: ...)</.code_inline>.
+        </.demo_section_description>
 
         <div class={css_class([:layout_demo])}>
           <div class={css_class([:sidebar])}>
@@ -326,22 +323,23 @@ defmodule LiveStyleDemoWeb.ContainerLive do
             </div>
           </div>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Container Query Units</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          Use <code class={css_class([{BaseStyles, :demo_code_inline}])}>cqi</code>
+      <.demo_section>
+        <.demo_section_title>Container Query Units</.demo_section_title>
+        <.demo_section_description>
+          Use
+          <.code_inline>cqi</.code_inline>
           (container query inline) units to size
           elements relative to their container. Resize to see the text and box scale.
-        </p>
+        </.demo_section_description>
 
         <div class={css_class([:cq_units_demo])}>
           <h3 class={css_class([:cq_title])}>Fluid Typography</h3>
           <div class={css_class([:cq_box])}>50cqi × 20cqi</div>
         </div>
         <p class={css_class([:resize_hint])}>← Drag to resize →</p>
-      </section>
+      </.demo_section>
     </.shell>
     """
   end

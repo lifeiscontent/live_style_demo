@@ -1,16 +1,14 @@
-defmodule LiveStyleDemoWeb.SixMonthTestLive do
+defmodule LiveStyleDemoWeb.ThemingLive do
   use LiveStyleDemoWeb, :live_view
 
-  require LiveStyleDemoWeb.BaseStyles
   require LiveStyleDemoWeb.Tokens
 
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
 
   css_class(:intro,
     display: "grid",
     gap: css_var({Tokens, :space, :"3"}),
-    margin_bottom: css_var({Tokens, :space, :"8"})
+    margin_bottom: css_var({Tokens, :space, :"12"})
   )
 
   css_class(:intro_text,
@@ -156,14 +154,20 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
   )
 
   css_class(:toggle_btn_active,
-    background_image: css_const({Tokens, :gradient, :accent}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    background_color: [
+      default: css_var({Tokens, :semantic, :fill_primary}),
+      ":hover": css_var({Tokens, :semantic, :fill_primary_hover})
+    ],
+    color: [
+      default: css_var({Tokens, :semantic, :text_on_primary}),
+      ":hover": css_var({Tokens, :semantic, :text_on_primary})
+    ],
     border_color: "transparent"
   )
 
   @impl true
   def mount(_params, _session, socket) do
-    {:ok, assign(socket, page_title: "Six-Month Test", scale: :default)}
+    {:ok, assign(socket, page_title: "Theming", scale: :default)}
   end
 
   @impl true
@@ -237,12 +241,8 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
       <h3 class={css_class([:preview_title])}>Ship UI faster</h3>
       <p class={css_class([:preview_text])}>Spacing comes from tokens.</p>
       <div class={css_class([:preview_row])}>
-        <button class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}>
-          Primary
-        </button>
-        <button class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}>
-          Secondary
-        </button>
+        <.button variant={:primary}>Primary</.button>
+        <.button variant={:secondary}>Secondary</.button>
       </div>
     </div>
     """
@@ -252,22 +252,13 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
   defp diff_class(:removed), do: :diff_removed
   defp diff_class(:context), do: :diff_context
 
-  defp toggle_btn_class(active_scale, button_scale) do
-    css_class([
-      {BaseStyles, :btn_base},
-      {BaseStyles, :btn_sm},
-      {BaseStyles, :btn_secondary},
-      active_scale == button_scale && :toggle_btn_active
-    ])
-  end
-
   @impl true
   def render(assigns) do
     ~H"""
     <.shell
-      active="six-month-test"
+      active="theming"
       show_footer
-      page_title="The Six-Month Test"
+      page_title="Theming"
       page_subtitle="Change spacing scales with tokens—not template refactors."
     >
       <div class={css_class([:intro])}>
@@ -278,30 +269,36 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
 
         <div class={css_class([:controls])}>
           <span class={css_class([:tag])}>Spacing scale</span>
-          <button
+          <.button
             type="button"
+            size={:sm}
+            variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="compact"
-            class={toggle_btn_class(@scale, :compact)}
+            class={if @scale == :compact, do: css_class([:toggle_btn_active])}
           >
             Compact
-          </button>
-          <button
+          </.button>
+          <.button
             type="button"
+            size={:sm}
+            variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="default"
-            class={toggle_btn_class(@scale, :default)}
+            class={if @scale == :default, do: css_class([:toggle_btn_active])}
           >
             Default
-          </button>
-          <button
+          </.button>
+          <.button
             type="button"
+            size={:sm}
+            variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="cozy"
-            class={toggle_btn_class(@scale, :cozy)}
+            class={if @scale == :cozy, do: css_class([:toggle_btn_active])}
           >
             Cozy
-          </button>
+          </.button>
         </div>
       </div>
 
@@ -323,12 +320,8 @@ defmodule LiveStyleDemoWeb.SixMonthTestLive do
               Switch the scale and the layout reflows.
             </p>
             <div class={css_class([:preview_row])}>
-              <button class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}>
-                Primary
-              </button>
-              <button class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}>
-                Secondary
-              </button>
+              <.button variant={:primary}>Primary</.button>
+              <.button variant={:secondary}>Secondary</.button>
             </div>
           </div>
 

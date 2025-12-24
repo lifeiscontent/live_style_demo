@@ -18,10 +18,9 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
   # Ensure tokens/styles compile first
   require LiveStyleDemoWeb.Tokens
-  require LiveStyleDemoWeb.BaseStyles
-
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
+
+  import LiveStyleDemoWeb.UIComponents
 
   # =============================================================================
   # Shell layout styles
@@ -35,19 +34,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     color: css_var({Tokens, :semantic, :text_primary}),
     font_family: css_var({Tokens, :semantic, :font_body}),
     transition: "background-color 200ms ease, color 200ms ease",
-    scrollbar_gutter: "stable both-edges",
-    "::before": %{
-      content: "''",
-      position: "fixed",
-      inset: "0",
-      z_index: "-1",
-      pointer_events: "none",
-      background_image:
-        "radial-gradient(1100px circle at 15% 0%, #{css_var({Tokens, :semantic, :glow_primary})}, transparent 55%), radial-gradient(900px circle at 95% 10%, #{css_var({Tokens, :semantic, :glow_secondary})}, transparent 60%), radial-gradient(1400px circle at 50% 115%, color-mix(in oklab, #{css_var({Tokens, :semantic, :text_accent})} 12%, transparent), transparent 70%)",
-      filter: "saturate(1.15)",
-      opacity: "0.95",
-      transform: "translateZ(0)"
-    }
+    scrollbar_gutter: "stable both-edges"
   )
 
   css_class(:topbar,
@@ -114,9 +101,8 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     width: [default: "2.25rem", "@media (max-width: 420px)": "2rem"],
     height: [default: "2.25rem", "@media (max-width: 420px)": "2rem"],
     border_radius: css_const({Tokens, :radius, :xl}),
-    background_image: css_const({Tokens, :gradient, :primary}),
-    box_shadow:
-      "0 18px 50px -42px #{css_var({Tokens, :semantic, :glow_primary})}, 0 18px 55px -48px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
+    box_shadow: "none"
   )
 
   css_class(:brand_text,
@@ -238,9 +224,9 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   )
 
   css_class(:style_btn_active,
-    background_image: css_const({Tokens, :gradient, :accent}),
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
     border_color: "transparent",
-    color: css_var({Tokens, :semantic, :text_inverse})
+    color: css_var({Tokens, :semantic, :text_on_primary})
   )
 
   css_class(:menu,
@@ -360,6 +346,48 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}"
   )
 
+  css_class(:pagination,
+    display: "grid",
+    grid_template_columns: "repeat(auto-fit, minmax(200px, 1fr))",
+    gap: css_var({Tokens, :space, :"4"}),
+    margin_top: css_var({Tokens, :space, :"16"}),
+    padding_top: css_var({Tokens, :space, :"8"}),
+    border_top: "1px solid #{css_var({Tokens, :semantic, :border_glass})}"
+  )
+
+  css_class(:pagination_link,
+    display: "flex",
+    flex_direction: "column",
+    gap: css_var({Tokens, :space, :"1"}),
+    padding: css_var({Tokens, :space, :"4"}),
+    border_radius: css_const({Tokens, :radius, :lg}),
+    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
+    text_decoration: "none",
+    color: css_var({Tokens, :semantic, :text_primary}),
+    transition: "all 0.2s ease",
+    background_color: [
+      default: "transparent",
+      ":hover": css_var({Tokens, :semantic, :fill_surface})
+    ],
+    border_color: [
+      default: css_var({Tokens, :semantic, :border_subtle}),
+      ":hover": css_var({Tokens, :semantic, :border_focus})
+    ]
+  )
+
+  css_class(:pagination_label,
+    font_size: css_const({Tokens, :font_size, :xs}),
+    color: css_var({Tokens, :semantic, :text_secondary}),
+    text_transform: "uppercase",
+    letter_spacing: "0.05em",
+    font_weight: css_const({Tokens, :font_weight, :bold})
+  )
+
+  css_class(:pagination_title,
+    font_size: css_const({Tokens, :font_size, :lg}),
+    font_weight: css_const({Tokens, :font_weight, :semibold})
+  )
+
   # =============================================================================
   # Components
   # =============================================================================
@@ -376,7 +404,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
       <.mobile_menu_hook_definition />
       <.appearance_hook_definition />
       <.spacing_hook_definition />
-      <a href="#main" class={css_class([{BaseStyles, :sr_only}])}>Skip to content</a>
+      <.skip_link target="#main">Skip to content</.skip_link>
 
       <header class={css_class([:topbar])}>
         <div class={css_class([:topbar_inner])}>
@@ -387,14 +415,17 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
           <nav class={css_class([:nav])} aria-label="Primary">
             <div class={css_class([:nav_links])}>
-              <.nav_link to={~p"/six-month-test"} active={@active == "six-month-test"}>
-                Six-Month Test
+              <.nav_link to={~p"/theming"} active={@active == "theming"}>
+                Theming
               </.nav_link>
               <.nav_link to={~p"/transitions"} active={@active == "transitions"}>
                 Transitions
               </.nav_link>
-              <.nav_link to={~p"/clean-heex"} active={@active == "clean-heex"}>
-                Clean HEEx
+              <.nav_link to={~p"/components"} active={@active == "components"}>
+                Components
+              </.nav_link>
+              <.nav_link to={~p"/style-guide"} active={@active == "style-guide"}>
+                Style Guide
               </.nav_link>
               <.nav_link to={~p"/demos"} active={@active == "demos"}>Demos</.nav_link>
               <a class={css_class([:nav_link])} href="https://github.com/lifeiscontent/live_style">
@@ -409,7 +440,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
               <div class={css_class([:style_panel])} data-spacing-panel>
                 <button type="button" class={css_class([:style_btn])} data-space="default">
-                  Default spacing
+                  Default
                 </button>
                 <button type="button" class={css_class([:style_btn])} data-space="compact">
                   Compact
@@ -426,26 +457,29 @@ defmodule LiveStyleDemoWeb.ShellComponents do
               </summary>
 
               <div class={css_class([:style_panel])} data-appearance-panel>
-                <button type="button" class={css_class([:style_btn])} data-appearance="default-light">
-                  Default (Light)
+                <button type="button" class={css_class([:style_btn])} data-appearance="default">
+                  Swiss
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="default-dark">
-                  Default (Dark)
-                </button>
-
-                <div class={css_class([:menu_divider])} />
-
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-paper">
-                  Paper
-                </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-neon">
-                  Neon Night
-                </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-terminal">
+                <button type="button" class={css_class([:style_btn])} data-appearance="terminal">
                   Terminal
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="zen-brutalist">
-                  Brutalist
+                <button type="button" class={css_class([:style_btn])} data-appearance="blueprint">
+                  Blueprint
+                </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="solar">
+                  Solar
+                </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="navy">
+                  Navy
+                </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="forest">
+                  Forest
+                </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="lavender">
+                  Lavender
+                </button>
+                <button type="button" class={css_class([:style_btn])} data-appearance="brutal">
+                  Brutal
                 </button>
               </div>
             </details>
@@ -457,32 +491,29 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
               <div class={css_class([:menu_backdrop])} data-mobile-menu-backdrop aria-hidden="true" />
               <div class={css_class([:menu_panel])} data-mobile-menu-panel role="menu">
-                <.nav_link to={~p"/six-month-test"} active={@active == "six-month-test"}>
-                  Six-Month Test
+                <.nav_link to={~p"/theming"} active={@active == "theming"}>
+                  Theming
                 </.nav_link>
                 <.nav_link to={~p"/transitions"} active={@active == "transitions"}>
                   Transitions
                 </.nav_link>
-                <.nav_link to={~p"/clean-heex"} active={@active == "clean-heex"}>
-                  Clean HEEx
+                <.nav_link to={~p"/components"} active={@active == "components"}>
+                  Components
+                </.nav_link>
+                <.nav_link to={~p"/style-guide"} active={@active == "style-guide"}>
+                  Style Guide
                 </.nav_link>
                 <.nav_link to={~p"/demos"} active={@active == "demos"}>Demos</.nav_link>
 
                 <div class={css_class([:menu_divider])} />
 
-                <a
-                  class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
-                  href="https://github.com/lifeiscontent/live_style"
-                >
+                <.button variant={:secondary} href="https://github.com/lifeiscontent/live_style">
                   GitHub
-                </a>
+                </.button>
 
-                <.link
-                  navigate={~p"/"}
-                  class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
-                >
+                <.button variant={:primary} navigate={~p"/"}>
                   Home
-                </.link>
+                </.button>
               </div>
             </details>
           </nav>
@@ -496,6 +527,8 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         </header>
 
         {render_slot(@inner_block)}
+
+        <.pagination active={@active} />
       </main>
 
       <footer :if={@show_footer} class={css_class([:footer])}>
@@ -514,6 +547,59 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         </div>
       </footer>
     </div>
+    """
+  end
+
+  defp pages do
+    [
+      {"home", "Home", "/"},
+      {"theming", "Theming", "/theming"},
+      {"components", "Components", "/components"},
+      {"style-guide", "Style Guide", "/style-guide"},
+      {"transitions", "Transitions", "/transitions"},
+      {"anchor", "Anchor Positioning", "/anchor"},
+      {"color", "Color & OKLCH", "/color"},
+      {"parent-selector", "Parent Selector (:has)", "/parent-selector"},
+      {"popover", "Popover API", "/popover"},
+      {"container", "Container Queries", "/container"},
+      {"scroll", "Scroll Animations", "/scroll"},
+      {"starting-style", "@starting-style", "/starting-style"},
+      {"focus-card", "Focus Card", "/focus-card"},
+      {"todo", "Todo App", "/todo"},
+      {"table", "Price Table", "/table"}
+    ]
+  end
+
+  attr(:active, :string, default: nil)
+
+  def pagination(assigns) do
+    all = pages()
+    idx = Enum.find_index(all, fn {id, _, _} -> id == assigns.active end)
+
+    assigns =
+      assign(assigns,
+        prev: if(idx && idx > 0, do: Enum.at(all, idx - 1)),
+        next: if(idx && idx < length(all) - 1, do: Enum.at(all, idx + 1))
+      )
+
+    ~H"""
+    <nav :if={@prev || @next} class={css_class([:pagination])} aria-label="Pagination">
+      <.link :if={@prev} navigate={elem(@prev, 2)} class={css_class([:pagination_link])}>
+        <span class={css_class([:pagination_label])}>&larr; Previous</span>
+        <span class={css_class([:pagination_title])}>{elem(@prev, 1)}</span>
+      </.link>
+      <div :if={!@prev}></div>
+
+      <.link
+        :if={@next}
+        navigate={elem(@next, 2)}
+        class={css_class([:pagination_link])}
+        style="text-align: right; align-items: flex-end;"
+      >
+        <span class={css_class([:pagination_label])}>Next &rarr;</span>
+        <span class={css_class([:pagination_title])}>{elem(@next, 1)}</span>
+      </.link>
+    </nav>
     """
   end
 
@@ -540,61 +626,36 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         }
 
         function normalizeAppearance() {
-          // Migrate from older keys if present.
           const stored = window.localStorage?.getItem(APPEARANCE_KEY)
           if (stored) return stored
-
-          const legacyStyle = window.localStorage?.getItem("ls-style") || "default"
-          const legacyTheme = window.localStorage?.getItem("ls-theme") || "light"
-
-          const value =
-            legacyStyle !== "default"
-              ? legacyStyle
-              : legacyTheme === "dark"
-                ? "default-dark"
-                : "default-light"
-
-          try {
-            window.localStorage?.setItem(APPEARANCE_KEY, value)
-          } catch (_err) {
-            // ignore
-          }
-
-          return value
+          return "default"
         }
 
         function applyAppearance(value) {
           const root = document.documentElement
-          const darkClass = root.dataset.themeDarkClass
 
-          const themeClasses = {
-            "zen-brutalist": root.dataset.styleZenBrutalistClass,
-            "zen-paper": root.dataset.styleZenPaperClass,
-            "zen-neon": root.dataset.styleZenNeonClass,
-            "zen-terminal": root.dataset.styleZenTerminalClass,
-          }
+        const themeClasses = {
+          "terminal": root.dataset.styleTerminalClass,
+          "blueprint": root.dataset.styleBlueprintClass,
+          "solar": root.dataset.styleSolarClass,
+          "navy": root.dataset.styleNavyClass,
+          "forest": root.dataset.styleForestClass,
+          "lavender": root.dataset.styleLavenderClass,
+          "brutal": root.dataset.styleBrutalClass,
+        }
 
-          // Remove all zen theme classes.
+          // Remove all theme classes
           Object.values(themeClasses).forEach((classString) => {
-            splitClasses(classString).forEach((cls) => root.classList.remove(cls))
+            if (classString) {
+              splitClasses(classString).forEach((cls) => root.classList.remove(cls))
+            }
           })
 
-          if (darkClass) root.classList.remove(darkClass)
-
-          let colorScheme = "light"
-
-          if (value === "default-dark") {
-            if (darkClass) root.classList.add(darkClass)
-            colorScheme = "dark"
-          } else if (value === "default-light") {
-            colorScheme = "light"
-          } else {
-            splitClasses(themeClasses[value]).forEach((cls) => root.classList.add(cls))
-            colorScheme = value === "zen-neon" || value === "zen-terminal" ? "dark" : "light"
+          if (value !== "default" && themeClasses[value]) {
+             splitClasses(themeClasses[value]).forEach((cls) => root.classList.add(cls))
           }
 
-          root.dataset.theme = colorScheme
-          root.style.colorScheme = colorScheme
+          root.dataset.theme = value
 
           try {
             window.localStorage?.setItem(APPEARANCE_KEY, value)
@@ -629,7 +690,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
               if (!btn) return
 
               event.preventDefault()
-              const next = btn.getAttribute("data-appearance") || "default-light"
+              const next = btn.getAttribute("data-appearance") || "default"
               applyAppearance(next)
               setActive(this.panel, next)
               this.el.open = false

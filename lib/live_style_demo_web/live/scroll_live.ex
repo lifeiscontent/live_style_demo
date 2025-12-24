@@ -2,8 +2,6 @@ defmodule LiveStyleDemoWeb.ScrollLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.Tokens
-  require LiveStyleDemoWeb.BaseStyles
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
 
   # ============================================================================
@@ -21,8 +19,7 @@ defmodule LiveStyleDemoWeb.ScrollLive do
     left: "0",
     width: "100%",
     height: "4px",
-    background:
-      "linear-gradient(90deg, #{css_var({Tokens, :semantic, :fill_primary})}, #{css_var({Tokens, :semantic, :fill_accent})})",
+    background: css_var({Tokens, :semantic, :fill_primary}),
     transform_origin: "left",
     z_index: "200",
     # Scroll-driven animation
@@ -46,12 +43,14 @@ defmodule LiveStyleDemoWeb.ScrollLive do
   )
 
   css_class(:reveal_card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
     border_radius: css_const({Tokens, :radius, :lg}),
     padding: css_var({Tokens, :space, :"6"}),
     margin_bottom: css_var({Tokens, :space, :"6"}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     # Scroll-driven animation with view()
     animation_name: css_keyframes(:reveal),
     animation_timeline: "view()",
@@ -86,7 +85,7 @@ defmodule LiveStyleDemoWeb.ScrollLive do
     position: "relative",
     height: "400px",
     overflow: "hidden",
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border_radius: css_const({Tokens, :radius, :"2xl"}),
     margin_bottom: css_var({Tokens, :space, :"8"}),
     # Define a named view timeline on the container (the element that enters viewport)
     view_timeline_name: "--parallax-container",
@@ -96,8 +95,10 @@ defmodule LiveStyleDemoWeb.ScrollLive do
   css_class(:parallax_bg,
     position: "absolute",
     inset: "0",
-    # Use background-size to make the gradient taller than container
-    background: css_const({Tokens, :gradient, :primary}),
+    # Stripe pattern to make movement visible
+    background_color: css_var({Tokens, :semantic, :fill_primary}),
+    background_image:
+      "repeating-linear-gradient(45deg, transparent, transparent 10px, rgba(255,255,255,0.1) 10px, rgba(255,255,255,0.1) 20px)",
     background_size: "100% 200%",
     animation_name: css_keyframes(:parallax_shift),
     animation_timeline: "--parallax-container",
@@ -112,7 +113,7 @@ defmodule LiveStyleDemoWeb.ScrollLive do
     align_items: "center",
     justify_content: "center",
     height: "100%",
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    color: css_var({Tokens, :semantic, :text_on_primary}),
     font_size: css_const({Tokens, :font_size, :"3xl"}),
     font_weight: css_const({Tokens, :font_weight, :bold}),
     text_shadow: "0 2px 10px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
@@ -142,10 +143,12 @@ defmodule LiveStyleDemoWeb.ScrollLive do
     flex_shrink: "0",
     width: "280px",
     height: "200px",
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
     border_radius: css_const({Tokens, :radius, :lg}),
+    box_shadow:
+      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
     display: "flex",
     align_items: "center",
     justify_content: "center",
@@ -167,8 +170,7 @@ defmodule LiveStyleDemoWeb.ScrollLive do
   css_class(:horizontal_progress_bar,
     width: "100%",
     height: "100%",
-    background:
-      "linear-gradient(90deg, #{css_var({Tokens, :semantic, :fill_success})}, #{css_var({Tokens, :semantic, :fill_primary})})",
+    background: css_var({Tokens, :semantic, :fill_primary}),
     transform_origin: "left",
     animation_name: css_keyframes(:grow_progress),
     animation_timeline: "--horizontal-scroll",
@@ -195,41 +197,35 @@ defmodule LiveStyleDemoWeb.ScrollLive do
     >
       <%!-- Progress bar at top --%>
       <div class={css_class([:progress_bar])}></div>
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Reading Progress</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          The purple bar at the top shows your scroll progress through the page using <code class={
-            css_class([{BaseStyles, :demo_code_inline}])
-          }>animation-timeline: scroll()</code>.
-        </p>
-        <div class={css_class([{BaseStyles, :demo_browser_note}])}>
+      <.demo_section>
+        <.demo_section_title>Reading Progress</.demo_section_title>
+        <.demo_section_description>
+          The progress bar at the top tracks your scroll position using <.code_inline>animation-timeline: scroll()</.code_inline>.
+        </.demo_section_description>
+        <.browser_note>
           <span>⚠️</span>
           <span>Requires Chrome 115+ or browsers with Scroll-Driven Animations support</span>
-        </div>
-      </section>
+        </.browser_note>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Parallax Effect</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          The background moves at a different rate than the scroll using <code class={
-            css_class([{BaseStyles, :demo_code_inline}])
-          }>animation-timeline: view()</code>.
-        </p>
+      <.demo_section>
+        <.demo_section_title>Parallax Effect</.demo_section_title>
+        <.demo_section_description>
+          The background moves at a different rate than the scroll using <.code_inline>animation-timeline: view()</.code_inline>.
+        </.demo_section_description>
         <div class={css_class([:parallax_container])}>
           <div class={css_class([:parallax_bg])}></div>
           <div class={css_class([:parallax_content])}>
             Parallax Background
           </div>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Horizontal Scroll Progress</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          Scroll horizontally to see the progress bar fill. Uses <code class={
-            css_class([{BaseStyles, :demo_code_inline}])
-          }>animation-timeline: scroll(x nearest)</code>.
-        </p>
+      <.demo_section>
+        <.demo_section_title>Horizontal Scroll Progress</.demo_section_title>
+        <.demo_section_description>
+          Scroll horizontally to see the progress bar fill. Uses <.code_inline>animation-timeline: scroll(x nearest)</.code_inline>.
+        </.demo_section_description>
         <div class={css_class([:horizontal_scroll_wrapper])}>
           <div class={css_class([:horizontal_scroll_container])}>
             <div :for={i <- 1..8} class={css_class([:scroll_card])}>
@@ -240,16 +236,16 @@ defmodule LiveStyleDemoWeb.ScrollLive do
             <div class={css_class([:horizontal_progress_bar])}></div>
           </div>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Reveal on Scroll</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+      <.demo_section>
+        <.demo_section_title>Reveal on Scroll</.demo_section_title>
+        <.demo_section_description>
           Cards fade in and slide up as they enter the viewport using
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>animation-timeline: view()</code>
-          and <code class={css_class([{BaseStyles, :demo_code_inline}])}>animation-range</code>.
-        </p>
-      </section>
+          <.code_inline>animation-timeline: view()</.code_inline>
+          and <.code_inline>animation-range</.code_inline>.
+        </.demo_section_description>
+      </.demo_section>
 
       <div class={css_class([:scroll_content])}>
         <div :for={i <- 1..6} class={css_class([:reveal_card])}>

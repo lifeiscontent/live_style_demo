@@ -5,8 +5,6 @@ defmodule LiveStyleDemoWeb.AnchorLive do
   alias LiveStyle.When
 
   require LiveStyleDemoWeb.Tokens
-  require LiveStyleDemoWeb.BaseStyles
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
 
   css_class(:demo_container,
@@ -71,7 +69,7 @@ defmodule LiveStyleDemoWeb.AnchorLive do
     padding_block: css_var({Tokens, :space, :"2"}),
     padding_inline: css_var({Tokens, :space, :"3"}),
     background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    color: css_var({Tokens, :semantic, :text_on_primary}),
     font_size: css_const({Tokens, :font_size, :sm}),
     border_radius: css_const({Tokens, :radius, :md}),
     box_shadow: css_const({Tokens, :shadow, :lg}),
@@ -127,7 +125,7 @@ defmodule LiveStyleDemoWeb.AnchorLive do
     padding_block: css_var({Tokens, :space, :"2"}),
     padding_inline: css_var({Tokens, :space, :"3"}),
     background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    color: css_var({Tokens, :semantic, :text_on_primary}),
     font_size: css_const({Tokens, :font_size, :sm}),
     border_radius: css_const({Tokens, :radius, :md}),
     box_shadow: css_const({Tokens, :shadow, :lg}),
@@ -216,7 +214,7 @@ defmodule LiveStyleDemoWeb.AnchorLive do
     padding_block: css_var({Tokens, :space, :"2"}),
     padding_inline: css_var({Tokens, :space, :"3"}),
     background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_inverse}),
+    color: css_var({Tokens, :semantic, :text_on_primary}),
     font_size: css_const({Tokens, :font_size, :sm}),
     border_radius: css_const({Tokens, :radius, :md}),
     box_shadow: css_const({Tokens, :shadow, :lg}),
@@ -241,97 +239,117 @@ defmodule LiveStyleDemoWeb.AnchorLive do
       page_subtitle="Anchor tooltips + smart fallbacks with pure CSS."
     >
       <%!-- Demo 1: Basic Tooltip --%>
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Basic Tooltip</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          A simple tooltip anchored to a button using <code class={
-            css_class([{BaseStyles, :demo_code_inline}])
-          }>position-anchor</code>.
+      <.demo_section>
+        <.demo_section_title>Basic Tooltip</.demo_section_title>
+        <.demo_section_description>
+          A simple tooltip anchored to a button using <.code_inline>position-anchor</.code_inline>.
           The tooltip automatically repositions using
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>position-try-fallbacks</code>
+          <.code_inline>position-try-fallbacks</.code_inline>
           when it would overflow the viewport.
-        </p>
+        </.demo_section_description>
         <div class={css_class([:demo_container])}>
           <div class={css_class([:relative])}>
-            <button class={"#{css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}, :basic_anchor])} #{Marker.default()}"}>
+            <.button
+              variant={:primary}
+              class={"#{css_class([:basic_anchor])} #{Marker.default()}"}
+            >
               Hover me
-            </button>
+            </.button>
             <div class={css_class([:basic_tooltip])}>
               I'm anchored with pure CSS!
             </div>
           </div>
         </div>
-        <div class={css_class([{BaseStyles, :demo_browser_note}])}>
+        <.browser_note>
           <span>⚠️</span>
           <span>Requires Chrome 125+ or browsers with Anchor Positioning support</span>
-        </div>
-      </section>
+        </.browser_note>
+      </.demo_section>
 
       <%!-- Demo 2: Grid of Anchors --%>
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Grid of Anchored Tooltips</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+      <.demo_section>
+        <.demo_section_title>Grid of Anchored Tooltips</.demo_section_title>
+        <.demo_section_description>
           Multiple anchored elements in a grid layout. Each button has its own
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>anchor-name</code>
-          and corresponding tooltip with <code class={css_class([{BaseStyles, :demo_code_inline}])}>position-anchor</code>.
+          <.code_inline>anchor-name</.code_inline>
+          and corresponding tooltip with <.code_inline>position-anchor</.code_inline>.
           Try scrolling the page so buttons are near viewport edges to see fallback positioning.
-        </p>
+        </.demo_section_description>
         <div class={css_class([:demo_container])}>
           <div class={css_class([:grid_demo])}>
             <div class={css_class([:grid_cell, :grid_pos_1])}>
-              <button class={"#{css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}, :grid_anchor_1])} #{Marker.default()}"}>
+              <.button
+                variant={:secondary}
+                class={"#{css_class([:grid_anchor_1])} #{Marker.default()}"}
+              >
                 ↖
-              </button>
+              </.button>
               <div class={css_class([:grid_tooltip_base, :grid_tooltip_1])}>Top-left</div>
             </div>
 
             <div class={css_class([:grid_cell, :grid_pos_2])}>
-              <button class={"#{css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}, :grid_anchor_2])} #{Marker.default()}"}>
+              <.button
+                variant={:secondary}
+                class={"#{css_class([:grid_anchor_2])} #{Marker.default()}"}
+              >
                 ↗
-              </button>
+              </.button>
               <div class={css_class([:grid_tooltip_base, :grid_tooltip_2])}>Top-right</div>
             </div>
 
             <div class={css_class([:grid_cell, :grid_pos_3])}>
-              <button class={"#{css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}, :grid_anchor_3])} #{Marker.default()}"}>
+              <.button
+                variant={:primary}
+                class={"#{css_class([:grid_anchor_3])} #{Marker.default()}"}
+              >
                 ●
-              </button>
+              </.button>
               <div class={css_class([:grid_tooltip_base, :grid_tooltip_3])}>Center</div>
             </div>
 
             <div class={css_class([:grid_cell, :grid_pos_4])}>
-              <button class={"#{css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}, :grid_anchor_4])} #{Marker.default()}"}>
+              <.button
+                variant={:secondary}
+                class={"#{css_class([:grid_anchor_4])} #{Marker.default()}"}
+              >
                 ↙
-              </button>
+              </.button>
               <div class={css_class([:grid_tooltip_base, :grid_tooltip_4])}>Bottom-left</div>
             </div>
 
             <div class={css_class([:grid_cell, :grid_pos_5])}>
-              <button class={"#{css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}, :grid_anchor_5])} #{Marker.default()}"}>
+              <.button
+                variant={:secondary}
+                class={"#{css_class([:grid_anchor_5])} #{Marker.default()}"}
+              >
                 ↘
-              </button>
+              </.button>
               <div class={css_class([:grid_tooltip_base, :grid_tooltip_5])}>Bottom-right</div>
             </div>
           </div>
         </div>
-      </section>
+      </.demo_section>
 
       <%!-- Demo 3: Scrollable Container --%>
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Scrollable Container</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          With <code class={css_class([{BaseStyles, :demo_code_inline}])}>position: absolute</code>
+      <.demo_section>
+        <.demo_section_title>Scrollable Container</.demo_section_title>
+        <.demo_section_description>
+          With
+          <.code_inline>position: absolute</.code_inline>
           and a scrollable containing block,
           the tooltip repositions as you scroll. Try scrolling inside the box below.
-        </p>
+        </.demo_section_description>
         <div class={css_class([:scroll_container])}>
           <div class={css_class([:scroll_content])}>
             <div class={css_class([:scroll_hint])}>↓ Scroll down ↓</div>
 
             <div class={css_class([:center_relative])}>
-              <button class={"#{css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}, :scroll_anchor])} #{Marker.default()}"}>
+              <.button
+                variant={:primary}
+                class={"#{css_class([:scroll_anchor])} #{Marker.default()}"}
+              >
                 Anchored Button
-              </button>
+              </.button>
               <div class={css_class([:scroll_tooltip])}>
                 Tooltip flips on scroll!
               </div>
@@ -340,7 +358,7 @@ defmodule LiveStyleDemoWeb.AnchorLive do
             <div class={css_class([:scroll_hint])}>↑ Scroll up ↑</div>
           </div>
         </div>
-      </section>
+      </.demo_section>
     </.shell>
     """
   end

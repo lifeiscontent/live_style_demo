@@ -3,9 +3,8 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
 
   require Logger
 
+  # Ensure Tokens is compiled first
   require LiveStyleDemoWeb.Tokens
-  require LiveStyleDemoWeb.BaseStyles
-  alias LiveStyleDemoWeb.BaseStyles
   alias LiveStyleDemoWeb.Tokens
 
   import LiveStyleDemoWeb.ViewTransition
@@ -74,13 +73,14 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
   )
 
   css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
+    border_color: css_var({Tokens, :semantic, :border_glass}),
     border_radius: css_const({Tokens, :radius, :lg}),
     padding: css_var({Tokens, :space, :"4"}),
     cursor: "pointer",
-    transition: "transform 0.18s ease-out, box-shadow 0.18s ease",
+    transition: "transform 0.18s ease-out, box-shadow 0.18s ease, border-color 0.18s ease",
     transform: %{
       :default => "scale(1)",
       ":hover" => "scale(1.02)"
@@ -88,6 +88,10 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     box_shadow: %{
       :default => "none",
       ":hover" => css_const({Tokens, :shadow, :md})
+    },
+    border_color: %{
+      :default => css_var({Tokens, :semantic, :border_glass}),
+      ":hover" => css_var({Tokens, :semantic, :border_focus})
     }
   )
 
@@ -119,31 +123,19 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
   # ============================================================================
 
   css_class(:feed_container,
-    max_width: "420px"
+    max_width: "420px",
+    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    backdrop_filter: "blur(12px) saturate(1.1)",
+    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border_radius: css_const({Tokens, :radius, :xl}),
+    padding: css_var({Tokens, :space, :"6"}),
+    box_shadow: "0 4px 20px -12px #{css_var({Tokens, :semantic, :shadow_color})}"
   )
 
   css_class(:feed_input_row,
     display: "flex",
     gap: css_var({Tokens, :space, :"2"}),
     margin_bottom: css_var({Tokens, :space, :"4"})
-  )
-
-  css_class(:feed_input,
-    flex: "1",
-    padding_block: css_var({Tokens, :space, :"2.5"}),
-    padding_inline: css_var({Tokens, :space, :"3"}),
-    border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :md}),
-    font_size: css_const({Tokens, :font_size, :base}),
-    outline: %{
-      :default => nil,
-      ":focus" => "none"
-    },
-    border_color: %{
-      :default => css_var({Tokens, :semantic, :border_subtle}),
-      ":focus" => css_var({Tokens, :semantic, :border_focus})
-    }
   )
 
   css_class(:feed_list,
@@ -165,13 +157,6 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
 
   css_class(:feed_item_last,
     border_bottom: "none"
-  )
-
-  css_class(:feed_toggle,
-    width: "20px",
-    height: "20px",
-    accent_color: css_var({Tokens, :semantic, :fill_primary}),
-    cursor: "pointer"
   )
 
   css_class(:feed_text,
@@ -335,33 +320,23 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
       page_title="View Transitions"
       page_subtitle="A focused lab for the View Transitions API + LiveView patches."
     >
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Card Grid</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
+      <.demo_section>
+        <.demo_section_title>Card Grid</.demo_section_title>
+        <.demo_section_description>
           Cards use
-          <code class={css_class([{BaseStyles, :demo_code_inline}])}>view-transition-name</code>
-          to create
-          smooth animations when shuffled, added, or removed. Each card gets a unique transition name.
-        </p>
+          <.code_inline>view-transition-name</.code_inline>
+          to create smooth animations when
+          shuffled, added, or removed. Each card gets a unique transition name.
+        </.demo_section_description>
 
-        <div class={css_class([{BaseStyles, :demo_browser_note}])}>
+        <.browser_note>
           <span>⚠️</span>
           <span>Requires Chrome 111+ or Safari 18+ with View Transitions support</span>
-        </div>
+        </.browser_note>
 
         <div class={css_class([:button_row, :button_row_top])}>
-          <button
-            class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
-            phx-click="shuffle_cards"
-          >
-            Shuffle Cards
-          </button>
-          <button
-            class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_secondary}])}
-            phx-click="add_card"
-          >
-            Add Card
-          </button>
+          <.button variant={:primary} phx-click="shuffle_cards">Shuffle Cards</.button>
+          <.button variant={:secondary} phx-click="add_card">Add Card</.button>
         </div>
 
         <div id="cards-grid" class={css_class([:demo_grid])}>
@@ -378,31 +353,24 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
             </.view_transition>
           <% end %>
         </div>
-      </section>
+      </.demo_section>
 
-      <section class={css_class([{BaseStyles, :demo_section}])}>
-        <h2 class={css_class([{BaseStyles, :demo_section_title}])}>Notification Feed</h2>
-        <p class={css_class([{BaseStyles, :demo_section_description}])}>
-          A small “live list” demo: insert, delete, and toggle read state.
-          Each row gets a stable transition name for smooth animations.
-        </p>
+      <.demo_section>
+        <.demo_section_title>Notification Feed</.demo_section_title>
+        <.demo_section_description>
+          A small “live list” demo: insert, delete, and toggle read state. Each row gets a stable
+          transition name for smooth animations.
+        </.demo_section_description>
 
         <div class={css_class([:feed_container])}>
           <form phx-submit="add_message" class={css_class([:feed_input_row])}>
-            <input
-              type="text"
+            <.input
               name="text"
-              class={css_class([:feed_input])}
               placeholder="Add a notification…"
               value={@new_message}
               phx-change="update_new_message"
             />
-            <button
-              type="submit"
-              class={css_class([{BaseStyles, :btn_base}, {BaseStyles, :btn_primary}])}
-            >
-              Add
-            </button>
+            <.button type="submit" variant={:primary}>Add</.button>
           </form>
 
           <div id="feed-list" class={css_class([:feed_list])}>
@@ -417,9 +385,8 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
                   class={css_class([:feed_item, index == length(@messages) - 1 && :feed_item_last])}
                   view-transition-class={css_view_transition(:list_item)}
                 >
-                  <input
+                  <.input
                     type="checkbox"
-                    class={css_class([:feed_toggle])}
                     checked={message.read}
                     phx-click="toggle_read"
                     phx-value-id={message.id}
@@ -435,13 +402,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
                     phx-value-id={message.id}
                     aria-label="Delete message"
                   >
-                    <svg
-                      width="16"
-                      height="16"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
+                    <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path
                         stroke-linecap="round"
                         stroke-linejoin="round"
@@ -455,7 +416,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
             <% end %>
           </div>
         </div>
-      </section>
+      </.demo_section>
     </.shell>
     """
   end
