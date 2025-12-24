@@ -452,8 +452,12 @@ defmodule LiveStyleDemoWeb.ShellComponents do
             </details>
 
             <details id="appearance" class={css_class([:style_menu])} phx-hook=".Appearance">
-              <summary class={css_class([:style_toggle])} aria-label="Theme">
-                <span aria-hidden="true">◐</span>
+              <summary
+                class={css_class([:style_toggle])}
+                aria-label="Theme"
+                data-appearance-toggle
+              >
+                <span aria-hidden="true" data-appearance-icon>🇨🇭</span>
               </summary>
 
               <div class={css_class([:style_panel])} data-appearance-panel>
@@ -631,18 +635,50 @@ defmodule LiveStyleDemoWeb.ShellComponents do
           return "default"
         }
 
+        function appearanceInfo(value) {
+          switch (value) {
+            case "terminal":
+              return {label: "Terminal", icon: "🟩"}
+            case "blueprint":
+              return {label: "Blueprint", icon: "🟦"}
+            case "solar":
+              return {label: "Solar", icon: "☀️"}
+            case "navy":
+              return {label: "Navy", icon: "🌊"}
+            case "forest":
+              return {label: "Forest", icon: "🌲"}
+            case "lavender":
+              return {label: "Lavender", icon: "💜"}
+            case "brutal":
+              return {label: "Brutal", icon: "🔨"}
+            default:
+              return {label: "Swiss", icon: "🇨🇭"}
+          }
+        }
+
+        function syncToggle(value, root) {
+          const {label, icon} = appearanceInfo(value)
+          const toggle = root.querySelector("[data-appearance-toggle]")
+          if (!toggle) return
+
+          const iconEl = toggle.querySelector("[data-appearance-icon]")
+          if (iconEl) iconEl.textContent = icon
+
+          toggle.title = `Theme: ${label}`
+        }
+
         function applyAppearance(value) {
           const root = document.documentElement
 
-        const themeClasses = {
-          "terminal": root.dataset.styleTerminalClass,
-          "blueprint": root.dataset.styleBlueprintClass,
-          "solar": root.dataset.styleSolarClass,
-          "navy": root.dataset.styleNavyClass,
-          "forest": root.dataset.styleForestClass,
-          "lavender": root.dataset.styleLavenderClass,
-          "brutal": root.dataset.styleBrutalClass,
-        }
+          const themeClasses = {
+            "terminal": root.dataset.styleTerminalClass,
+            "blueprint": root.dataset.styleBlueprintClass,
+            "solar": root.dataset.styleSolarClass,
+            "navy": root.dataset.styleNavyClass,
+            "forest": root.dataset.styleForestClass,
+            "lavender": root.dataset.styleLavenderClass,
+            "brutal": root.dataset.styleBrutalClass,
+          }
 
           // Remove all theme classes
           Object.values(themeClasses).forEach((classString) => {
@@ -656,6 +692,8 @@ defmodule LiveStyleDemoWeb.ShellComponents do
           }
 
           root.dataset.theme = value
+
+          syncToggle(value, root)
 
           try {
             window.localStorage?.setItem(APPEARANCE_KEY, value)
