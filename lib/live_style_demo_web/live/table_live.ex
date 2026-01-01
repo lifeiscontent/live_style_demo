@@ -72,86 +72,74 @@ defmodule LiveStyleDemoWeb.TableLive do
   # ============================================================================
 
   # Column highlight selectors generated dynamically (like StyleX's Object.fromEntries)
-  @column_opacity Map.new(2..8, fn n ->
+  @column_opacity Enum.map(2..8, fn n ->
                     {":nth-child(#{n})",
-                     %{
-                       :default => nil,
-                       When.ancestor(":has(td:nth-of-type(#{n}):hover)") => "1"
-                     }}
+                     [
+                       {:default, nil},
+                       {When.ancestor(":has(td:nth-of-type(#{n}):hover)"), "1"}
+                     ]}
                   end)
 
-  @column_background Map.new(2..8, fn n ->
+  @column_background Enum.map(2..8, fn n ->
                        {":nth-child(#{n})",
-                        %{
-                          :default => nil,
-                          When.ancestor(":has(td:nth-of-type(#{n}):hover)") => @highlight
-                        }}
+                        [
+                          {:default, nil},
+                          {When.ancestor(":has(td:nth-of-type(#{n}):hover)"), @highlight}
+                        ]}
                      end)
 
-  @column_color Map.new(2..8, fn n ->
+  @column_color Enum.map(2..8, fn n ->
                   {":nth-child(#{n})",
-                   %{
-                     :default => nil,
-                     When.ancestor(":has(td:nth-of-type(#{n}):hover)") =>
-                       var({Semantic, :text_on_primary})
-                   }}
+                   [
+                     {:default, nil},
+                     {When.ancestor(":has(td:nth-of-type(#{n}):hover)"),
+                       var({Semantic, :text_on_primary})}
+                   ]}
                 end)
 
   class(:td,
-    text_align: %{
-      :default => "center",
-      ":first-child" => "right"
-    },
+    text_align: [
+      default: "center",
+      ":first-child": "right"
+    ],
     padding_block: var({Space, :"1"}),
     padding_inline: var({Space, :"2"}),
     color:
-      Map.merge(
-        %{
-          :default => var({Semantic, :text_secondary}),
-          When.ancestor(":hover", @row_marker) => %{
-            :default => var({Semantic, :text_on_primary}),
-            ":nth-child(1)" => var({Semantic, :text_secondary})
-          },
-          ":hover" => %{
-            :default => var({Semantic, :text_on_primary}),
-            ":nth-child(1)" => var({Semantic, :text_secondary})
-          }
-        },
-        @column_color
-      ),
+      [
+        {:default, var({Semantic, :text_secondary})},
+        {When.ancestor(":hover", @row_marker), [
+          {:default, var({Semantic, :text_on_primary})},
+          {":nth-child(1)", var({Semantic, :text_secondary})}
+        ]},
+        {":hover", [
+          {:default, var({Semantic, :text_on_primary})},
+          {":nth-child(1)", var({Semantic, :text_secondary})}
+        ]}
+      ] ++ @column_color,
     font_weight: "200",
     opacity:
-      Map.merge(
-        %{
-          :default => "1",
-          # Fade out all cells when hovering anywhere in the container
-          When.ancestor(":hover") => "0.1",
-          # Keep cells in the hovered row visible
-          When.ancestor(":hover", @row_marker) => "1",
-          # Keep the hovered cell visible
-          ":hover" => "1"
-        },
-        # Column highlight: keep cells in the same column as hovered cell visible
-        @column_opacity
-      ),
+      [
+        {:default, "1"},
+        # Fade out all cells when hovering anywhere in the container
+        {When.ancestor(":hover"), "0.1"},
+        # Keep cells in the hovered row visible
+        {When.ancestor(":hover", @row_marker), "1"},
+        # Keep the hovered cell visible
+        {":hover", "1"}
+      ] ++ @column_opacity,
     background_color:
-      Map.merge(
-        %{
-          :default => "transparent",
-          # Highlight row on hover
-          When.ancestor(":hover", @row_marker) => @highlight,
-
-          # Highlight hovered cell
-          ":hover" => %{
-            :default => @highlight,
-            ":nth-child(1)" => "transparent"
-          },
-          # First column never gets background
-          ":nth-child(1)" => "transparent"
-        },
-        # Column highlight: highlight cells in same column as hovered cell
-        @column_background
-      )
+      [
+        {:default, "transparent"},
+        # Highlight row on hover
+        {When.ancestor(":hover", @row_marker), @highlight},
+        # Highlight hovered cell
+        {":hover", [
+          {:default, @highlight},
+          {":nth-child(1)", "transparent"}
+        ]},
+        # First column never gets background
+        {":nth-child(1)", "transparent"}
+      ] ++ @column_background
   )
 
   # Header cell style

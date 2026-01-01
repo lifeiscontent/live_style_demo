@@ -17,33 +17,33 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
   # ============================================================================
 
   keyframes(:fade_in,
-    from: %{opacity: "0"},
-    to: %{opacity: "1"}
+    from: [opacity: "0"],
+    to: [opacity: "1"]
   )
 
   keyframes(:fade_out,
-    from: %{opacity: "1"},
-    to: %{opacity: "0"}
+    from: [opacity: "1"],
+    to: [opacity: "0"]
   )
 
   keyframes(:scale_in,
-    from: %{opacity: "0", transform: "scale(0.8)"},
-    to: %{opacity: "1", transform: "scale(1)"}
+    from: [opacity: "0", transform: "scale(0.8)"],
+    to: [opacity: "1", transform: "scale(1)"]
   )
 
   keyframes(:scale_out,
-    from: %{opacity: "1", transform: "scale(1)"},
-    to: %{opacity: "0", transform: "scale(0.8)"}
+    from: [opacity: "1", transform: "scale(1)"],
+    to: [opacity: "0", transform: "scale(0.8)"]
   )
 
   keyframes(:slide_in_from_right,
-    from: %{opacity: "0", transform: "translateX(30px)"},
-    to: %{opacity: "1", transform: "translateX(0)"}
+    from: [opacity: "0", transform: "translateX(30px)"],
+    to: [opacity: "1", transform: "translateX(0)"]
   )
 
   keyframes(:slide_out_to_left,
-    from: %{opacity: "1", transform: "translateX(0)"},
-    to: %{opacity: "0", transform: "translateX(-30px)"}
+    from: [opacity: "1", transform: "translateX(0)"],
+    to: [opacity: "0", transform: "translateX(-30px)"]
   )
 
   # Card transition: smooth position animation for shuffling
@@ -84,18 +84,18 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     padding: var({Space, :"4"}),
     cursor: "pointer",
     transition: "transform 0.18s ease-out, box-shadow 0.18s ease, border-color 0.18s ease",
-    transform: %{
-      :default => "scale(1)",
-      ":hover" => "scale(1.02)"
-    },
-    box_shadow: %{
-      :default => "none",
-      ":hover" => const({Tokens, :shadow_md})
-    },
-    border_color: %{
-      :default => var({Semantic, :border_glass}),
-      ":hover" => var({Semantic, :border_focus})
-    }
+    transform: [
+      default: "scale(1)",
+      ":hover": "scale(1.02)"
+    ],
+    box_shadow: [
+      default: "none",
+      ":hover": const({Tokens, :shadow_md})
+    ],
+    border_color: [
+      default: var({Semantic, :border_glass}),
+      ":hover": var({Semantic, :border_focus})
+    ]
   )
 
   class(:card_title,
@@ -181,10 +181,10 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     color: var({Semantic, :text_muted}),
     border_radius: const({Tokens, :radius_sm}),
     transition: "color 0.15s ease",
-    color: %{
-      :default => var({Semantic, :text_muted}),
-      ":hover" => var({Semantic, :text_danger})
-    }
+    color: [
+      default: var({Semantic, :text_muted}),
+      ":hover": var({Semantic, :text_danger})
+    ]
   )
 
   class(:empty_state,

@@ -55,16 +55,16 @@ defmodule LiveStyleDemoWeb.AnchorLive do
     margin_top: var({Space, :"2"}),
     position_try_fallbacks: "flip-block, flip-inline",
     # Hidden by default
-    opacity: %{
-      :default => "0",
-      When.sibling_before(":hover") => "1",
-      When.sibling_before(":focus") => "1"
-    },
-    visibility: %{
-      :default => "hidden",
-      When.sibling_before(":hover") => "visible",
-      When.sibling_before(":focus") => "visible"
-    },
+    opacity: [
+      {:default, "0"},
+      {When.sibling_before(":hover"), "1"},
+      {When.sibling_before(":focus"), "1"}
+    ],
+    visibility: [
+      {:default, "hidden"},
+      {When.sibling_before(":hover"), "visible"},
+      {When.sibling_before(":focus"), "visible"}
+    ],
     pointer_events: "none",
     transition: "opacity 0.15s ease",
     # Styling
@@ -112,16 +112,16 @@ defmodule LiveStyleDemoWeb.AnchorLive do
 
   class(:grid_tooltip_base,
     position: "fixed",
-    opacity: %{
-      :default => "0",
-      When.sibling_before(":hover") => "1",
-      When.sibling_before(":focus") => "1"
-    },
-    visibility: %{
-      :default => "hidden",
-      When.sibling_before(":hover") => "visible",
-      When.sibling_before(":focus") => "visible"
-    },
+    opacity: [
+      {:default, "0"},
+      {When.sibling_before(":hover"), "1"},
+      {When.sibling_before(":focus"), "1"}
+    ],
+    visibility: [
+      {:default, "hidden"},
+      {When.sibling_before(":hover"), "visible"},
+      {When.sibling_before(":focus"), "visible"}
+    ],
     pointer_events: "none",
     transition: "opacity 0.15s ease",
     white_space: "nowrap",
@@ -201,16 +201,16 @@ defmodule LiveStyleDemoWeb.AnchorLive do
     position_area: "bottom center",
     margin_top: var({Space, :"2"}),
     position_try_fallbacks: "flip-block, flip-inline",
-    opacity: %{
-      :default => "0",
-      When.sibling_before(":hover") => "1",
-      When.sibling_before(":focus") => "1"
-    },
-    visibility: %{
-      :default => "hidden",
-      When.sibling_before(":hover") => "visible",
-      When.sibling_before(":focus") => "visible"
-    },
+    opacity: [
+      {:default, "0"},
+      {When.sibling_before(":hover"), "1"},
+      {When.sibling_before(":focus"), "1"}
+    ],
+    visibility: [
+      {:default, "hidden"},
+      {When.sibling_before(":hover"), "visible"},
+      {When.sibling_before(":focus"), "visible"}
+    ],
     pointer_events: "none",
     transition: "opacity 0.15s ease",
     white_space: "nowrap",

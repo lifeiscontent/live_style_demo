@@ -12,8 +12,8 @@ defmodule LiveStyleDemoWeb.ScrollLive do
   # ============================================================================
 
   keyframes(:grow_progress,
-    from: %{transform: "scaleX(0)"},
-    to: %{transform: "scaleX(1)"}
+    from: [transform: "scaleX(0)"],
+    to: [transform: "scaleX(1)"]
   )
 
   class(:progress_bar,
@@ -41,8 +41,8 @@ defmodule LiveStyleDemoWeb.ScrollLive do
   )
 
   keyframes(:reveal,
-    from: %{opacity: "0", transform: "translateY(50px)"},
-    to: %{opacity: "1", transform: "translateY(0)"}
+    from: [opacity: "0", transform: "translateY(50px)"],
+    to: [opacity: "1", transform: "translateY(0)"]
   )
 
   class(:reveal_card,
@@ -80,8 +80,8 @@ defmodule LiveStyleDemoWeb.ScrollLive do
   # Parallax: background moves slower than scroll, creating depth
   # Uses small pixel values for subtle effect
   keyframes(:parallax_shift,
-    from: %{background_position: "center 100%"},
-    to: %{background_position: "center 0%"}
+    from: [background_position: "center 100%"],
+    to: [background_position: "center 0%"]
   )
 
   class(:parallax_container,

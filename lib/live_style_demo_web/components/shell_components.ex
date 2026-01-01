@@ -45,7 +45,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     z_index: const({Tokens, :z_sticky}),
     isolation: "isolate",
     background_color: "transparent",
-    "::before": %{
+    "::before": [
       content: "''",
       position: "absolute",
       inset: "0",
@@ -56,7 +56,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
       border_bottom_width: "1px",
       border_bottom_style: "solid",
       border_bottom_color: var({Semantic, :border_glass})
-    }
+    ]
   )
 
   class(:menu_backdrop,
@@ -222,7 +222,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     cursor: "pointer",
     text_align: "left",
     transition: "transform 160ms ease",
-    transform: %{:default => "translateY(0)", ":active" => "translateY(1px)"}
+    transform: [default: "translateY(0)", ":active": "translateY(1px)"]
   )
 
   class(:style_btn_active,
@@ -255,8 +255,8 @@ defmodule LiveStyleDemoWeb.ShellComponents do
       ":focus-visible": "2px solid #{var({Semantic, :focus_ring})}"
     ],
     outline_offset: [default: "0", ":focus-visible": "2px"],
-    "::marker": %{content: "''"},
-    "::-webkit-details-marker": %{display: "none"}
+    "::marker": [content: "''"],
+    "::-webkit-details-marker": [display: "none"]
   )
 
   class(:menu_panel,

@@ -35,9 +35,9 @@ defmodule LiveStyleDemoWeb.PopoverLive do
     height: "fit-content",
     margin: "auto",
     # StyleX pattern: pseudo-element as top-level key
-    "::backdrop": %{
+    "::backdrop": [
       background_color: var({Semantic, :overlay_backdrop})
-    }
+    ]
   )
 
   class(:popover_title,
@@ -73,10 +73,10 @@ defmodule LiveStyleDemoWeb.PopoverLive do
     width: "fit-content",
     height: "fit-content",
     margin: "auto",
-    "::backdrop": %{
+    "::backdrop": [
       background_color: var({Semantic, :overlay_backdrop}),
       backdrop_filter: "blur(2px)"
-    }
+    ]
   )
 
   class(:popover_header,
@@ -92,14 +92,14 @@ defmodule LiveStyleDemoWeb.PopoverLive do
     border: "none",
     cursor: "pointer",
     border_radius: const({Tokens, :radius_sm}),
-    color: %{
-      :default => var({Semantic, :text_muted}),
-      ":hover" => var({Semantic, :text_primary})
-    },
-    background_color: %{
-      :default => "transparent",
-      ":hover" => var({Semantic, :fill_muted})
-    }
+    color: [
+      default: var({Semantic, :text_muted}),
+      ":hover": var({Semantic, :text_primary})
+    ],
+    background_color: [
+      default: "transparent",
+      ":hover": var({Semantic, :fill_muted})
+    ]
   )
 
   class(:popover_actions,

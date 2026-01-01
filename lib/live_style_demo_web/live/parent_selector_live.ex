@@ -26,11 +26,11 @@ defmodule LiveStyleDemoWeb.ParentSelectorLive do
     overflow: "hidden",
     transition: "box-shadow 0.2s ease, transform 0.2s ease",
     # Cards with images get a stronger shadow
-    box_shadow: %{
-      :default => "none",
-      ":has(img)" =>
+    box_shadow: [
+      default: "none",
+      ":has(img)":
         "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}"
-    }
+    ]
   )
 
   class(:card_image,
@@ -94,22 +94,22 @@ defmodule LiveStyleDemoWeb.ParentSelectorLive do
     border_radius: const({Tokens, :radius_md}),
     font_size: const({Tokens, :font_size_base}),
     transition: "border-color 0.2s ease, background-color 0.2s ease",
-    outline: %{
-      :default => nil,
-      ":focus" => "none"
-    },
+    outline: [
+      default: nil,
+      ":focus": "none"
+    ],
     background_color: var({Semantic, :fill_page}),
-    color: %{
-      :default => var({Semantic, :text_primary}),
-      ":invalid:not(:placeholder-shown)" => var({Semantic, :text_danger}),
-      ":valid:not(:placeholder-shown)" => var({Semantic, :text_success})
-    },
-    border_color: %{
-      :default => var({Semantic, :border_subtle}),
-      ":focus" => var({Semantic, :border_focus}),
-      ":invalid:not(:placeholder-shown)" => var({Semantic, :fill_danger}),
-      ":valid:not(:placeholder-shown)" => var({Semantic, :fill_success})
-    }
+    color: [
+      default: var({Semantic, :text_primary}),
+      ":invalid:not(:placeholder-shown)": var({Semantic, :text_danger}),
+      ":valid:not(:placeholder-shown)": var({Semantic, :text_success})
+    ],
+    border_color: [
+      default: var({Semantic, :border_subtle}),
+      ":focus": var({Semantic, :border_focus}),
+      ":invalid:not(:placeholder-shown)": var({Semantic, :fill_danger}),
+      ":valid:not(:placeholder-shown)": var({Semantic, :fill_success})
+    ]
   )
 
   class(:error_message,
@@ -145,15 +145,15 @@ defmodule LiveStyleDemoWeb.ParentSelectorLive do
     transition: "background-color 0.2s ease",
     cursor: "pointer",
     # Style the item when its checkbox is checked using :has()
-    background_color: %{
-      :default => var({Semantic, :fill_page}),
-      ":invalid:not(:placeholder-shown)" => var({Semantic, :fill_danger}),
-      ":valid:not(:placeholder-shown)" => var({Semantic, :fill_success})
-    },
-    box_shadow: %{
-      :default => "none",
-      ":has(input:focus)" => "0 0 0 3px #{var({Semantic, :focus_ring})}"
-    }
+    background_color: [
+      default: var({Semantic, :fill_page}),
+      ":invalid:not(:placeholder-shown)": var({Semantic, :fill_danger}),
+      ":valid:not(:placeholder-shown)": var({Semantic, :fill_success})
+    ],
+    box_shadow: [
+      default: "none",
+      ":has(input:focus)": "0 0 0 3px #{var({Semantic, :focus_ring})}"
+    ]
   )
 
   class(:search_icon,
@@ -184,14 +184,14 @@ defmodule LiveStyleDemoWeb.ParentSelectorLive do
     border_color: var({Semantic, :border_subtle}),
     border_radius: const({Tokens, :radius_lg}),
     transition: "box-shadow 0.2s ease, border-color 0.2s ease",
-    box_shadow: %{
-      :default => "none",
-      ":has(input:focus)" => "0 0 0 3px #{var({Semantic, :focus_ring})}"
-    },
-    border_color: %{
-      :default => var({Semantic, :border_subtle}),
-      ":has(input:focus)" => var({Semantic, :border_focus})
-    }
+    box_shadow: [
+      default: "none",
+      ":has(input:focus)": "0 0 0 3px #{var({Semantic, :focus_ring})}"
+    ],
+    border_color: [
+      default: var({Semantic, :border_subtle}),
+      ":has(input:focus)": var({Semantic, :border_focus})
+    ]
   )
 
   class(:search_input,

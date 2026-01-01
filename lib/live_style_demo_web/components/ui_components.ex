@@ -106,10 +106,10 @@ defmodule LiveStyleDemoWeb.UIComponents do
     border: "none",
     cursor: "pointer",
     color: "inherit",
-    opacity: %{
-      :default => "0.7",
-      ":hover" => "1"
-    }
+    opacity: [
+      default: "0.7",
+      ":hover": "1"
+    ]
   )
 
   # ============================================================================
@@ -139,10 +139,10 @@ defmodule LiveStyleDemoWeb.UIComponents do
     color: var({Semantic, :text_primary}),
     cursor: "pointer",
     transition: "background-color 0.15s ease",
-    background_color: %{
-      :default => "transparent",
-      ":hover" => var({Semantic, :fill_muted})
-    }
+    background_color: [
+      default: "transparent",
+      ":hover": var({Semantic, :fill_muted})
+    ]
   )
 
   class(:menu_divider,
@@ -154,10 +154,10 @@ defmodule LiveStyleDemoWeb.UIComponents do
 
   class(:menu_item_danger,
     color: var({Semantic, :fill_danger}),
-    background_color: %{
-      :default => "transparent",
-      ":hover" => "color-mix(in oklab, #{var({Semantic, :fill_danger})} 15%, transparent)"
-    }
+    background_color: [
+      default: "transparent",
+      ":hover": "color-mix(in oklab, #{var({Semantic, :fill_danger})} 15%, transparent)"
+    ]
   )
 
   # ============================================================================

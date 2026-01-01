@@ -46,14 +46,14 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
     # Transition properties for smooth animation
     transition: "opacity 0.3s ease, transform 0.3s ease",
     # Default (end) state
-    opacity: %{
-      :default => "1",
-      "@starting-style" => "0"
-    },
-    transform: %{
-      :default => "scale(1)",
-      "@starting-style" => "scale(0.9)"
-    }
+    opacity: [
+      default: "1",
+      "@starting-style": "0"
+    ],
+    transform: [
+      default: "scale(1)",
+      "@starting-style": "scale(0.9)"
+    ]
   )
 
   class(:card_title,
@@ -88,21 +88,21 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
 
   class(:modal_popover,
     transition: "opacity 0.25s ease, transform 0.25s ease, display 0.25s allow-discrete",
-    opacity: %{
-      :default => "1",
-      ":not(:popover-open)" => "0",
-      "@starting-style" => "0"
-    },
-    transform: %{
-      :default => "translateY(0)",
-      ":not(:popover-open)" => "translateY(-10px)",
-      "@starting-style" => "translateY(-10px)"
-    },
-    "::backdrop": %{
+    opacity: [
+      default: "1",
+      ":not(:popover-open)": "0",
+      "@starting-style": "0"
+    ],
+    transform: [
+      default: "translateY(0)",
+      ":not(:popover-open)": "translateY(-10px)",
+      "@starting-style": "translateY(-10px)"
+    ],
+    "::backdrop": [
       background_color: var({Semantic, :overlay_backdrop}),
       backdrop_filter: "blur(4px)",
       transition: "opacity 0.25s ease"
-    }
+    ]
   )
 
   # ============================================================================
@@ -139,14 +139,14 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
     min_width: "280px",
     # Transition
     transition: "opacity 0.3s ease, transform 0.3s ease",
-    opacity: %{
-      :default => "1",
-      "@starting-style" => "0"
-    },
-    transform: %{
-      :default => "translateX(0)",
-      "@starting-style" => "translateX(100%)"
-    }
+    opacity: [
+      default: "1",
+      "@starting-style": "0"
+    ],
+    transform: [
+      default: "translateX(0)",
+      "@starting-style": "translateX(100%)"
+    ]
   )
 
   class(:notification_success,
@@ -175,10 +175,10 @@ defmodule LiveStyleDemoWeb.StartingStyleLive do
     cursor: "pointer",
     color: "inherit",
     border_radius: const({Tokens, :radius_sm}),
-    opacity: %{
-      :default => "0.7",
-      ":hover" => "1"
-    }
+    opacity: [
+      default: "0.7",
+      ":hover": "1"
+    ]
   )
 
   # ============================================================================

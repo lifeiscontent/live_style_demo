@@ -38,3 +38,4 @@ live_style_demo-*.tar
 npm-debug.log
 /assets/node_modules/
 
+/priv/live_style_manifest.etf
