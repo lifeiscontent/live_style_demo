@@ -3,7 +3,10 @@ defmodule LiveStyleDemoWeb.TodoLive do
 
   # Ensure Tokens is compiled first
   require LiveStyleDemoWeb.Tokens
+
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
   import LiveStyleDemoWeb.ViewTransition
 
@@ -11,18 +14,18 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Keyframes
   # ============================================================================
 
-  css_keyframes(:check_bounce,
+  keyframes(:check_bounce,
     "0%": [transform: "scale(1)"],
     "50%": [transform: "scale(1.2)"],
     "100%": [transform: "scale(1)"]
   )
 
-  css_keyframes(:strike_through,
+  keyframes(:strike_through,
     from: [width: "0%"],
     to: [width: "100%"]
   )
 
-  css_keyframes(:shake,
+  keyframes(:shake,
     "0%, 100%": [transform: "translateX(0)"],
     "25%": [transform: "translateX(-5px)"],
     "75%": [transform: "translateX(5px)"]
@@ -32,7 +35,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # View Transitions
   # ============================================================================
 
-  css_view_transition(:todo_item,
+  view_transition_class(:todo_item,
     group: [
       pointer_events: "none",
       animation_duration: ".22s",
@@ -44,66 +47,66 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Layout
   # ============================================================================
 
-  css_class(:content,
-    padding_top: css_var({Tokens, :space, :"8"}),
-    padding_bottom: css_var({Tokens, :space, :"16"})
+  class(:content,
+    padding_top: var({Space, :"8"}),
+    padding_bottom: var({Space, :"16"})
   )
 
-  css_class(:container,
+  class(:container,
     max_width: "32rem",
     margin_left: "auto",
     margin_right: "auto",
-    padding_left: css_var({Tokens, :space, :"6"}),
-    padding_right: css_var({Tokens, :space, :"6"})
+    padding_left: var({Space, :"6"}),
+    padding_right: var({Space, :"6"})
   )
 
   # ============================================================================
   # Card
   # ============================================================================
 
-  css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:card,
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    border_radius: const({Tokens, :radius_2xl}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}",
     overflow: "hidden"
   )
 
-  css_class(:card_header,
-    background: css_var({Tokens, :semantic, :fill_primary}),
-    padding: css_var({Tokens, :space, :"6"}),
-    color: css_var({Tokens, :semantic, :text_on_primary})
+  class(:card_header,
+    background: var({Semantic, :fill_primary}),
+    padding: var({Space, :"6"}),
+    color: var({Semantic, :text_on_primary})
   )
 
-  css_class(:card_title,
-    font_size: css_const({Tokens, :font_size, :"2xl"}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+  class(:card_title,
+    font_size: const({Tokens, :font_size_2xl}),
+    font_weight: const({Tokens, :font_weight_bold}),
     margin: "0",
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"3"})
+    gap: var({Space, :"3"})
   )
 
-  css_class(:card_subtitle,
-    font_size: css_const({Tokens, :font_size, :sm}),
+  class(:card_subtitle,
+    font_size: const({Tokens, :font_size_sm}),
     opacity: "0.9",
-    margin_top: css_var({Tokens, :space, :"1"})
+    margin_top: var({Space, :"1"})
   )
 
-  css_class(:card_body,
-    padding: css_var({Tokens, :space, :"6"})
+  class(:card_body,
+    padding: var({Space, :"6"})
   )
 
   # ============================================================================
   # Input Form
   # ============================================================================
 
-  css_class(:form,
+  class(:form,
     display: "flex",
-    gap: css_var({Tokens, :space, :"3"}),
-    margin_bottom: css_var({Tokens, :space, :"6"})
+    gap: var({Space, :"3"}),
+    margin_bottom: var({Space, :"6"})
   )
 
   # Using BaseStyles for input and button, just need local overrides if any
@@ -112,29 +115,29 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Task List
   # ============================================================================
 
-  css_class(:todo_list,
+  class(:todo_list,
     list_style: "none",
     padding: "0",
     margin: "0"
   )
 
-  css_class(:todo_item,
+  class(:todo_item,
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"3"}),
-    padding: css_var({Tokens, :space, :"4"}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    margin_bottom: css_var({Tokens, :space, :"2"}),
-    background_color: css_var({Tokens, :semantic, :fill_surface}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
+    gap: var({Space, :"3"}),
+    padding: var({Space, :"4"}),
+    border_radius: const({Tokens, :radius_lg}),
+    margin_bottom: var({Space, :"2"}),
+    background_color: var({Semantic, :fill_surface}),
+    border: "1px solid #{var({Semantic, :border_subtle})}",
     transition: "background-color 0.2s ease",
     contain: "layout"
   )
 
-  css_class(:todo_item_completed,
+  class(:todo_item_completed,
     opacity: "0.75",
     background_color:
-      "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_success})} 14%, #{css_var({Tokens, :semantic, :fill_surface})})"
+      "color-mix(in oklab, #{var({Semantic, :fill_success})} 14%, #{var({Semantic, :fill_surface})})"
   )
 
   # ============================================================================
@@ -147,29 +150,29 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Item Text
   # ============================================================================
 
-  css_class(:todo_text_wrapper,
+  class(:todo_text_wrapper,
     flex: "1",
     position: "relative",
     overflow: "hidden"
   )
 
-  css_class(:todo_text,
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: css_var({Tokens, :semantic, :text_primary}),
+  class(:todo_text,
+    font_size: const({Tokens, :font_size_base}),
+    color: var({Semantic, :text_primary}),
     transition: "color 0.2s ease"
   )
 
-  css_class(:todo_text_completed,
-    color: css_var({Tokens, :semantic, :text_muted})
+  class(:todo_text_completed,
+    color: var({Semantic, :text_muted})
   )
 
-  css_class(:todo_strike,
+  class(:todo_strike,
     position: "absolute",
     top: "50%",
     left: "0",
     height: "2px",
-    background_color: css_var({Tokens, :semantic, :text_muted}),
-    animation_name: css_keyframes(:strike_through),
+    background_color: var({Semantic, :text_muted}),
+    animation_name: keyframes(:strike_through),
     animation_duration: "0.3s",
     animation_timing_function: "ease-out",
     animation_fill_mode: "forwards"
@@ -179,24 +182,23 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Delete Button
   # ============================================================================
 
-  css_class(:delete_button,
+  class(:delete_button,
     width: "2rem",
     height: "2rem",
     display: "flex",
     align_items: "center",
     justify_content: "center",
-    border_radius: css_const({Tokens, :radius, :full}),
+    border_radius: const({Tokens, :radius_full}),
     color: [
-      default: css_var({Tokens, :semantic, :text_muted}),
-      ":hover": css_var({Tokens, :semantic, :fill_danger})
+      default: var({Semantic, :text_muted}),
+      ":hover": var({Semantic, :fill_danger})
     ],
     background_color: [
       default: "transparent",
-      ":hover":
-        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 12%, transparent)"
+      ":hover": "color-mix(in oklab, #{var({Semantic, :fill_danger})} 12%, transparent)"
     ],
     border: "none",
-    font_size: css_const({Tokens, :font_size, :lg}),
+    font_size: const({Tokens, :font_size_lg}),
     opacity: "0",
     transform: "scale(0.8)",
     transition: "all 0.2s ease",
@@ -207,64 +209,64 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Empty State
   # ============================================================================
 
-  css_class(:empty_state,
+  class(:empty_state,
     text_align: "center",
-    padding: css_var({Tokens, :space, :"8"}),
-    color: css_var({Tokens, :semantic, :text_muted})
+    padding: var({Space, :"8"}),
+    color: var({Semantic, :text_muted})
   )
 
-  css_class(:empty_icon,
+  class(:empty_icon,
     font_size: "3rem",
-    margin_bottom: css_var({Tokens, :space, :"4"}),
+    margin_bottom: var({Space, :"4"}),
     opacity: "0.5"
   )
 
-  css_class(:empty_text,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    margin_bottom: css_var({Tokens, :space, :"2"})
+  class(:empty_text,
+    font_size: const({Tokens, :font_size_lg}),
+    margin_bottom: var({Space, :"2"})
   )
 
-  css_class(:empty_subtext,
-    font_size: css_const({Tokens, :font_size, :sm})
+  class(:empty_subtext,
+    font_size: const({Tokens, :font_size_sm})
   )
 
   # ============================================================================
   # Filter Buttons
   # ============================================================================
 
-  css_class(:filter_group,
+  class(:filter_group,
     display: "flex",
     flex_wrap: "wrap",
     justify_content: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    margin_bottom: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"2"}),
+    margin_bottom: var({Space, :"4"})
   )
 
-  css_class(:filter_button,
-    padding_top: css_var({Tokens, :space, :"2"}),
-    padding_bottom: css_var({Tokens, :space, :"2"}),
+  class(:filter_button,
+    padding_top: var({Space, :"2"}),
+    padding_bottom: var({Space, :"2"}),
     padding_left: [
-      default: css_var({Tokens, :space, :"4"}),
-      "@media (max-width: 420px)": css_var({Tokens, :space, :"3"})
+      default: var({Space, :"4"}),
+      "@media (max-width: 420px)": var({Space, :"3"})
     ],
     padding_right: [
-      default: css_var({Tokens, :space, :"4"}),
-      "@media (max-width: 420px)": css_var({Tokens, :space, :"3"})
+      default: var({Space, :"4"}),
+      "@media (max-width: 420px)": var({Space, :"3"})
     ],
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_secondary}),
     background_color: "transparent",
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default}),
-    border_radius: css_const({Tokens, :radius, :full}),
+    border_color: var({Semantic, :border_default}),
+    border_radius: const({Tokens, :radius_full}),
     cursor: "pointer",
     transition: "all 0.2s ease"
   )
 
-  css_class(:filter_button_active,
-    background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_on_primary}),
+  class(:filter_button_active,
+    background_color: var({Semantic, :fill_primary}),
+    color: var({Semantic, :text_on_primary}),
     border_color: "transparent"
   )
 
@@ -272,13 +274,13 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Input Shake Animation
   # ============================================================================
 
-  css_class(:input_shake,
-    animation_name: css_keyframes(:shake),
+  class(:input_shake,
+    animation_name: keyframes(:shake),
     animation_duration: "0.4s",
     animation_timing_function: "ease-out",
     border_color: [
-      default: css_var({Tokens, :semantic, :fill_danger}),
-      ":focus": css_var({Tokens, :semantic, :fill_danger})
+      default: var({Semantic, :fill_danger}),
+      ":focus": var({Semantic, :fill_danger})
     ]
   )
 
@@ -286,25 +288,25 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # Footer Stats
   # ============================================================================
 
-  css_class(:footer,
+  class(:footer,
     display: "flex",
     justify_content: "space-between",
     align_items: "center",
-    padding_top: css_var({Tokens, :space, :"4"}),
+    padding_top: var({Space, :"4"}),
     border_top_width: "1px",
     border_top_style: "solid",
-    border_top_color: css_var({Tokens, :semantic, :border_subtle}),
-    margin_top: css_var({Tokens, :space, :"4"})
+    border_top_color: var({Semantic, :border_subtle}),
+    margin_top: var({Space, :"4"})
   )
 
-  css_class(:stats,
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_muted})
+  class(:stats,
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_muted})
   )
 
-  css_class(:clear_button,
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_muted}),
+  class(:clear_button,
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_muted}),
     background: "none",
     border: "none",
     cursor: "pointer",
@@ -439,22 +441,22 @@ defmodule LiveStyleDemoWeb.TodoLive do
       page_subtitle="A small LiveView app: transitions, hooks, and component styling."
     >
       <div id="todo-page">
-        <div class={css_class([:content])}>
-          <div class={css_class([:container])}>
-            <div class={css_class([:card])}>
+        <div {css(:content)}>
+          <div {css(:container)}>
+            <div {css(:card)}>
               <%!-- Header --%>
-              <div class={css_class([:card_header])}>
-                <h1 class={css_class([:card_title])}>
+              <div {css(:card_header)}>
+                <h1 {css(:card_title)}>
                   <span>&#9745;</span> Todo List
                 </h1>
-                <p class={css_class([:card_subtitle])}>
+                <p {css(:card_subtitle)}>
                   Built with LiveStyle &amp; View Transitions API
                 </p>
               </div>
 
-              <div class={css_class([:card_body])}>
+              <div {css(:card_body)}>
                 <%!-- Input Form --%>
-                <form phx-submit="add_todo" class={css_class([:form])}>
+                <form phx-submit="add_todo" {css(:form)}>
                   <.input
                     name="text"
                     value={@new_todo}
@@ -464,19 +466,19 @@ defmodule LiveStyleDemoWeb.TodoLive do
                     id="todo-input"
                     autocomplete="off"
                     error={@input_error}
-                    class={if @input_error, do: css_class([:input_shake])}
+                    {css([@input_error && :input_shake])}
                   />
                   <.button type="submit" variant={:primary}>Add</.button>
                 </form>
 
                 <%!-- Filter Buttons --%>
                 <%= if not Enum.empty?(@todos) do %>
-                  <div class={css_class([:filter_group])}>
+                  <div {css(:filter_group)}>
                     <button
                       type="button"
                       phx-click="set_filter"
                       phx-value-filter="all"
-                      class={filter_button_class(@filter == :all)}
+                      {css([:filter_button, @filter == :all && :filter_button_active])}
                     >
                       All
                     </button>
@@ -484,7 +486,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
                       type="button"
                       phx-click="set_filter"
                       phx-value-filter="active"
-                      class={filter_button_class(@filter == :active)}
+                      {css([:filter_button, @filter == :active && :filter_button_active])}
                     >
                       Active
                     </button>
@@ -492,7 +494,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
                       type="button"
                       phx-click="set_filter"
                       phx-value-filter="completed"
-                      class={filter_button_class(@filter == :completed)}
+                      {css([:filter_button, @filter == :completed && :filter_button_active])}
                     >
                       Completed
                     </button>
@@ -501,18 +503,18 @@ defmodule LiveStyleDemoWeb.TodoLive do
 
                 <%!-- Todo List --%>
                 <%= if Enum.empty?(@todos) do %>
-                  <div class={css_class([:empty_state])}>
-                    <div class={css_class([:empty_icon])}>&#128203;</div>
-                    <p class={css_class([:empty_text])}>No todos yet!</p>
-                    <p class={css_class([:empty_subtext])}>Add one above to get started</p>
+                  <div {css(:empty_state)}>
+                    <div {css(:empty_icon)}>&#128203;</div>
+                    <p {css(:empty_text)}>No todos yet!</p>
+                    <p {css(:empty_subtext)}>Add one above to get started</p>
                   </div>
                 <% else %>
-                  <ul class={css_class([:todo_list])}>
+                  <ul {css(:todo_list)}>
                     <%= for todo <- filtered_todos(@todos, @filter) do %>
                       <.view_transition
                         id={"todo-#{todo.id}"}
-                        class={css_class([:todo_item, todo.completed && :todo_item_completed])}
-                        view-transition-class={css_view_transition(:todo_item)}
+                        {css([:todo_item, todo.completed && :todo_item_completed])}
+                        view-transition-class={view_transition_class(:todo_item)}
                       >
                         <%!-- Checkbox --%>
                         <.input
@@ -524,12 +526,12 @@ defmodule LiveStyleDemoWeb.TodoLive do
                         />
 
                         <%!-- Text --%>
-                        <div class={css_class([:todo_text_wrapper])}>
-                          <span class={todo_text_class(todo.completed)}>
+                        <div {css(:todo_text_wrapper)}>
+                          <span {css([:todo_text, todo.completed && :todo_text_completed])}>
                             {todo.text}
                           </span>
                           <%= if todo.completed do %>
-                            <div class={css_class([:todo_strike])}></div>
+                            <div {css(:todo_strike)}></div>
                           <% end %>
                         </div>
 
@@ -538,7 +540,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
                           type="button"
                           phx-click="delete_todo"
                           phx-value-id={todo.id}
-                          class={css_class([:delete_button]) <> " delete-button"}
+                          {css(:delete_button)}
                           aria-label="Delete todo"
                         >
                           &#10005;
@@ -548,15 +550,15 @@ defmodule LiveStyleDemoWeb.TodoLive do
                   </ul>
 
                   <%!-- Footer --%>
-                  <div class={css_class([:footer])}>
-                    <span class={css_class([:stats])}>
+                  <div {css(:footer)}>
+                    <span {css(:stats)}>
                       {items_left(@todos)} item{if items_left(@todos) != 1, do: "s"} left
                     </span>
                     <%= if completed_count(@todos) > 0 do %>
                       <button
                         type="button"
                         phx-click="clear_completed"
-                        class={css_class([:clear_button])}
+                        {css(:clear_button)}
                       >
                         Clear completed ({completed_count(@todos)})
                       </button>
@@ -584,21 +586,5 @@ defmodule LiveStyleDemoWeb.TodoLive do
       </script>
     </.shell>
     """
-  end
-
-  defp todo_text_class(completed) do
-    if completed do
-      css_class([:todo_text, :todo_text_completed])
-    else
-      css_class([:todo_text])
-    end
-  end
-
-  defp filter_button_class(active) do
-    if active do
-      css_class([:filter_button, :filter_button_active])
-    else
-      css_class([:filter_button])
-    end
   end
 end

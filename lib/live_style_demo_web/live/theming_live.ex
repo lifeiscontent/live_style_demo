@@ -4,163 +4,165 @@ defmodule LiveStyleDemoWeb.ThemingLive do
   require LiveStyleDemoWeb.Tokens
 
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
-  css_class(:intro,
+  class(:intro,
     display: "grid",
-    gap: css_var({Tokens, :space, :"3"}),
-    margin_bottom: css_var({Tokens, :space, :"12"})
+    gap: var({Space, :"3"}),
+    margin_bottom: var({Space, :"12"})
   )
 
-  css_class(:intro_text,
+  class(:intro_text,
     max_width: "80ch",
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed})
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed})
   )
 
-  css_class(:controls,
+  class(:controls,
     display: "flex",
     flex_wrap: "wrap",
-    gap: css_var({Tokens, :space, :"2"}),
+    gap: var({Space, :"2"}),
     align_items: "center"
   )
 
-  css_class(:panel,
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:panel,
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    border_radius: const({Tokens, :radius_2xl}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}",
     overflow: "hidden"
   )
 
-  css_class(:panel_header,
-    padding: css_var({Tokens, :space, :"6"}),
-    border_bottom: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+  class(:panel_header,
+    padding: var({Space, :"6"}),
+    border_bottom: "1px solid #{var({Semantic, :border_glass})}",
     display: "grid",
-    gap: css_var({Tokens, :space, :"2"})
+    gap: var({Space, :"2"})
   )
 
-  css_class(:panel_title,
-    font_size: css_const({Tokens, :font_size, :xl}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+  class(:panel_title,
+    font_size: const({Tokens, :font_size_xl}),
+    font_weight: const({Tokens, :font_weight_bold}),
     letter_spacing: "-0.02em",
-    line_height: css_const({Tokens, :leading, :tight})
+    line_height: const({Tokens, :leading_tight})
   )
 
-  css_class(:panel_subtitle,
+  class(:panel_subtitle,
     max_width: "80ch",
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed})
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed})
   )
 
-  css_class(:tag,
+  class(:tag,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    padding_block: css_var({Tokens, :space, :"1"}),
-    padding_inline: css_var({Tokens, :space, :"2.5"}),
-    border_radius: css_const({Tokens, :radius, :full}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    background_color: css_var({Tokens, :semantic, :fill_muted}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_default})}",
-    color: css_var({Tokens, :semantic, :text_secondary}),
+    gap: var({Space, :"2"}),
+    padding_block: var({Space, :"1"}),
+    padding_inline: var({Space, :"2.5"}),
+    border_radius: const({Tokens, :radius_full}),
+    font_size: const({Tokens, :font_size_sm}),
+    font_weight: const({Tokens, :font_weight_medium}),
+    background_color: var({Semantic, :fill_muted}),
+    border: "1px solid #{var({Semantic, :border_default})}",
+    color: var({Semantic, :text_secondary}),
     justify_self: "start"
   )
 
-  css_class(:panel_body,
-    padding: css_var({Tokens, :space, :"6"}),
+  class(:panel_body,
+    padding: var({Space, :"6"}),
     display: "grid",
-    gap: css_var({Tokens, :space, :"6"})
+    gap: var({Space, :"6"})
   )
 
-  css_class(:preview_card,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    border_radius: css_const({Tokens, :radius, :xl}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
-    padding: css_var({Tokens, :space, :"6"}),
+  class(:preview_card,
+    background_color: var({Semantic, :fill_page}),
+    border_radius: const({Tokens, :radius_xl}),
+    border: "1px solid #{var({Semantic, :border_subtle})}",
+    padding: var({Space, :"6"}),
     display: "grid",
-    gap: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"})
   )
 
-  css_class(:preview_title,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+  class(:preview_title,
+    font_size: const({Tokens, :font_size_lg}),
+    font_weight: const({Tokens, :font_weight_bold}),
     letter_spacing: "-0.02em",
-    line_height: css_const({Tokens, :leading, :tight})
+    line_height: const({Tokens, :leading_tight})
   )
 
-  css_class(:preview_text,
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed})
+  class(:preview_text,
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed})
   )
 
-  css_class(:preview_row,
+  class(:preview_row,
     display: "flex",
     flex_wrap: "wrap",
-    gap: css_var({Tokens, :space, :"3"})
+    gap: var({Space, :"3"})
   )
 
-  css_class(:code_grid,
+  class(:code_grid,
     display: "grid",
     grid_template_columns: "repeat(auto-fit, minmax(min(420px, 100%), 1fr))",
-    gap: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"})
   )
 
-  css_class(:code_block,
-    background_color: css_var({Tokens, :semantic, :fill_surface}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
-    border_radius: css_const({Tokens, :radius, :xl}),
-    padding: css_var({Tokens, :space, :"4"}),
+  class(:code_block,
+    background_color: var({Semantic, :fill_surface}),
+    border: "1px solid #{var({Semantic, :border_subtle})}",
+    border_radius: const({Tokens, :radius_xl}),
+    padding: var({Space, :"4"}),
     overflow_x: "auto",
     display: "grid",
-    gap: css_var({Tokens, :space, :"2"}),
+    gap: var({Space, :"2"}),
     min_width: "0"
   )
 
-  css_class(:code_title,
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    color: css_var({Tokens, :semantic, :text_primary})
+  class(:code_title,
+    font_size: const({Tokens, :font_size_sm}),
+    font_weight: const({Tokens, :font_weight_semibold}),
+    color: var({Semantic, :text_primary})
   )
 
-  css_class(:code_pre,
+  class(:code_pre,
     margin: "0",
-    font_family: css_const({Tokens, :font, :mono}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    line_height: css_const({Tokens, :leading, :relaxed}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
+    font_family: const({Tokens, :font_mono}),
+    font_size: const({Tokens, :font_size_sm}),
+    line_height: const({Tokens, :leading_relaxed}),
+    color: var({Semantic, :text_secondary}),
     white_space: "pre"
   )
 
-  css_class(:diff_line,
+  class(:diff_line,
     display: "block",
     white_space: "pre"
   )
 
-  css_class(:diff_added,
+  class(:diff_added,
     color:
-      "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_success})} 85%, #{css_var({Tokens, :semantic, :text_secondary})})"
+      "color-mix(in oklab, #{var({Semantic, :fill_success})} 85%, #{var({Semantic, :text_secondary})})"
   )
 
-  css_class(:diff_removed,
+  class(:diff_removed,
     color:
-      "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 80%, #{css_var({Tokens, :semantic, :text_secondary})})"
+      "color-mix(in oklab, #{var({Semantic, :fill_danger})} 80%, #{var({Semantic, :text_secondary})})"
   )
 
-  css_class(:diff_context,
-    color: css_var({Tokens, :semantic, :text_secondary})
+  class(:diff_context,
+    color: var({Semantic, :text_secondary})
   )
 
-  css_class(:toggle_btn_active,
+  class(:toggle_btn_active,
     background_color: [
-      default: css_var({Tokens, :semantic, :fill_primary}),
-      ":hover": css_var({Tokens, :semantic, :fill_primary_hover})
+      default: var({Semantic, :fill_primary}),
+      ":hover": var({Semantic, :fill_primary_hover})
     ],
     color: [
-      default: css_var({Tokens, :semantic, :text_on_primary}),
-      ":hover": css_var({Tokens, :semantic, :text_on_primary})
+      default: var({Semantic, :text_on_primary}),
+      ":hover": var({Semantic, :text_on_primary})
     ],
     border_color: "transparent"
   )
@@ -183,8 +185,11 @@ defmodule LiveStyleDemoWeb.ThemingLive do
   end
 
   defp scale_class(:default), do: nil
-  defp scale_class(:compact), do: css_theme({Tokens, :space, :compact})
-  defp scale_class(:cozy), do: css_theme({Tokens, :space, :cozy})
+  defp scale_class(:compact), do: theme({Space, :compact})
+  defp scale_class(:cozy), do: theme({Space, :cozy})
+
+  defp toggle_active_class(true), do: css(:toggle_btn_active).class
+  defp toggle_active_class(false), do: nil
 
   defp scale_label(:default), do: "Default"
   defp scale_label(:compact), do: "Compact"
@@ -193,14 +198,14 @@ defmodule LiveStyleDemoWeb.ThemingLive do
   defp diff_lines(:default) do
     [
       {:context, "# Using the default spacing variables"},
-      {:context, "css_vars(:space, ... )"},
+      {:context, "vars ... "},
       {:context, ""},
       {:context, "# Try Compact or Cozy to see an override"}
     ]
   end
 
   defp diff_lines(scale) when scale in [:compact, :cozy] do
-    title = "css_theme(:space, :#{scale}, ...)"
+    title = "theme(:space, :#{scale}, ...)"
 
     changes =
       case scale do
@@ -237,10 +242,10 @@ defmodule LiveStyleDemoWeb.ThemingLive do
   defp markup_code do
     """
     # Same markup either way.
-    <div class={css_class([:preview_card])}>
-      <h3 class={css_class([:preview_title])}>Ship UI faster</h3>
-      <p class={css_class([:preview_text])}>Spacing comes from tokens.</p>
-      <div class={css_class([:preview_row])}>
+    <div {css(:preview_card)}>
+      <h3 {css(:preview_title)}>Ship UI faster</h3>
+      <p {css(:preview_text)}>Spacing comes from tokens.</p>
+      <div {css(:preview_row)}>
         <.button variant={:primary}>Primary</.button>
         <.button variant={:secondary}>Secondary</.button>
       </div>
@@ -261,21 +266,21 @@ defmodule LiveStyleDemoWeb.ThemingLive do
       page_title="Theming"
       page_subtitle="Change spacing scales with tokens—not template refactors."
     >
-      <div class={css_class([:intro])}>
-        <p class={css_class([:intro_text])}>
+      <div {css(:intro)}>
+        <p {css(:intro_text)}>
           In a utility-class world, changing your spacing scale often means touching a lot of markup.
           LiveStyle keeps spacing decisions in tokens, so global design changes are centralized.
         </p>
 
-        <div class={css_class([:controls])}>
-          <span class={css_class([:tag])}>Spacing scale</span>
+        <div {css(:controls)}>
+          <span {css(:tag)}>Spacing scale</span>
           <.button
             type="button"
             size={:sm}
             variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="compact"
-            class={if @scale == :compact, do: css_class([:toggle_btn_active])}
+            class={toggle_active_class(@scale == :compact)}
           >
             Compact
           </.button>
@@ -285,7 +290,7 @@ defmodule LiveStyleDemoWeb.ThemingLive do
             variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="default"
-            class={if @scale == :default, do: css_class([:toggle_btn_active])}
+            class={toggle_active_class(@scale == :default)}
           >
             Default
           </.button>
@@ -295,47 +300,47 @@ defmodule LiveStyleDemoWeb.ThemingLive do
             variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="cozy"
-            class={if @scale == :cozy, do: css_class([:toggle_btn_active])}
+            class={toggle_active_class(@scale == :cozy)}
           >
             Cozy
           </.button>
         </div>
       </div>
 
-      <section class={[css_class([:panel]), scale_class(@scale)]}>
-        <header class={css_class([:panel_header])}>
-          <span class={css_class([:tag])}>{scale_label(@scale)} spacing</span>
-          <h2 class={css_class([:panel_title])}>Same markup. Different spacing.</h2>
-          <p class={css_class([:panel_subtitle])}>
-            This simulates the “designer changes the spacing scale six months later” moment.
-            With tokens, it’s a centralized change—not a template refactor.
+      <section {css([:panel, scale_class(@scale)])}>
+        <header {css(:panel_header)}>
+          <span {css(:tag)}>{scale_label(@scale)} spacing</span>
+          <h2 {css(:panel_title)}>Same markup. Different spacing.</h2>
+          <p {css(:panel_subtitle)}>
+            This simulates the "designer changes the spacing scale six months later" moment.
+            With tokens, it's a centralized change—not a template refactor.
           </p>
         </header>
 
-        <div class={css_class([:panel_body])}>
-          <div class={css_class([:preview_card])}>
-            <h3 class={css_class([:preview_title])}>Ship UI faster</h3>
-            <p class={css_class([:preview_text])}>
+        <div {css(:panel_body)}>
+          <div {css(:preview_card)}>
+            <h3 {css(:preview_title)}>Ship UI faster</h3>
+            <p {css(:preview_text)}>
               Every gap and padding is driven by the "space" token group.
               Switch the scale and the layout reflows.
             </p>
-            <div class={css_class([:preview_row])}>
+            <div {css(:preview_row)}>
               <.button variant={:primary}>Primary</.button>
               <.button variant={:secondary}>Secondary</.button>
             </div>
           </div>
 
-          <div class={css_class([:code_grid])}>
-            <div class={css_class([:code_block])}>
-              <p class={css_class([:code_title])}>Token override (diff-ish)</p>
-              <pre class={css_class([:code_pre])}>
-    <%= for {type, line} <- diff_lines(@scale) do %><span class={css_class([:diff_line, diff_class(type)])}><%= line %></span>
+          <div {css(:code_grid)}>
+            <div {css(:code_block)}>
+              <p {css(:code_title)}>Token override (diff-ish)</p>
+              <pre {css(:code_pre)}>
+    <%= for {type, line} <- diff_lines(@scale) do %><span {css([:diff_line, diff_class(type)])}><%= line %></span>
     <% end %></pre>
             </div>
 
-            <div class={css_class([:code_block])}>
-              <p class={css_class([:code_title])}>Markup (unchanged)</p>
-              <pre class={css_class([:code_pre])}>{markup_code()}</pre>
+            <div {css(:code_block)}>
+              <p {css(:code_title)}>Markup (unchanged)</p>
+              <pre {css(:code_pre)}>{markup_code()}</pre>
             </div>
           </div>
         </div>

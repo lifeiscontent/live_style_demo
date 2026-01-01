@@ -4,42 +4,65 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
   require LiveStyleDemoWeb.Tokens
 
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
-  css_class(:grid_section,
+  class(:grid_section,
     display: "grid",
-    gap: css_var({Tokens, :space, :"8"})
+    gap: var({Space, :"8"})
   )
 
-  css_class(:component_row,
+  class(:component_row,
     display: "flex",
     flex_wrap: "wrap",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"})
   )
 
-  css_class(:component_col,
+  class(:component_col,
     display: "flex",
     flex_direction: "column",
-    gap: css_var({Tokens, :space, :"4"}),
+    gap: var({Space, :"4"}),
     max_width: "24rem"
   )
 
-  css_class(:section_label,
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
-    color: css_var({Tokens, :semantic, :text_muted}),
+  class(:section_label,
+    font_size: const({Tokens, :font_size_sm}),
+    font_weight: const({Tokens, :font_weight_bold}),
+    color: var({Semantic, :text_muted}),
     text_transform: "uppercase",
     letter_spacing: "0.05em",
-    margin_bottom: css_var({Tokens, :space, :"4"}),
+    margin_bottom: var({Space, :"4"}),
     display: "block"
   )
 
-  css_class(:swatch,
+  class(:swatch,
     width: "100%",
     height: "4rem",
-    border_radius: css_const({Tokens, :radius, :lg}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}"
+    border_radius: const({Tokens, :radius_lg}),
+    border: "1px solid #{var({Semantic, :border_glass})}"
   )
+
+  class(:section_content,
+    padding: var({Space, :"8"})
+  )
+
+  class(:row_spacing,
+    margin_top: var({Space, :"4"})
+  )
+
+  # Heading size variants for demo
+  class(:heading_4xl, font_size: const({Tokens, :font_size_4xl}))
+  class(:heading_3xl, font_size: const({Tokens, :font_size_3xl}))
+  class(:heading_2xl, font_size: const({Tokens, :font_size_2xl}))
+
+  # Swatch background variants for demo
+  class(:swatch_primary, background_color: var({Semantic, :fill_primary}))
+  class(:swatch_secondary, background_color: var({Semantic, :fill_secondary}))
+  class(:swatch_surface, background_color: var({Semantic, :fill_surface}))
+  class(:swatch_danger, background_color: var({Semantic, :fill_danger}))
+
+  class(:full_width, width: "100%")
 
   @impl true
   def mount(_params, _session, socket) do
@@ -60,19 +83,19 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
       page_title="Style Guide"
       page_subtitle="Reference for all base components."
     >
-      <div class={css_class([:grid_section])}>
+      <div {css(:grid_section)}>
         <%!-- Typography --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Typography</span>
-            <div class={css_class([:component_col])}>
-              <.heading level={1} style={"font-size: #{css_const({Tokens, :font_size, :"4xl"})}"}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Typography</span>
+            <div {css(:component_col)}>
+              <.heading level={1} class={css(:heading_4xl).class}>
                 Heading 1
               </.heading>
-              <.heading level={2} style={"font-size: #{css_const({Tokens, :font_size, :"3xl"})}"}>
+              <.heading level={2} class={css(:heading_3xl).class}>
                 Heading 2
               </.heading>
-              <.heading level={3} style={"font-size: #{css_const({Tokens, :font_size, :"2xl"})}"}>
+              <.heading level={3} class={css(:heading_2xl).class}>
                 Heading 3
               </.heading>
               <.body_text>
@@ -89,18 +112,15 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Buttons --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Buttons</span>
-            <div class={css_class([:component_row])}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Buttons</span>
+            <div {css(:component_row)}>
               <.button variant={:primary}>Primary</.button>
               <.button variant={:secondary}>Secondary</.button>
               <.button variant={:danger}>Danger</.button>
               <.button variant={:ghost}>Ghost</.button>
             </div>
-            <div
-              class={css_class([:component_row])}
-              style={"margin-top: #{css_var({Tokens, :space, :"4"})}"}
-            >
+            <div {css([:component_row, :row_spacing])}>
               <.button size={:sm} variant={:primary}>Small Primary</.button>
               <.button size={:sm} variant={:secondary}>Small Secondary</.button>
             </div>
@@ -109,16 +129,16 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Forms --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Forms</span>
-            <div class={css_class([:component_col])}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Forms</span>
+            <div {css(:component_col)}>
               <.input placeholder="Bare input" value="Bare value" />
               <.input placeholder="Bare input (error)" value="Oops" error />
 
               <.field label="Standard Input" placeholder="Standard Input" />
               <.field label="Error State" value="Invalid input" error="Invalid input" />
 
-              <div class={css_class([:component_row])}>
+              <div {css(:component_row)}>
                 <.field
                   type="checkbox"
                   label="Checkbox Option"
@@ -141,9 +161,9 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Links --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Links</span>
-            <div class={css_class([:component_row])}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Links</span>
+            <div {css(:component_row)}>
               <.text_link href="#">Text Link</.text_link>
               <.button href="#" variant={:secondary}>Button Link</.button>
             </div>
@@ -152,9 +172,9 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Icons --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Icons</span>
-            <div class={css_class([:component_row])}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Icons</span>
+            <div {css(:component_row)}>
               <.icon name="info" size={:md} />
               <.icon name="alert" size={:md} />
               <.icon name="check" size={:md} />
@@ -165,9 +185,9 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Flash --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Flash</span>
-            <div class={css_class([:component_col])}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Flash</span>
+            <div {css(:component_col)}>
               <.flash kind={:info} title="Info">
                 Flash messages support icons + actions.
               </.flash>
@@ -180,10 +200,10 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Overlays --%>
         <.card as={:section} overflow={:visible}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Overlays</span>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Overlays</span>
 
-            <div class={css_class([:component_col])}>
+            <div {css(:component_col)}>
               <.tooltip>Tooltip</.tooltip>
 
               <.toast variant={:success}>Saved!</.toast>
@@ -212,9 +232,9 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Badges --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Badges</span>
-            <div class={css_class([:component_row])}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Badges</span>
+            <div {css(:component_row)}>
               <.badge variant={:neutral}>Neutral</.badge>
               <.badge variant={:primary}>Primary</.badge>
               <.badge variant={:outline}>Outline</.badge>
@@ -224,9 +244,9 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Skip Link --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Skip Link</span>
-            <div class={css_class([:component_col])}>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Skip Link</span>
+            <div {css(:component_col)}>
               <.skip_link target="#main">Skip to content</.skip_link>
               <.body_text size={:sm} muted>
                 The skip link is visually hidden until focused.
@@ -237,34 +257,14 @@ defmodule LiveStyleDemoWeb.StyleGuideLive do
 
         <%!-- Colors --%>
         <.card as={:section}>
-          <div style={"padding: #{css_var({Tokens, :space, :"8"})}"}>
-            <span class={css_class([:section_label])}>Semantic Colors</span>
-            <div class={css_class([:component_row])}>
-              <div class={css_class([:component_col])} style="width: 100%">
-                <div
-                  class={css_class([:swatch])}
-                  style={"background: #{css_var({Tokens, :semantic, :fill_primary})}"}
-                  title="Primary"
-                >
-                </div>
-                <div
-                  class={css_class([:swatch])}
-                  style={"background: #{css_var({Tokens, :semantic, :fill_secondary})}"}
-                  title="Secondary"
-                >
-                </div>
-                <div
-                  class={css_class([:swatch])}
-                  style={"background: #{css_var({Tokens, :semantic, :fill_surface})}"}
-                  title="Surface"
-                >
-                </div>
-                <div
-                  class={css_class([:swatch])}
-                  style={"background: #{css_var({Tokens, :semantic, :fill_danger})}"}
-                  title="Danger"
-                >
-                </div>
+          <div {css(:section_content)}>
+            <span {css(:section_label)}>Semantic Colors</span>
+            <div {css(:component_row)}>
+              <div {css([:component_col, :full_width])}>
+                <div {css([:swatch, :swatch_primary])} title="Primary"></div>
+                <div {css([:swatch, :swatch_secondary])} title="Secondary"></div>
+                <div {css([:swatch, :swatch_surface])} title="Surface"></div>
+                <div {css([:swatch, :swatch_danger])} title="Danger"></div>
               </div>
             </div>
           </div>

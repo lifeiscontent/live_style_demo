@@ -17,10 +17,13 @@ defmodule LiveStyleDemoWeb.TableLive do
 
   # Ensure Tokens is compiled first
   require LiveStyleDemoWeb.Tokens
+
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
   # Theme-aware table highlight (replaces StyleX demo's hardcoded teal)
-  @highlight css_var({Tokens, :semantic, :highlight_primary})
+  @highlight var({Semantic, :highlight_primary})
 
   # Get the ROW marker from Tokens
   @row_marker Tokens.row_marker()
@@ -29,39 +32,39 @@ defmodule LiveStyleDemoWeb.TableLive do
   # Container styles (matching StyleX)
   # ============================================================================
 
-  css_class(:container,
+  class(:container,
     padding: [
-      default: css_var({Tokens, :space, :"4"}),
-      "@media (min-width: 640px)": css_var({Tokens, :space, :"8"})
+      default: var({Space, :"4"}),
+      "@media (min-width: 640px)": var({Space, :"8"})
     ],
     margin_block: [
       default: "0",
-      "@media (min-width: 640px)": css_var({Tokens, :space, :"4"})
+      "@media (min-width: 640px)": var({Space, :"4"})
     ],
     margin_inline: "auto",
     max_width: "64rem",
-    border_radius: css_const({Tokens, :radius, :"2xl"}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    border_radius: const({Tokens, :radius_2xl}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border: "1px solid #{var({Semantic, :border_glass})}",
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}"
   )
 
-  css_class(:table_scroll,
+  class(:table_scroll,
     width: "100%",
     overflow_x: "auto",
     overscroll_behavior_x: "contain",
     "-webkit-overflow-scrolling": "touch"
   )
 
-  css_class(:table,
+  class(:table,
     width: "100%",
     min_width: "560px",
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_glass}),
-    border_radius: css_const({Tokens, :radius, :lg})
+    border_color: var({Semantic, :border_glass}),
+    border_radius: const({Tokens, :radius_lg})
   )
 
   # ============================================================================
@@ -90,28 +93,28 @@ defmodule LiveStyleDemoWeb.TableLive do
                    %{
                      :default => nil,
                      When.ancestor(":has(td:nth-of-type(#{n}):hover)") =>
-                       css_var({Tokens, :semantic, :text_on_primary})
+                       var({Semantic, :text_on_primary})
                    }}
                 end)
 
-  css_class(:td,
+  class(:td,
     text_align: %{
       :default => "center",
       ":first-child" => "right"
     },
-    padding_block: css_var({Tokens, :space, :"1"}),
-    padding_inline: css_var({Tokens, :space, :"2"}),
+    padding_block: var({Space, :"1"}),
+    padding_inline: var({Space, :"2"}),
     color:
       Map.merge(
         %{
-          :default => css_var({Tokens, :semantic, :text_secondary}),
+          :default => var({Semantic, :text_secondary}),
           When.ancestor(":hover", @row_marker) => %{
-            :default => css_var({Tokens, :semantic, :text_on_primary}),
-            ":nth-child(1)" => css_var({Tokens, :semantic, :text_secondary})
+            :default => var({Semantic, :text_on_primary}),
+            ":nth-child(1)" => var({Semantic, :text_secondary})
           },
           ":hover" => %{
-            :default => css_var({Tokens, :semantic, :text_on_primary}),
-            ":nth-child(1)" => css_var({Tokens, :semantic, :text_secondary})
+            :default => var({Semantic, :text_on_primary}),
+            ":nth-child(1)" => var({Semantic, :text_secondary})
           }
         },
         @column_color
@@ -152,8 +155,8 @@ defmodule LiveStyleDemoWeb.TableLive do
   )
 
   # Header cell style
-  css_class(:th,
-    color: css_var({Tokens, :semantic, :text_primary}),
+  class(:th,
+    color: var({Semantic, :text_primary}),
     font_weight: "800",
     background_color: "transparent"
   )
@@ -178,9 +181,9 @@ defmodule LiveStyleDemoWeb.TableLive do
       page_title="Price Table"
       page_subtitle="A dense table with :has()-powered cross-highlighting."
     >
-      <div class={container_class()}>
-        <div class={css_class([:table_scroll])}>
-          <table class={css_class([:table])}>
+      <div {css([:container, Marker.default()])}>
+        <div {css(:table_scroll)}>
+          <table {css(:table)}>
             <thead>
               <.tr>
                 <.th></.th>
@@ -268,24 +271,19 @@ defmodule LiveStyleDemoWeb.TableLive do
 
   defp tr(assigns) do
     ~H"""
-    <tr class={Tokens.row_marker()}>{render_slot(@inner_block)}</tr>
+    <tr class={Tokens.row_marker().class}>{render_slot(@inner_block)}</tr>
     """
   end
 
   defp th(assigns) do
     ~H"""
-    <th class={css_class([:td, :th])}>{render_slot(@inner_block)}</th>
+    <th {css([:td, :th])}>{render_slot(@inner_block)}</th>
     """
   end
 
   defp td(assigns) do
     ~H"""
-    <td class={css_class([:td])}>{render_slot(@inner_block)}</td>
+    <td {css(:td)}>{render_slot(@inner_block)}</td>
     """
-  end
-
-  # Container with default marker for cross-highlight effects
-  defp container_class do
-    css_class([:container]) <> " " <> Marker.default()
   end
 end

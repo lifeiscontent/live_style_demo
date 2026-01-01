@@ -5,7 +5,10 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
 
   # Ensure Tokens is compiled first
   require LiveStyleDemoWeb.Tokens
+
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
   import LiveStyleDemoWeb.ViewTransition
 
@@ -13,39 +16,39 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
   # View Transitions
   # ============================================================================
 
-  css_keyframes(:fade_in,
+  keyframes(:fade_in,
     from: %{opacity: "0"},
     to: %{opacity: "1"}
   )
 
-  css_keyframes(:fade_out,
+  keyframes(:fade_out,
     from: %{opacity: "1"},
     to: %{opacity: "0"}
   )
 
-  css_keyframes(:scale_in,
+  keyframes(:scale_in,
     from: %{opacity: "0", transform: "scale(0.8)"},
     to: %{opacity: "1", transform: "scale(1)"}
   )
 
-  css_keyframes(:scale_out,
+  keyframes(:scale_out,
     from: %{opacity: "1", transform: "scale(1)"},
     to: %{opacity: "0", transform: "scale(0.8)"}
   )
 
-  css_keyframes(:slide_in_from_right,
+  keyframes(:slide_in_from_right,
     from: %{opacity: "0", transform: "translateX(30px)"},
     to: %{opacity: "1", transform: "translateX(0)"}
   )
 
-  css_keyframes(:slide_out_to_left,
+  keyframes(:slide_out_to_left,
     from: %{opacity: "1", transform: "translateX(0)"},
     to: %{opacity: "0", transform: "translateX(-30px)"}
   )
 
   # Card transition: smooth position animation for shuffling
   # Uses default crossfade for enter/exit
-  css_view_transition(:card,
+  view_transition_class(:card,
     group: [
       # Prevent transition pseudo-elements from swallowing clicks.
       pointer_events: "none",
@@ -54,7 +57,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     ]
   )
 
-  css_view_transition(:list_item,
+  view_transition_class(:list_item,
     group: [
       pointer_events: "none",
       animation_duration: ".18s",
@@ -66,19 +69,19 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
   # Demo 1: Card Grid with View Transitions
   # ============================================================================
 
-  css_class(:demo_grid,
+  class(:demo_grid,
     display: "grid",
     grid_template_columns: "repeat(auto-fill, minmax(200px, 1fr))",
-    gap: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"})
   )
 
-  css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:card,
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_glass}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    padding: css_var({Tokens, :space, :"4"}),
+    border_color: var({Semantic, :border_glass}),
+    border_radius: const({Tokens, :radius_lg}),
+    padding: var({Space, :"4"}),
     cursor: "pointer",
     transition: "transform 0.18s ease-out, box-shadow 0.18s ease, border-color 0.18s ease",
     transform: %{
@@ -87,108 +90,108 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     },
     box_shadow: %{
       :default => "none",
-      ":hover" => css_const({Tokens, :shadow, :md})
+      ":hover" => const({Tokens, :shadow_md})
     },
     border_color: %{
-      :default => css_var({Tokens, :semantic, :border_glass}),
-      ":hover" => css_var({Tokens, :semantic, :border_focus})
+      :default => var({Semantic, :border_glass}),
+      ":hover" => var({Semantic, :border_focus})
     }
   )
 
-  css_class(:card_title,
-    font_size: css_const({Tokens, :font_size, :base}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_var({Tokens, :space, :"1"})
+  class(:card_title,
+    font_size: const({Tokens, :font_size_base}),
+    font_weight: const({Tokens, :font_weight_semibold}),
+    color: var({Semantic, :text_primary}),
+    margin_bottom: var({Space, :"1"})
   )
 
-  css_class(:card_text,
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_secondary})
+  class(:card_text,
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_secondary})
   )
 
-  css_class(:button_row,
+  class(:button_row,
     display: "flex",
     flex_wrap: "wrap",
-    gap: css_var({Tokens, :space, :"2"}),
-    margin_bottom: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"2"}),
+    margin_bottom: var({Space, :"4"})
   )
 
-  css_class(:button_row_top,
-    margin_top: css_var({Tokens, :space, :"4"})
+  class(:button_row_top,
+    margin_top: var({Space, :"4"})
   )
 
   # ============================================================================
   # Demo 2: Notification Feed (insert/delete/read)
   # ============================================================================
 
-  css_class(:feed_container,
+  class(:feed_container,
     max_width: "420px",
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    border_radius: css_const({Tokens, :radius, :xl}),
-    padding: css_var({Tokens, :space, :"6"}),
-    box_shadow: "0 4px 20px -12px #{css_var({Tokens, :semantic, :shadow_color})}"
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    border_radius: const({Tokens, :radius_xl}),
+    padding: var({Space, :"6"}),
+    box_shadow: "0 4px 20px -12px #{var({Semantic, :shadow_color})}"
   )
 
-  css_class(:feed_input_row,
+  class(:feed_input_row,
     display: "flex",
-    gap: css_var({Tokens, :space, :"2"}),
-    margin_bottom: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"2"}),
+    margin_bottom: var({Space, :"4"})
   )
 
-  css_class(:feed_list,
-    background_color: css_var({Tokens, :semantic, :fill_page}),
+  class(:feed_list,
+    background_color: var({Semantic, :fill_page}),
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border_color: var({Semantic, :border_subtle}),
+    border_radius: const({Tokens, :radius_lg}),
     overflow: "hidden"
   )
 
-  css_class(:feed_item,
+  class(:feed_item,
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"3"}),
-    padding: css_var({Tokens, :space, :"3"}),
+    gap: var({Space, :"3"}),
+    padding: var({Space, :"3"}),
     border_bottom: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_subtle})
+    border_color: var({Semantic, :border_subtle})
   )
 
-  css_class(:feed_item_last,
+  class(:feed_item_last,
     border_bottom: "none"
   )
 
-  css_class(:feed_text,
+  class(:feed_text,
     flex: "1",
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: css_var({Tokens, :semantic, :text_primary})
+    font_size: const({Tokens, :font_size_base}),
+    color: var({Semantic, :text_primary})
   )
 
-  css_class(:feed_text_read,
+  class(:feed_text_read,
     text_decoration: "line-through",
-    color: css_var({Tokens, :semantic, :text_muted})
+    color: var({Semantic, :text_muted})
   )
 
-  css_class(:feed_delete,
-    padding: css_var({Tokens, :space, :"1"}),
+  class(:feed_delete,
+    padding: var({Space, :"1"}),
     background: "none",
     border: "none",
     cursor: "pointer",
-    color: css_var({Tokens, :semantic, :text_muted}),
-    border_radius: css_const({Tokens, :radius, :sm}),
+    color: var({Semantic, :text_muted}),
+    border_radius: const({Tokens, :radius_sm}),
     transition: "color 0.15s ease",
     color: %{
-      :default => css_var({Tokens, :semantic, :text_muted}),
-      ":hover" => css_var({Tokens, :semantic, :text_danger})
+      :default => var({Semantic, :text_muted}),
+      ":hover" => var({Semantic, :text_danger})
     }
   )
 
-  css_class(:empty_state,
-    padding: css_var({Tokens, :space, :"8"}),
+  class(:empty_state,
+    padding: var({Space, :"8"}),
     text_align: "center",
-    color: css_var({Tokens, :semantic, :text_muted}),
-    font_size: css_const({Tokens, :font_size, :sm})
+    color: var({Semantic, :text_muted}),
+    font_size: const({Tokens, :font_size_sm})
   )
 
   # ============================================================================
@@ -334,22 +337,22 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
           <span>Requires Chrome 111+ or Safari 18+ with View Transitions support</span>
         </.browser_note>
 
-        <div class={css_class([:button_row, :button_row_top])}>
+        <div {css([:button_row, :button_row_top])}>
           <.button variant={:primary} phx-click="shuffle_cards">Shuffle Cards</.button>
           <.button variant={:secondary} phx-click="add_card">Add Card</.button>
         </div>
 
-        <div id="cards-grid" class={css_class([:demo_grid])}>
+        <div id="cards-grid" {css(:demo_grid)}>
           <%= for card <- @cards do %>
             <.view_transition
               id={"card-#{card.id}"}
-              class={css_class([:card])}
-              view-transition-class={css_view_transition(:card)}
+              {css(:card)}
+              view-transition-class={view_transition_class(:card)}
               phx-click="remove_card"
               phx-value-id={card.id}
             >
-              <h3 class={css_class([:card_title])}>{card.title}</h3>
-              <p class={css_class([:card_text])}>{card.text}</p>
+              <h3 {css(:card_title)}>{card.title}</h3>
+              <p {css(:card_text)}>{card.text}</p>
             </.view_transition>
           <% end %>
         </div>
@@ -358,12 +361,12 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
       <.demo_section>
         <.demo_section_title>Notification Feed</.demo_section_title>
         <.demo_section_description>
-          A small “live list” demo: insert, delete, and toggle read state. Each row gets a stable
+          A small "live list" demo: insert, delete, and toggle read state. Each row gets a stable
           transition name for smooth animations.
         </.demo_section_description>
 
-        <div class={css_class([:feed_container])}>
-          <form phx-submit="add_message" class={css_class([:feed_input_row])}>
+        <div {css(:feed_container)}>
+          <form phx-submit="add_message" {css(:feed_input_row)}>
             <.input
               name="text"
               placeholder="Add a notification…"
@@ -373,17 +376,17 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
             <.button type="submit" variant={:primary}>Add</.button>
           </form>
 
-          <div id="feed-list" class={css_class([:feed_list])}>
+          <div id="feed-list" {css(:feed_list)}>
             <%= if @messages == [] do %>
-              <div class={css_class([:empty_state])}>
+              <div {css(:empty_state)}>
                 Nothing here yet. Add one above!
               </div>
             <% else %>
               <%= for {message, index} <- Enum.with_index(@messages) do %>
                 <.view_transition
                   id={"message-#{message.id}"}
-                  class={css_class([:feed_item, index == length(@messages) - 1 && :feed_item_last])}
-                  view-transition-class={css_view_transition(:list_item)}
+                  {css([:feed_item, index == length(@messages) - 1 && :feed_item_last])}
+                  view-transition-class={view_transition_class(:list_item)}
                 >
                   <.input
                     type="checkbox"
@@ -392,12 +395,11 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
                     phx-value-id={message.id}
                     aria-label="Toggle read"
                   />
-                  <span class={css_class([:feed_text]) <>
-                      if(message.read, do: " " <> css_class([:feed_text_read]), else: "")}>
+                  <span {css([:feed_text, message.read && :feed_text_read])}>
                     {message.text}
                   </span>
                   <button
-                    class={css_class([:feed_delete])}
+                    {css(:feed_delete)}
                     phx-click="delete_message"
                     phx-value-id={message.id}
                     aria-label="Delete message"

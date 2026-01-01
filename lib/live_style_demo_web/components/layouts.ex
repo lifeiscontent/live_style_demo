@@ -4,20 +4,21 @@ defmodule LiveStyleDemoWeb.Layouts do
   used by your application.
   """
   use LiveStyleDemoWeb, :html
+  use LiveStyle
 
   require LiveStyleDemoWeb.Tokens
 
-  alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Space
 
   import LiveStyleDemoWeb.UIComponents
 
-  css_class(:flash_group,
+  class(:flash_group,
     position: "fixed",
-    top: css_var({Tokens, :space, :"4"}),
-    right: css_var({Tokens, :space, :"4"}),
+    top: var({Space, :"4"}),
+    right: var({Space, :"4"}),
     z_index: "50",
     display: "grid",
-    gap: css_var({Tokens, :space, :"2"})
+    gap: var({Space, :"2"})
   )
 
   # Embed all files in layouts/* within this module.
@@ -68,7 +69,7 @@ defmodule LiveStyleDemoWeb.Layouts do
 
   def flash_group(assigns) do
     ~H"""
-    <div id={@id} aria-live="polite" class={css_class([:flash_group])}>
+    <div id={@id} aria-live="polite" {css(:flash_group)}>
       <.flash kind={:info} flash={@flash} />
       <.flash kind={:error} flash={@flash} />
 

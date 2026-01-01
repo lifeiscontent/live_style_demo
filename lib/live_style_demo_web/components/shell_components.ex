@@ -7,7 +7,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   """
 
   use Phoenix.Component
-  use LiveStyle.Sheet
+  use LiveStyle
 
   require Phoenix.LiveView.ColocatedHook
 
@@ -19,6 +19,8 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   # Ensure tokens/styles compile first
   require LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
   import LiveStyleDemoWeb.UIComponents
 
@@ -26,21 +28,21 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   # Shell layout styles
   # =============================================================================
 
-  css_class(:shell,
+  class(:shell,
     position: "relative",
     isolation: "isolate",
     min_height: "100vh",
-    background_color: css_var({Tokens, :semantic, :fill_surface}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    font_family: css_var({Tokens, :semantic, :font_body}),
+    background_color: var({Semantic, :fill_surface}),
+    color: var({Semantic, :text_primary}),
+    font_family: var({Semantic, :font_body}),
     transition: "background-color 200ms ease, color 200ms ease",
     scrollbar_gutter: "stable both-edges"
   )
 
-  css_class(:topbar,
+  class(:topbar,
     position: "sticky",
     top: "0",
-    z_index: css_const({Tokens, :z, :sticky}),
+    z_index: const({Tokens, :z_sticky}),
     isolation: "isolate",
     background_color: "transparent",
     "::before": %{
@@ -49,34 +51,34 @@ defmodule LiveStyleDemoWeb.ShellComponents do
       inset: "0",
       z_index: "-1",
       pointer_events: "none",
-      background_color: css_var({Tokens, :semantic, :fill_glass}),
+      background_color: var({Semantic, :fill_glass}),
       backdrop_filter: "blur(14px) saturate(1.2)",
       border_bottom_width: "1px",
       border_bottom_style: "solid",
-      border_bottom_color: css_var({Tokens, :semantic, :border_glass})
+      border_bottom_color: var({Semantic, :border_glass})
     }
   )
 
-  css_class(:menu_backdrop,
+  class(:menu_backdrop,
     position: "fixed",
     inset: "0",
-    background_color: css_var({Tokens, :semantic, :overlay_backdrop}),
+    background_color: var({Semantic, :overlay_backdrop}),
     backdrop_filter: "blur(2px)",
     # Keep the backdrop below the sticky topbar so the header stays crisp/clickable.
-    z_index: css_const({Tokens, :z, :dropdown})
+    z_index: const({Tokens, :z_dropdown})
   )
 
-  css_class(:topbar_inner,
+  class(:topbar_inner,
     display: "flex",
     align_items: "center",
     justify_content: "space-between",
     gap: [
-      default: css_var({Tokens, :space, :"4"}),
-      "@media (max-width: 420px)": css_var({Tokens, :space, :"2"})
+      default: var({Space, :"4"}),
+      "@media (max-width: 420px)": var({Space, :"2"})
     ],
     padding_block: [
-      default: css_var({Tokens, :space, :"4"}),
-      "@media (max-width: 420px)": css_var({Tokens, :space, :"3"})
+      default: var({Space, :"4"}),
+      "@media (max-width: 420px)": var({Space, :"3"})
     ],
     padding_inline: [
       default: "clamp(1rem, 4vw, 2rem)",
@@ -86,150 +88,150 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     margin_inline: "auto"
   )
 
-  css_class(:brand,
+  class(:brand,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"3"}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+    gap: var({Space, :"3"}),
+    font_weight: const({Tokens, :font_weight_bold}),
     letter_spacing: "-0.02em",
-    color: css_var({Tokens, :semantic, :text_primary}),
+    color: var({Semantic, :text_primary}),
     text_decoration: "none",
     min_width: "0"
   )
 
-  css_class(:brand_mark,
+  class(:brand_mark,
     width: [default: "2.25rem", "@media (max-width: 420px)": "2rem"],
     height: [default: "2.25rem", "@media (max-width: 420px)": "2rem"],
-    border_radius: css_const({Tokens, :radius, :xl}),
-    background_color: css_var({Tokens, :semantic, :fill_primary}),
+    border_radius: const({Tokens, :radius_xl}),
+    background_color: var({Semantic, :fill_primary}),
     box_shadow: "none"
   )
 
-  css_class(:brand_text,
+  class(:brand_text,
     display: ["@media (max-width: 420px)": "none"],
-    font_size: css_const({Tokens, :font_size, :lg}),
-    line_height: css_const({Tokens, :leading, :tight}),
+    font_size: const({Tokens, :font_size_lg}),
+    line_height: const({Tokens, :leading_tight}),
     white_space: "nowrap"
   )
 
-  css_class(:nav,
+  class(:nav,
     display: "flex",
     align_items: "center",
     gap: [
-      default: css_var({Tokens, :space, :"3"}),
-      "@media (max-width: 420px)": css_var({Tokens, :space, :"2"})
+      default: var({Space, :"3"}),
+      "@media (max-width: 420px)": var({Space, :"2"})
     ],
     flex_shrink: "0"
   )
 
   # Desktop nav row (kept hidden on phones/landscape)
-  css_class(:nav_links,
+  class(:nav_links,
     display: [
       default: "none",
       "@media (min-width: 1024px)": "flex"
     ],
     align_items: "center",
-    gap: css_var({Tokens, :space, :"2"})
+    gap: var({Space, :"2"})
   )
 
-  css_class(:nav_link,
+  class(:nav_link,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    padding_block: css_var({Tokens, :space, :"2"}),
-    padding_inline: css_var({Tokens, :space, :"3"}),
-    border_radius: css_const({Tokens, :radius, :full}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
+    gap: var({Space, :"2"}),
+    padding_block: var({Space, :"2"}),
+    padding_inline: var({Space, :"3"}),
+    border_radius: const({Tokens, :radius_full}),
+    font_size: const({Tokens, :font_size_sm}),
+    font_weight: const({Tokens, :font_weight_medium}),
+    color: var({Semantic, :text_secondary}),
     border: "1px solid transparent",
     transition: "background-color 160ms ease, border-color 160ms ease, color 160ms ease",
     outline: [
       default: "none",
-      ":focus-visible": "2px solid #{css_var({Tokens, :semantic, :focus_ring})}"
+      ":focus-visible": "2px solid #{var({Semantic, :focus_ring})}"
     ],
     outline_offset: [default: "0", ":focus-visible": "2px"],
     background_color: [
       default: "transparent",
-      ":hover": css_var({Tokens, :semantic, :fill_glass})
+      ":hover": var({Semantic, :fill_glass})
     ],
     border_color: [
       default: "transparent",
-      ":hover": css_var({Tokens, :semantic, :border_glass})
+      ":hover": var({Semantic, :border_glass})
     ]
   )
 
-  css_class(:nav_link_active,
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
-    border_color: css_var({Tokens, :semantic, :border_glass}),
-    color: css_var({Tokens, :semantic, :text_primary})
+  class(:nav_link_active,
+    background_color: var({Semantic, :fill_glass}),
+    border_color: var({Semantic, :border_glass}),
+    color: var({Semantic, :text_primary})
   )
 
-  css_class(:style_toggle,
+  class(:style_toggle,
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
     width: "2.5rem",
     height: "2.5rem",
-    border_radius: css_const({Tokens, :radius, :full}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    box_shadow: "0 14px 40px -36px #{css_var({Tokens, :semantic, :shadow_color})}",
-    color: css_var({Tokens, :semantic, :text_primary}),
+    border_radius: const({Tokens, :radius_full}),
+    background_color: var({Semantic, :fill_glass}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    box_shadow: "0 14px 40px -36px #{var({Semantic, :shadow_color})}",
+    color: var({Semantic, :text_primary}),
     outline: [
       default: "none",
-      ":focus-visible": "2px solid #{css_var({Tokens, :semantic, :focus_ring})}"
+      ":focus-visible": "2px solid #{var({Semantic, :focus_ring})}"
     ],
     outline_offset: [default: "0", ":focus-visible": "2px"]
   )
 
-  css_class(:style_menu,
+  class(:style_menu,
     position: "relative",
     display: "inline-flex"
   )
 
-  css_class(:style_panel,
+  class(:style_panel,
     position: "absolute",
-    top: "calc(100% + #{css_var({Tokens, :space, :"3"})})",
+    top: "calc(100% + #{var({Space, :"3"})})",
     right: "0",
     width: "min(18rem, 80vw)",
-    padding: css_var({Tokens, :space, :"4"}),
-    border_radius: css_const({Tokens, :radius, :xl}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    padding: var({Space, :"4"}),
+    border_radius: const({Tokens, :radius_xl}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(14px) saturate(1.2)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border: "1px solid #{var({Semantic, :border_glass})}",
     box_shadow:
-      "0 30px 80px -68px #{css_var({Tokens, :semantic, :shadow_color_strong})}, 0 20px 60px -52px #{css_var({Tokens, :semantic, :shadow_color})}",
+      "0 30px 80px -68px #{var({Semantic, :shadow_color_strong})}, 0 20px 60px -52px #{var({Semantic, :shadow_color})}",
     display: "grid",
-    gap: css_var({Tokens, :space, :"2"})
+    gap: var({Space, :"2"})
   )
 
-  css_class(:style_btn,
+  class(:style_btn,
     display: "flex",
     align_items: "center",
     justify_content: "space-between",
-    gap: css_var({Tokens, :space, :"2"}),
+    gap: var({Space, :"2"}),
     width: "100%",
-    padding_block: css_var({Tokens, :space, :"2.5"}),
-    padding_inline: css_var({Tokens, :space, :"3"}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
+    padding_block: var({Space, :"2.5"}),
+    padding_inline: var({Space, :"3"}),
+    border_radius: const({Tokens, :radius_lg}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    background_color: var({Semantic, :fill_glass}),
+    color: var({Semantic, :text_primary}),
+    font_weight: const({Tokens, :font_weight_medium}),
     cursor: "pointer",
     text_align: "left",
     transition: "transform 160ms ease",
-    transform: [default: "translateY(0)", ":active": "translateY(1px)"]
+    transform: %{:default => "translateY(0)", ":active" => "translateY(1px)"}
   )
 
-  css_class(:style_btn_active,
-    background_color: css_var({Tokens, :semantic, :fill_primary}),
+  class(:style_btn_active,
+    background_color: var({Semantic, :fill_primary}),
     border_color: "transparent",
-    color: css_var({Tokens, :semantic, :text_on_primary})
+    color: var({Semantic, :text_on_primary})
   )
 
-  css_class(:menu,
+  class(:menu,
     position: "relative",
     display: [
       default: "inline-flex",
@@ -237,155 +239,160 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     ]
   )
 
-  css_class(:menu_summary,
+  class(:menu_summary,
     list_style: "none",
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
     width: "2.5rem",
     height: "2.5rem",
-    border_radius: css_const({Tokens, :radius, :full}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    color: css_var({Tokens, :semantic, :text_primary}),
+    border_radius: const({Tokens, :radius_full}),
+    background_color: var({Semantic, :fill_glass}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    color: var({Semantic, :text_primary}),
     outline: [
       default: "none",
-      ":focus-visible": "2px solid #{css_var({Tokens, :semantic, :focus_ring})}"
+      ":focus-visible": "2px solid #{var({Semantic, :focus_ring})}"
     ],
     outline_offset: [default: "0", ":focus-visible": "2px"],
     "::marker": %{content: "''"},
     "::-webkit-details-marker": %{display: "none"}
   )
 
-  css_class(:menu_panel,
+  class(:menu_panel,
     # Mobile menu sheet
     position: "fixed",
-    z_index: css_const({Tokens, :z, :modal}),
+    z_index: const({Tokens, :z_modal}),
     left: "max(1rem, env(safe-area-inset-left))",
     right: "max(1rem, env(safe-area-inset-right))",
     top: "calc(4.25rem + env(safe-area-inset-top))",
     max_height: "calc(100vh - 5.25rem - env(safe-area-inset-top) - env(safe-area-inset-bottom))",
     overflow_y: "auto",
     overscroll_behavior: "contain",
-    padding: css_var({Tokens, :space, :"4"}),
-    border_radius: css_const({Tokens, :radius, :xl}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+    padding: var({Space, :"4"}),
+    border_radius: const({Tokens, :radius_xl}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(14px) saturate(1.2)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+    border: "1px solid #{var({Semantic, :border_glass})}",
     box_shadow:
-      "0 30px 80px -68px #{css_var({Tokens, :semantic, :shadow_color_strong})}, 0 20px 60px -52px #{css_var({Tokens, :semantic, :shadow_color})}",
+      "0 30px 80px -68px #{var({Semantic, :shadow_color_strong})}, 0 20px 60px -52px #{var({Semantic, :shadow_color})}",
     display: "grid",
-    gap: css_var({Tokens, :space, :"2"})
+    gap: var({Space, :"2"})
   )
 
-  css_class(:menu_divider,
+  class(:menu_divider,
     height: "1px",
     width: "100%",
-    background_color: css_var({Tokens, :semantic, :border_glass}),
-    margin_block: css_var({Tokens, :space, :"2"})
+    background_color: var({Semantic, :border_glass}),
+    margin_block: var({Space, :"2"})
   )
 
-  css_class(:main,
+  class(:main,
     padding_block: "clamp(1.25rem, 3vw, 2rem)",
     padding_inline: "clamp(1rem, 4vw, 2rem)",
     max_width: "90rem",
     margin_inline: "auto"
   )
 
-  css_class(:page_header,
+  class(:page_header,
     display: "grid",
-    gap: css_var({Tokens, :space, :"2"}),
-    margin_bottom: css_var({Tokens, :space, :"8"})
+    gap: var({Space, :"2"}),
+    margin_bottom: var({Space, :"8"})
   )
 
-  css_class(:page_title,
+  class(:page_title,
     font_size: "clamp(1.5rem, 1.2rem + 1.5vw, 2.25rem)",
-    font_family: css_var({Tokens, :semantic, :font_heading}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+    font_family: var({Semantic, :font_heading}),
+    font_weight: const({Tokens, :font_weight_bold}),
     letter_spacing: "-0.03em",
-    line_height: css_const({Tokens, :leading, :tight})
+    line_height: const({Tokens, :leading_tight})
   )
 
-  css_class(:page_subtitle,
+  class(:page_subtitle,
     max_width: "70ch",
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    font_size: css_const({Tokens, :font_size, :lg}),
-    line_height: css_const({Tokens, :leading, :relaxed})
+    color: var({Semantic, :text_secondary}),
+    font_size: const({Tokens, :font_size_lg}),
+    line_height: const({Tokens, :leading_relaxed})
   )
 
-  css_class(:footer,
+  class(:footer,
     margin_top: "clamp(3rem, 5vw, 5rem)",
-    padding_block: css_var({Tokens, :space, :"10"}),
+    padding_block: var({Space, :"10"}),
     padding_inline: "clamp(1rem, 4vw, 2rem)",
     max_width: "90rem",
     margin_inline: "auto",
-    border_top: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    color: css_var({Tokens, :semantic, :text_muted})
+    border_top: "1px solid #{var({Semantic, :border_glass})}",
+    color: var({Semantic, :text_muted})
   )
 
-  css_class(:footer_inner,
+  class(:footer_inner,
     display: "flex",
     flex_wrap: "wrap",
     align_items: "center",
     justify_content: "space-between",
-    gap: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"})
   )
 
-  css_class(:footer_link,
-    color: css_var({Tokens, :semantic, :text_link}),
+  class(:footer_link,
+    color: var({Semantic, :text_link}),
     text_decoration: [default: "none", ":hover": "underline"]
   )
 
-  css_class(:kbd,
-    font_family: css_const({Tokens, :font, :mono}),
-    font_size: css_const({Tokens, :font_size, :xs}),
-    padding_block: css_var({Tokens, :space, :"0.5"}),
-    padding_inline: css_var({Tokens, :space, :"1.5"}),
-    border_radius: css_const({Tokens, :radius, :md}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}"
+  class(:kbd,
+    font_family: const({Tokens, :font_mono}),
+    font_size: const({Tokens, :font_size_xs}),
+    padding_block: var({Space, :"0.5"}),
+    padding_inline: var({Space, :"1.5"}),
+    border_radius: const({Tokens, :radius_md}),
+    background_color: var({Semantic, :fill_glass}),
+    border: "1px solid #{var({Semantic, :border_glass})}"
   )
 
-  css_class(:pagination,
+  class(:pagination,
     display: "grid",
     grid_template_columns: "repeat(auto-fit, minmax(200px, 1fr))",
-    gap: css_var({Tokens, :space, :"4"}),
-    margin_top: css_var({Tokens, :space, :"16"}),
-    padding_top: css_var({Tokens, :space, :"8"}),
-    border_top: "1px solid #{css_var({Tokens, :semantic, :border_glass})}"
+    gap: var({Space, :"4"}),
+    margin_top: var({Space, :"16"}),
+    padding_top: var({Space, :"8"}),
+    border_top: "1px solid #{var({Semantic, :border_glass})}"
   )
 
-  css_class(:pagination_link,
+  class(:pagination_link,
     display: "flex",
     flex_direction: "column",
-    gap: css_var({Tokens, :space, :"1"}),
-    padding: css_var({Tokens, :space, :"4"}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_subtle})}",
+    gap: var({Space, :"1"}),
+    padding: var({Space, :"4"}),
+    border_radius: const({Tokens, :radius_lg}),
+    border: "1px solid #{var({Semantic, :border_subtle})}",
     text_decoration: "none",
-    color: css_var({Tokens, :semantic, :text_primary}),
+    color: var({Semantic, :text_primary}),
     transition: "all 0.2s ease",
     background_color: [
       default: "transparent",
-      ":hover": css_var({Tokens, :semantic, :fill_surface})
+      ":hover": var({Semantic, :fill_surface})
     ],
     border_color: [
-      default: css_var({Tokens, :semantic, :border_subtle}),
-      ":hover": css_var({Tokens, :semantic, :border_focus})
+      default: var({Semantic, :border_subtle}),
+      ":hover": var({Semantic, :border_focus})
     ]
   )
 
-  css_class(:pagination_label,
-    font_size: css_const({Tokens, :font_size, :xs}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    text_transform: "uppercase",
-    letter_spacing: "0.05em",
-    font_weight: css_const({Tokens, :font_weight, :bold})
+  class(:pagination_link_next,
+    text_align: "right",
+    align_items: "flex-end"
   )
 
-  css_class(:pagination_title,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :semibold})
+  class(:pagination_label,
+    font_size: const({Tokens, :font_size_xs}),
+    color: var({Semantic, :text_secondary}),
+    text_transform: "uppercase",
+    letter_spacing: "0.05em",
+    font_weight: const({Tokens, :font_weight_bold})
+  )
+
+  class(:pagination_title,
+    font_size: const({Tokens, :font_size_lg}),
+    font_weight: const({Tokens, :font_weight_semibold})
   )
 
   # =============================================================================
@@ -400,21 +407,21 @@ defmodule LiveStyleDemoWeb.ShellComponents do
 
   def shell(assigns) do
     ~H"""
-    <div class={css_class([:shell])} data-app-shell>
+    <div {css(:shell)} data-app-shell>
       <.mobile_menu_hook_definition />
       <.appearance_hook_definition />
       <.spacing_hook_definition />
       <.skip_link target="#main">Skip to content</.skip_link>
 
-      <header class={css_class([:topbar])}>
-        <div class={css_class([:topbar_inner])}>
-          <.link navigate={~p"/"} class={css_class([:brand])}>
-            <span class={css_class([:brand_mark])} aria-hidden="true" />
-            <span class={css_class([:brand_text])}>LiveStyle</span>
+      <header {css(:topbar)}>
+        <div {css(:topbar_inner)}>
+          <.link navigate={~p"/"} {css(:brand)}>
+            <span {css(:brand_mark)} aria-hidden="true" />
+            <span {css(:brand_text)}>LiveStyle</span>
           </.link>
 
-          <nav class={css_class([:nav])} aria-label="Primary">
-            <div class={css_class([:nav_links])}>
+          <nav {css(:nav)} aria-label="Primary">
+            <div {css(:nav_links)}>
               <.nav_link to={~p"/theming"} active={@active == "theming"}>
                 Theming
               </.nav_link>
@@ -428,73 +435,73 @@ defmodule LiveStyleDemoWeb.ShellComponents do
                 Style Guide
               </.nav_link>
               <.nav_link to={~p"/demos"} active={@active == "demos"}>Demos</.nav_link>
-              <a class={css_class([:nav_link])} href="https://github.com/lifeiscontent/live_style">
+              <a {css(:nav_link)} href="https://github.com/lifeiscontent/live_style">
                 GitHub
               </a>
             </div>
 
-            <details id="spacing" class={css_class([:style_menu])} phx-hook=".Spacing">
-              <summary class={css_class([:style_toggle])} aria-label="Spacing">
+            <details id="spacing" {css(:style_menu)} phx-hook=".Spacing">
+              <summary {css(:style_toggle)} aria-label="Spacing">
                 <span aria-hidden="true">↕</span>
               </summary>
 
-              <div class={css_class([:style_panel])} data-spacing-panel>
-                <button type="button" class={css_class([:style_btn])} data-space="default">
+              <div {css(:style_panel)} data-spacing-panel>
+                <button type="button" {css(:style_btn)} data-space="default">
                   Default
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-space="compact">
+                <button type="button" {css(:style_btn)} data-space="compact">
                   Compact
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-space="cozy">
+                <button type="button" {css(:style_btn)} data-space="cozy">
                   Cozy
                 </button>
               </div>
             </details>
 
-            <details id="appearance" class={css_class([:style_menu])} phx-hook=".Appearance">
+            <details id="appearance" {css(:style_menu)} phx-hook=".Appearance">
               <summary
-                class={css_class([:style_toggle])}
+                {css(:style_toggle)}
                 aria-label="Theme"
                 data-appearance-toggle
               >
                 <span aria-hidden="true" data-appearance-icon>🇨🇭</span>
               </summary>
 
-              <div class={css_class([:style_panel])} data-appearance-panel>
-                <button type="button" class={css_class([:style_btn])} data-appearance="default">
+              <div {css(:style_panel)} data-appearance-panel>
+                <button type="button" {css(:style_btn)} data-appearance="default">
                   Swiss
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="terminal">
+                <button type="button" {css(:style_btn)} data-appearance="terminal">
                   Terminal
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="blueprint">
+                <button type="button" {css(:style_btn)} data-appearance="blueprint">
                   Blueprint
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="solar">
+                <button type="button" {css(:style_btn)} data-appearance="solar">
                   Solar
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="navy">
+                <button type="button" {css(:style_btn)} data-appearance="navy">
                   Navy
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="forest">
+                <button type="button" {css(:style_btn)} data-appearance="forest">
                   Forest
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="lavender">
+                <button type="button" {css(:style_btn)} data-appearance="lavender">
                   Lavender
                 </button>
-                <button type="button" class={css_class([:style_btn])} data-appearance="brutal">
+                <button type="button" {css(:style_btn)} data-appearance="brutal">
                   Brutal
                 </button>
               </div>
             </details>
 
-            <details id="mobile-menu" class={css_class([:menu])} phx-hook=".MobileMenu">
-              <summary class={css_class([:menu_summary])} aria-label="Open menu">
+            <details id="mobile-menu" {css(:menu)} phx-hook=".MobileMenu">
+              <summary {css(:menu_summary)} aria-label="Open menu">
                 <span aria-hidden="true">☰</span>
               </summary>
 
-              <div class={css_class([:menu_backdrop])} data-mobile-menu-backdrop aria-hidden="true" />
-              <div class={css_class([:menu_panel])} data-mobile-menu-panel role="menu">
+              <div {css(:menu_backdrop)} data-mobile-menu-backdrop aria-hidden="true" />
+              <div {css(:menu_panel)} data-mobile-menu-panel role="menu">
                 <.nav_link to={~p"/theming"} active={@active == "theming"}>
                   Theming
                 </.nav_link>
@@ -509,7 +516,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
                 </.nav_link>
                 <.nav_link to={~p"/demos"} active={@active == "demos"}>Demos</.nav_link>
 
-                <div class={css_class([:menu_divider])} />
+                <div {css(:menu_divider)} />
 
                 <.button variant={:secondary} href="https://github.com/lifeiscontent/live_style">
                   GitHub
@@ -524,10 +531,10 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         </div>
       </header>
 
-      <main id="main" class={css_class([:main])}>
-        <header :if={@page_title || @page_subtitle} class={css_class([:page_header])}>
-          <h1 :if={@page_title} class={css_class([:page_title])}>{@page_title}</h1>
-          <p :if={@page_subtitle} class={css_class([:page_subtitle])}>{@page_subtitle}</p>
+      <main id="main" {css(:main)}>
+        <header :if={@page_title || @page_subtitle} {css(:page_header)}>
+          <h1 :if={@page_title} {css(:page_title)}>{@page_title}</h1>
+          <p :if={@page_subtitle} {css(:page_subtitle)}>{@page_subtitle}</p>
         </header>
 
         {render_slot(@inner_block)}
@@ -535,13 +542,12 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         <.pagination active={@active} />
       </main>
 
-      <footer :if={@show_footer} class={css_class([:footer])}>
-        <div class={css_class([:footer_inner])}>
+      <footer :if={@show_footer} {css(:footer)}>
+        <div {css(:footer_inner)}>
           <p>
-            Built with
-            <a class={css_class([:footer_link])} href="https://phoenixframework.org">Phoenix</a>
+            Built with <a {css(:footer_link)} href="https://phoenixframework.org">Phoenix</a>
             and <a
-              class={css_class([:footer_link])}
+              {css(:footer_link)}
               href="https://github.com/lifeiscontent/live_style"
             >LiveStyle</a>.
           </p>
@@ -587,28 +593,27 @@ defmodule LiveStyleDemoWeb.ShellComponents do
       )
 
     ~H"""
-    <nav :if={@prev || @next} class={css_class([:pagination])} aria-label="Pagination">
-      <.link :if={@prev} navigate={elem(@prev, 2)} class={css_class([:pagination_link])}>
-        <span class={css_class([:pagination_label])}>&larr; Previous</span>
-        <span class={css_class([:pagination_title])}>{elem(@prev, 1)}</span>
+    <nav :if={@prev || @next} {css(:pagination)} aria-label="Pagination">
+      <.link :if={@prev} navigate={elem(@prev, 2)} {css(:pagination_link)}>
+        <span {css(:pagination_label)}>&larr; Previous</span>
+        <span {css(:pagination_title)}>{elem(@prev, 1)}</span>
       </.link>
       <div :if={!@prev}></div>
 
       <.link
         :if={@next}
         navigate={elem(@next, 2)}
-        class={css_class([:pagination_link])}
-        style="text-align: right; align-items: flex-end;"
+        {css([:pagination_link, :pagination_link_next])}
       >
-        <span class={css_class([:pagination_label])}>Next &rarr;</span>
-        <span class={css_class([:pagination_title])}>{elem(@next, 1)}</span>
+        <span {css(:pagination_label)}>Next &rarr;</span>
+        <span {css(:pagination_title)}>{elem(@next, 1)}</span>
       </.link>
     </nav>
     """
   end
 
   def appearance_hook_definition(assigns) do
-    assigns = assign(assigns, :style_btn_active_class, css_class([:style_btn_active]))
+    assigns = assign(assigns, :style_btn_active_class, css(:style_btn_active).class)
 
     ~H"""
     <div
@@ -765,7 +770,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   end
 
   def spacing_hook_definition(assigns) do
-    assigns = assign(assigns, :style_btn_active_class, css_class([:style_btn_active]))
+    assigns = assign(assigns, :style_btn_active_class, css(:style_btn_active).class)
 
     ~H"""
     <div
@@ -797,7 +802,9 @@ defmodule LiveStyleDemoWeb.ShellComponents do
             splitClasses(classString).forEach((cls) => root.classList.remove(cls))
           })
 
-          splitClasses(classes[value]).forEach((cls) => root.classList.add(cls))
+          if (classes[value]) {
+            splitClasses(classes[value]).forEach((cls) => root.classList.add(cls))
+          }
           root.dataset.spaceScale = value
 
           try {
@@ -922,7 +929,7 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     ~H"""
     <.link
       navigate={@to}
-      class={css_class([:nav_link, @active && :nav_link_active])}
+      {css([:nav_link, @active && :nav_link_active])}
       aria-current={@active && "page"}
     >
       {render_slot(@inner_block)}

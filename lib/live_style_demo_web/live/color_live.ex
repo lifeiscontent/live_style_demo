@@ -4,126 +4,128 @@ defmodule LiveStyleDemoWeb.ColorLive do
   require LiveStyleDemoWeb.Tokens
 
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Anim
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
-  css_class(:layout,
+  class(:layout,
     display: "grid",
-    gap: css_var({Tokens, :space, :"8"}),
+    gap: var({Space, :"8"}),
     grid_template_columns: [
       default: "1fr",
       "@media (min-width: 900px)": "1.2fr 0.8fr"
     ]
   )
 
-  css_class(:card,
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:card,
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(14px) saturate(1.15)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    border_radius: css_const({Tokens, :radius, :"2xl"}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    border_radius: const({Tokens, :radius_2xl}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 26px 80px -74px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
-    padding: css_var({Tokens, :space, :"6"})
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 26px 80px -74px #{var({Semantic, :shadow_color_strong})}",
+    padding: var({Space, :"6"})
   )
 
-  css_class(:title,
-    font_size: css_const({Tokens, :font_size, :xl}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+  class(:title,
+    font_size: const({Tokens, :font_size_xl}),
+    font_weight: const({Tokens, :font_weight_bold}),
     letter_spacing: "-0.02em",
-    margin_bottom: css_var({Tokens, :space, :"2"})
+    margin_bottom: var({Space, :"2"})
   )
 
-  css_class(:subtitle,
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed}),
-    margin_bottom: css_var({Tokens, :space, :"6"})
+  class(:subtitle,
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed}),
+    margin_bottom: var({Space, :"6"})
   )
 
-  css_class(:tip,
+  class(:tip,
     margin: "0",
-    color: css_var({Tokens, :semantic, :text_muted}),
-    font_size: css_const({Tokens, :font_size, :sm})
+    color: var({Semantic, :text_muted}),
+    font_size: const({Tokens, :font_size_sm})
   )
 
-  css_class(:palette_grid,
+  class(:palette_grid,
     display: "grid",
     grid_template_columns: "repeat(3, 1fr)",
     grid_template_rows: "repeat(2, 1fr)",
-    gap: css_var({Tokens, :space, :"4"}),
+    gap: var({Space, :"4"}),
     height: "min(46vh, 420px)"
   )
 
-  css_class(:color_block,
-    border_radius: css_const({Tokens, :radius, :xl}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
+  class(:color_block,
+    border_radius: const({Tokens, :radius_xl}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
     display: "flex",
     align_items: "center",
     justify_content: "center",
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_on_primary}),
-    font_family: css_const({Tokens, :font, :mono}),
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_on_primary}),
+    font_family: const({Tokens, :font_mono}),
     transition: "background-color 200ms ease"
   )
 
   # Color Variants (calculated via color-mix)
-  css_class(:color_base,
+  class(:color_base,
     grid_column: "span 2",
     grid_row: "span 2",
-    background_color:
-      "oklch(70% #{css_var({Tokens, :anim, :chroma})} #{css_var({Tokens, :anim, :hue})})"
+    background_color: "oklch(70% #{var({Anim, :chroma})} #{var({Anim, :hue})})"
   )
 
-  css_class(:color_dark,
+  class(:color_dark,
     background_color:
-      "color-mix(in oklab, oklch(70% #{css_var({Tokens, :anim, :chroma})} #{css_var({Tokens, :anim, :hue})}) 60%, black)"
+      "color-mix(in oklab, oklch(70% #{var({Anim, :chroma})} #{var({Anim, :hue})}) 60%, black)"
   )
 
-  css_class(:color_light,
+  class(:color_light,
     background_color:
-      "color-mix(in oklab, oklch(70% #{css_var({Tokens, :anim, :chroma})} #{css_var({Tokens, :anim, :hue})}) 60%, white)",
-    color: css_var({Tokens, :semantic, :text_primary})
+      "color-mix(in oklab, oklch(70% #{var({Anim, :chroma})} #{var({Anim, :hue})}) 60%, white)",
+    color: var({Semantic, :text_primary})
   )
 
-  css_class(:swatch_vars, fn hue, chroma ->
+  class(:swatch_vars, fn hue, chroma ->
     [
-      {css_var({Tokens, :anim, :hue}), hue},
-      {css_var({Tokens, :anim, :chroma}), chroma}
+      {var({Anim, :hue}), hue},
+      {var({Anim, :chroma}), chroma}
     ]
   end)
 
-  css_class(:controls,
+  class(:controls,
     display: "grid",
-    gap: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"})
   )
 
-  css_class(:label,
+  class(:label,
     display: "flex",
     align_items: "baseline",
     justify_content: "space-between",
-    gap: css_var({Tokens, :space, :"3"}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    color: css_var({Tokens, :semantic, :text_primary})
+    gap: var({Space, :"3"}),
+    font_weight: const({Tokens, :font_weight_medium}),
+    color: var({Semantic, :text_primary})
   )
 
-  css_class(:value,
-    font_family: css_const({Tokens, :font, :mono}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_secondary})
+  class(:value,
+    font_family: const({Tokens, :font_mono}),
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_secondary})
   )
 
-  css_class(:range,
+  class(:range,
     width: "100%",
-    accent_color: css_var({Tokens, :semantic, :fill_primary})
+    accent_color: var({Semantic, :fill_primary})
   )
 
-  css_class(:code,
-    font_family: css_const({Tokens, :font, :mono}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    line_height: css_const({Tokens, :leading, :relaxed}),
+  class(:code,
+    font_family: const({Tokens, :font_mono}),
+    font_size: const({Tokens, :font_size_sm}),
+    line_height: const({Tokens, :leading_relaxed}),
     white_space: "pre-wrap",
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    background_color: css_var({Tokens, :semantic, :fill_muted}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    border_radius: css_const({Tokens, :radius, :lg}),
-    padding: css_var({Tokens, :space, :"4"})
+    color: var({Semantic, :text_secondary}),
+    background_color: var({Semantic, :fill_muted}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    border_radius: const({Tokens, :radius_lg}),
+    padding: var({Space, :"4"})
   )
 
   @impl true
@@ -145,7 +147,7 @@ defmodule LiveStyleDemoWeb.ColorLive do
 
   defp code_snippet(assigns) do
     ~H"""
-    <pre class={css_class([:code])}>
+    <pre {css(:code)}>
     /* Base Color */
     background: oklch(70% {Float.round(@chroma, 2)} {@hue}deg);
 
@@ -157,7 +159,7 @@ defmodule LiveStyleDemoWeb.ColorLive do
     );
 
     /* With CSS Variables */
-    @property {LiveStyle.Vars.lookup!(Tokens, :anim, :hue)} &#123;
+    @property {LiveStyle.Vars.lookup!({Tokens.Anim, :hue}).ident} &#123;
       syntax: "&lt;angle&gt;";
       inherits: true;
       initial-value: 260deg;
@@ -178,28 +180,28 @@ defmodule LiveStyleDemoWeb.ColorLive do
       page_title="Color & OKLCH"
       page_subtitle="OKLCH + color-mix() + typed custom properties (@property)."
     >
-      <div class={css_class([:layout])}>
-        <div class={css_class([:card])}>
-          <div class={css_class([:title])}>Palette Generator</div>
-          <p class={css_class([:subtitle])}>
+      <div {css(:layout)}>
+        <div {css(:card)}>
+          <div {css(:title)}>Palette Generator</div>
+          <p {css(:subtitle)}>
             Generate a color scale on the fly using <code>oklch()</code> and <code>color-mix()</code>.
             Solid colors only—no gradients.
           </p>
 
           <div {css([:palette_grid, {:swatch_vars, ["#{@hue}deg", @chroma_string]}])}>
-            <div class={css_class([:color_block, :color_base])}>Base</div>
-            <div class={css_class([:color_block, :color_dark])}>Darker</div>
-            <div class={css_class([:color_block, :color_light])}>Lighter</div>
+            <div {css([:color_block, :color_base])}>Base</div>
+            <div {css([:color_block, :color_dark])}>Darker</div>
+            <div {css([:color_block, :color_light])}>Lighter</div>
           </div>
 
-          <form phx-change="update" phx-submit="update" class={css_class([:controls])}>
+          <form phx-change="update" phx-submit="update" {css(:controls)}>
             <div>
-              <div class={css_class([:label])}>
+              <div {css(:label)}>
                 <span>Hue</span>
-                <span class={css_class([:value])}>{@hue}</span>
+                <span {css(:value)}>{@hue}</span>
               </div>
               <input
-                class={css_class([:range])}
+                {css(:range)}
                 name="hue"
                 type="range"
                 min="0"
@@ -210,12 +212,12 @@ defmodule LiveStyleDemoWeb.ColorLive do
             </div>
 
             <div>
-              <div class={css_class([:label])}>
+              <div {css(:label)}>
                 <span>Chroma</span>
-                <span class={css_class([:value])}>{@chroma_string}</span>
+                <span {css(:value)}>{@chroma_string}</span>
               </div>
               <input
-                class={css_class([:range])}
+                {css(:range)}
                 name="chroma"
                 type="range"
                 min="0.05"
@@ -226,18 +228,18 @@ defmodule LiveStyleDemoWeb.ColorLive do
               />
             </div>
 
-            <p class={css_class([:tip])}>
+            <p {css(:tip)}>
               Tip: use the header theme picker (◐) or press <code>t</code>.
             </p>
           </form>
         </div>
 
-        <div class={css_class([:card])}>
-          <div class={css_class([:title])}>What’s happening</div>
-          <p class={css_class([:subtitle])}>
-            We set hue and chroma via a dynamic <code>css_class/2</code>
+        <div {css(:card)}>
+          <div {css(:title)}>What's happening</div>
+          <p {css(:subtitle)}>
+            We set hue and chroma via a dynamic <code>class/2</code>
             rule that writes
-            the hashed custom properties (using <code>css_var/1</code>
+            the hashed custom properties (using <code>var/1</code>
             as the property key), then reference
             both variables inside the static color definition.
             LiveStyle generates the <code>@property</code>

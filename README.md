@@ -9,17 +9,27 @@ A demonstration application showcasing [LiveStyle](https://github.com/lifeiscont
 Centralized design system with semantic tokens for colors, spacing, typography, and more:
 
 ```elixir
-# Define raw color palette
-css_vars(:colors,
-  gray_500: "#6b7280",
-  indigo_600: "#4f46e5"
-)
+defmodule MyApp.Tokens do
+  use LiveStyle
 
-# Define semantic tokens that reference colors
-css_vars(:semantic,
-  text_primary: css_var({:colors, :gray_900}),
-  text_accent: css_var({:colors, :indigo_600})
-)
+  # Define raw color palette
+  vars(
+    gray_500: "#6b7280",
+    indigo_600: "#4f46e5"
+  )
+end
+
+defmodule MyApp.Tokens.Semantic do
+  use LiveStyle
+
+  alias MyApp.Tokens
+
+  # Define semantic tokens that reference colors
+  vars(
+    text_primary: var({Tokens, :gray_900}),
+    text_accent: var({Tokens, :indigo_600})
+  )
+end
 ```
 
 ### Atomic CSS Generation
@@ -27,13 +37,29 @@ css_vars(:semantic,
 Zero-runtime CSS with compile-time extraction:
 
 ```elixir
-css_class(:card,
-  display: "flex",
-  gap: css_const({Tokens, :space, :"4"}),
-  padding: css_const({Tokens, :space, :"6"}),
-  background_color: css_var({Tokens, :semantic, :fill_card}),
-  border_radius: css_const({Tokens, :radius, :lg})
-)
+defmodule MyAppWeb.CardLive do
+  use MyAppWeb, :live_view
+
+  alias MyApp.Tokens
+  alias MyApp.Tokens.Semantic
+  alias MyApp.Tokens.Space
+
+  class(:card,
+    display: "flex",
+    gap: var({Space, :"4"}),
+    padding: var({Space, :"6"}),
+    background_color: var({Semantic, :fill_card}),
+    border_radius: const({Tokens, :radius_lg})
+  )
+
+  def render(assigns) do
+    ~H"""
+    <div {css(:card)}>
+      Content here
+    </div>
+    """
+  end
+end
 ```
 
 ### View Transitions API
@@ -41,19 +67,19 @@ css_class(:card,
 Smooth animations for LiveView DOM updates with the View Transitions API:
 
 ```elixir
-css_keyframes(:vt_scale_in,
+keyframes(:vt_scale_in,
   from: [opacity: "0", transform: "scale(0.8)"],
   to: [opacity: "1", transform: "scale(1)"]
 )
 
-css_view_transition(:todo_transition,
+view_transition(:todo_transition,
   old: [
-    animation_name: css_keyframes(:vt_scale_out),
+    animation_name: keyframes(:vt_scale_out),
     animation_duration: "250ms",
     animation_timing_function: "ease-out"
   ],
   new: [
-    animation_name: css_keyframes(:vt_scale_in),
+    animation_name: keyframes(:vt_scale_in),
     animation_duration: "250ms",
     animation_timing_function: "ease-out"
   ]
@@ -65,18 +91,41 @@ css_view_transition(:todo_transition,
 Runtime theme switching with CSS custom properties:
 
 ```elixir
-css_theme(:semantic, :dark,
-  text_primary: css_var({:colors, :gray_50}),
-  fill_page: css_var({:colors, :gray_950}),
-  fill_surface: css_var({:colors, :gray_900})
-)
+defmodule MyApp.Tokens.Semantic do
+  use LiveStyle
+
+  alias MyApp.Tokens
+
+  vars(
+    text_primary: var({Tokens, :gray_900}),
+    fill_page: var({Tokens, :white}),
+    fill_surface: var({Tokens, :gray_50})
+  )
+
+  theme(:dark,
+    text_primary: var({Tokens, :gray_50}),
+    fill_page: var({Tokens, :gray_950}),
+    fill_surface: var({Tokens, :gray_900})
+  )
+end
 ```
 
 ## Demo Pages
 
 - **Home** (`/`) - Animated gradient hero with design token showcase
-- **Todo App** (`/todo`) - View Transitions API demo with add/remove/reorder animations
-- **Data Table** (`/table`) - Interactive table with cross-highlight effects using When selectors
+- **Components** (`/components`) - Comparison of utility vs LiveStyle markup
+- **Style Guide** (`/style-guide`) - Reference for all base components
+- **Focus Card** (`/focus-card`) - Interactive card with hover/focus effects
+- **Table** (`/table`) - Interactive table with cross-highlight effects using When selectors
+- **Transitions** (`/transitions`) - View Transitions API demonstrations
+- **Starting Style** (`/starting-style`) - CSS @starting-style animations
+- **Scroll** (`/scroll`) - Scroll-driven animations
+- **Container** (`/container`) - Container queries demo
+- **Theming** (`/theming`) - Runtime theme switching
+- **Colors** (`/colors`) - Color palette showcase
+- **Popover** (`/popover`) - Popover and anchor positioning
+- **Parent Selector** (`/parent-selector`) - CSS :has() selector demos
+- **Todo App** (`/todo`) - View Transitions API demo with add/remove animations
 
 ## Getting Started
 
@@ -84,7 +133,6 @@ css_theme(:semantic, :dark,
 
 - Elixir 1.15+
 - Erlang/OTP 26+
-- Node.js 18+ (for asset building)
 
 ### Setup
 
@@ -107,68 +155,128 @@ Visit [`localhost:4000`](http://localhost:4000) in your browser.
 ```
 lib/
 ├── live_style_demo_web/
-│   ├── tokens.ex           # Design tokens & view transitions
+│   ├── tokens.ex           # Design tokens, animations & view transitions
 │   ├── live/
 │   │   ├── home_live.ex    # Homepage with gradient animation
 │   │   ├── todo_live.ex    # Todo app with view transitions
-│   │   └── table_live.ex   # Data table demo
+│   │   ├── table_live.ex   # Data table with cross-highlighting
+│   │   └── ...             # Other demo pages
 │   └── components/
-│       └── layouts.ex      # App layout components
+│       ├── ui_components.ex    # Buttons, inputs, badges, etc.
+│       ├── shell_components.ex # Layout shell and navigation
+│       └── layout_components.ex # Typography and layout primitives
 ```
 
 ## How It Works
 
 ### 1. Define Tokens
 
-Design tokens are defined in `tokens.ex` using LiveStyle macros:
+Design tokens are defined using LiveStyle macros. Each module becomes a namespace:
 
 ```elixir
 defmodule LiveStyleDemoWeb.Tokens do
-  use LiveStyle.Tokens
+  use LiveStyle
 
-  css_vars(:colors, gray_500: "#6b7280", ...)
-  css_vars(:semantic, text_primary: css_var({:colors, :gray_900}), ...)
-  css_consts(:space, "4": "1rem", ...)
-  css_keyframes(:spin, from: [...], to: [...])
-  css_view_transition(:todo_transition, old: [...], new: [...])
+  # Constants (static values, inlined at compile time)
+  consts(
+    font_size_sm: "0.875rem",
+    font_size_base: "1rem",
+    radius_lg: "0.5rem"
+  )
+
+  # Keyframes for animations
+  keyframes(:spin,
+    from: [transform: "rotate(0deg)"],
+    to: [transform: "rotate(360deg)"]
+  )
+end
+
+defmodule LiveStyleDemoWeb.Tokens.Space do
+  use LiveStyle
+
+  # CSS variables (can be overridden at runtime via themes)
+  vars(
+    "1": "0.25rem",
+    "2": "0.5rem",
+    "4": "1rem",
+    "6": "1.5rem",
+    "8": "2rem"
+  )
+end
+
+defmodule LiveStyleDemoWeb.Tokens.Semantic do
+  use LiveStyle
+
+  alias LiveStyleDemoWeb.Tokens
+
+  vars(
+    text_primary: var({Tokens, :gray_900}),
+    fill_surface: var({Tokens, :white})
+  )
+
+  # Dark theme overrides
+  theme(:dark,
+    text_primary: var({Tokens, :gray_50}),
+    fill_surface: var({Tokens, :gray_900})
+  )
 end
 ```
 
 ### 2. Use in Components
 
-Reference tokens in your LiveView components:
+Define classes in your LiveView modules and use the `css/1` macro:
 
 ```elixir
-css_class(:card,
-  padding: css_const({Tokens, :space, :"4"}),
-  color: css_var({Tokens, :semantic, :text_primary}),
-  background: css_var({Tokens, :semantic, :fill_card})
-)
+defmodule MyAppWeb.CardLive do
+  use MyAppWeb, :live_view
 
-def render(assigns) do
-  ~H"""
-  <div class={css_class([:card])}>
-    Content here
-  </div>
-  """
+  alias MyApp.Tokens
+  alias MyApp.Tokens.Semantic
+  alias MyApp.Tokens.Space
+
+  class(:card,
+    padding: var({Space, :"4"}),
+    color: var({Semantic, :text_primary}),
+    background: var({Semantic, :fill_surface}),
+    border_radius: const({Tokens, :radius_lg})
+  )
+
+  class(:card_title,
+    font_size: const({Tokens, :font_size_lg}),
+    font_weight: const({Tokens, :font_weight_bold})
+  )
+
+  def render(assigns) do
+    ~H"""
+    <div {css(:card)}>
+      <h2 {css(:card_title)}>Title</h2>
+      Content here
+    </div>
+    """
+  end
 end
 ```
 
 ### 3. View Transitions
 
-For animated DOM updates, apply the view transition class to elements:
+For animated DOM updates, use view transitions:
 
 ```elixir
+# In your tokens module
+view_transition(:todo_item,
+  old: [animation: keyframes(:fade_out), animation_duration: "200ms"],
+  new: [animation: keyframes(:fade_in), animation_duration: "200ms"]
+)
+
+# In your LiveView template
 <div
-  class={css_view_transition({Tokens, :todo_transition})}
+  {css(view_transition({Tokens, :todo_item}))}
   style={"view-transition-name: todo-#{todo.id}"}
   id={"todo-#{todo.id}"}
 >
   {todo.title}
 </div>
 ```
-
-The CSS for transitions is generated from `css_view_transition/2` definitions.
 
 ## Related
 

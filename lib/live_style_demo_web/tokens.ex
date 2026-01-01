@@ -4,558 +4,167 @@ defmodule LiveStyleDemoWeb.Tokens do
 
   ## Architecture
 
-  1. `colors` - Raw color palette (hex values, not themed)
-  2. `semantic` - Semantic tokens referencing colors (themed for light/dark)
+  Tokens are organized into modules by purpose:
+
+  1. `Tokens.Semantic` - Semantic tokens (themed colors, fonts)
+  2. `Tokens.Space` - Spacing scale (themed for compact/cozy)
+  3. `Tokens.Anim` - Animation tokens
+  4. `Tokens` - Constants (font, radius, shadow, etc.), keyframes, markers
 
   ## Usage
 
-      use LiveStyle.Sheet
+      use LiveStyle
 
-      css_class :button,
-        color: css_var({LiveStyleDemoWeb.Tokens, :semantic, :text_primary}),
-        background: css_var({LiveStyleDemoWeb.Tokens, :semantic, :fill_primary}),
-        padding: css_const({LiveStyleDemoWeb.Tokens, :space, :"4"})
+      class :button,
+        color: var({LiveStyleDemoWeb.Tokens.Semantic, :text_primary}),
+        background: var({LiveStyleDemoWeb.Tokens.Semantic, :fill_primary}),
+        padding: var({LiveStyleDemoWeb.Tokens.Space, :"4"})
 
       # Apply dark theme:
-      <div class={css_theme({LiveStyleDemoWeb.Tokens, :semantic, :dark})}>
+      <div class={theme({LiveStyleDemoWeb.Tokens.Semantic, :terminal})}>
         ...
       </div>
   """
-  use LiveStyle.Tokens
-  import LiveStyle.Types
-
-  # ===========================================================================
-  # Semantic - References to colors (themed)
-  # ===========================================================================
-
-  # DEFAULT THEME: SWISS (Clean, Minimal, Grid-based)
-  # Palette: White, Black, Red.
-
-  css_vars(:semantic,
-    # Text
-    text_primary: "#000000",
-    text_secondary: "#555555",
-    text_muted: "#999999",
-
-    # Dedicated button text tokens for perfect contrast
-    text_on_primary: "#ffffff",
-    text_accent: "#ff3e00",
-    text_link: "#ff3e00",
-
-    # Fill/background
-    fill_primary: "#ff3e00",
-    # Swiss Hover: Black (High contrast)
-    fill_primary_hover: "#000000",
-    fill_secondary: "#e5e5e5",
-    fill_danger: "#ff0000",
-    # Minimalist success
-    fill_success: "#000000",
-    # Minimalist warning
-    fill_warning: "#000000",
-    fill_page: "#ffffff",
-    fill_surface: "#f8f8f8",
-    fill_muted: "#f2f2f2",
-
-    # Border
-    border_default: "#e5e5e5",
-    border_subtle: "#f0f0f0",
-    border_input: "#d1d5db",
-    border_focus: "#000000",
-
-    # Status / intent
-    text_danger: "#ff0000",
-    text_success: "#000000",
-
-    # Effects / polish (Strict: No gradients)
-    fill_glass: "#ffffff",
-    border_glass: "#e5e5e5",
-    shadow_color: "rgba(0,0,0,0.1)",
-    shadow_color_strong: "rgba(0,0,0,0.2)",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    highlight_primary: "#ff3e00",
-    focus_ring: "#000000",
-
-    # Themeable UI decisions
-    font_body: "'Helvetica Neue', Helvetica, Arial, sans-serif",
-    font_heading: "'Helvetica Neue', Helvetica, Arial, sans-serif"
-  )
-
-  # ===========================================================================
-  # Themes
-  # ===========================================================================
-
-  # THEME: TERMINAL (Developer focused, High Contrast)
-  # Palette: Black, Green, White.
-
-  css_theme(:semantic, :terminal,
-    text_primary: "#00ff00",
-    text_secondary: "#00aa00",
-    text_muted: "#005500",
-    text_on_primary: "#000000",
-    text_accent: "#ffffff",
-    text_link: "#00ff00",
-    fill_primary: "#00ff00",
-    # Terminal Hover: White (Max contrast with Black text)
-    fill_primary_hover: "#ffffff",
-    fill_secondary: "#002200",
-    fill_danger: "#ff0000",
-    fill_success: "#00ff00",
-    fill_warning: "#ffff00",
-    text_danger: "#ff0000",
-    text_success: "#00ff00",
-    fill_page: "#000000",
-    fill_surface: "#001100",
-    fill_muted: "#002200",
-    border_default: "#004400",
-    border_subtle: "#002200",
-    border_input: "#004400",
-    border_focus: "#00ff00",
-    fill_glass: "#000000",
-    border_glass: "#00ff00",
-    shadow_color: "transparent",
-    shadow_color_strong: "transparent",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    focus_ring: "#00ff00",
-    highlight_primary: "#ffffff",
-    font_body: "'Courier New', Courier, monospace",
-    font_heading: "'Courier New', Courier, monospace"
-  )
-
-  # THEME: BLUEPRINT (Technical, Precise)
-  # Palette: Blueprint Blue, White, Darker Blue.
-
-  css_theme(:semantic, :blueprint,
-    text_primary: "#ffffff",
-    text_secondary: "#a0c0ff",
-    text_muted: "#5070a0",
-    text_on_primary: "#002060",
-    text_accent: "#ffffff",
-    text_link: "#ffffff",
-    fill_primary: "#ffffff",
-    fill_primary_hover: "#e0e0e0",
-    fill_secondary: "#004080",
-    fill_danger: "#ff6666",
-    fill_success: "#66ff66",
-    fill_warning: "#ffff66",
-    text_danger: "#ff6666",
-    text_success: "#66ff66",
-    # Blueprint Blue
-    fill_page: "#003366",
-    fill_surface: "#002b55",
-    fill_muted: "#002040",
-
-    # White lines
-    border_default: "#ffffff",
-    border_subtle: "#5070a0",
-    border_input: "#ffffff",
-    border_focus: "#ffffff",
-    fill_glass: "#003366",
-    border_glass: "#ffffff",
-    shadow_color: "rgba(0,0,0,0.2)",
-    shadow_color_strong: "rgba(0,0,0,0.4)",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    focus_ring: "#ffffff",
-    highlight_primary: "#ffffff",
-    font_body: "'Consolas', 'Monaco', monospace",
-    font_heading: "'Consolas', 'Monaco', monospace"
-
-    # Blueprint style
-  )
-
-  # THEME: SOLAR (Warm, Light, Sophisticated)
-  # Palette: Cream, Deep Teal, Magenta.
-
-  css_theme(:semantic, :solar,
-    text_primary: "#002b36",
-    text_secondary: "#586e75",
-    text_muted: "#93a1a1",
-    text_on_primary: "#fdf6e3",
-    text_accent: "#d33682",
-    text_link: "#d33682",
-    fill_primary: "#d33682",
-    # Solar Hover: Deep Teal (Base02)
-    fill_primary_hover: "#073642",
-    # Distinct from surface for the style guide palette.
-    fill_secondary: "#e3dbbf",
-    fill_danger: "#dc322f",
-    fill_success: "#859900",
-    fill_warning: "#b58900",
-    text_danger: "#dc322f",
-    text_success: "#859900",
-    # Cream
-    fill_page: "#fdf6e3",
-    fill_surface: "#eee8d5",
-    fill_muted: "#e3dbbf",
-    border_default: "#93a1a1",
-    border_subtle: "#e3dbbf",
-    border_input: "#93a1a1",
-    border_focus: "#d33682",
-    fill_glass: "#fdf6e3",
-    border_glass: "#93a1a1",
-    shadow_color: "rgba(0,43,54,0.1)",
-    shadow_color_strong: "rgba(0,43,54,0.2)",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    focus_ring: "#d33682",
-    highlight_primary: "#d33682",
-    font_body: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif",
-    font_heading: "'Gill Sans', 'Gill Sans MT', Calibri, sans-serif"
-  )
-
-  # THEME: NAVY (Dark, Deep, Cyber-lite)
-  # Palette: Navy, Light Blue, Teal.
-
-  css_theme(:semantic, :navy,
-    text_primary: "#e6f1ff",
-    text_secondary: "#8892b0",
-    text_muted: "#495670",
-    text_on_primary: "#0a192f",
-    text_accent: "#64ffda",
-    text_link: "#64ffda",
-    fill_primary: "#64ffda",
-    # Navy Hover: White
-    fill_primary_hover: "#ffffff",
-    # Distinct from surface for the style guide palette.
-    fill_secondary: "#233554",
-    fill_danger: "#ff5f5f",
-    fill_success: "#64ffda",
-    fill_warning: "#ffbd2e",
-    text_danger: "#ff5f5f",
-    text_success: "#64ffda",
-    # Navy
-    fill_page: "#0a192f",
-    fill_surface: "#112240",
-    fill_muted: "#020c1b",
-    border_default: "#233554",
-    border_subtle: "#1d2d44",
-    border_input: "#233554",
-    border_focus: "#64ffda",
-    fill_glass: "#112240",
-    border_glass: "#233554",
-    shadow_color: "rgba(2,12,27,0.7)",
-    shadow_color_strong: "rgba(2,12,27,0.9)",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    focus_ring: "#64ffda",
-    highlight_primary: "#64ffda",
-    font_body: "'Fira Code', monospace",
-    font_heading: "'Fira Code', monospace"
-  )
-
-  # THEME: FOREST (Organic, Calm, Dark)
-  # Palette: Deep Green, Off-White, Gold.
-
-  css_theme(:semantic, :forest,
-    text_primary: "#ecfdf5",
-    text_secondary: "#a7f3d0",
-    text_muted: "#6ee7b7",
-    text_on_primary: "#022c22",
-    text_accent: "#fbbf24",
-    text_link: "#fbbf24",
-    fill_primary: "#fbbf24",
-    # Forest Hover: Off-White
-    fill_primary_hover: "#ecfdf5",
-    # Distinct from surface for the style guide palette.
-    fill_secondary: "#065f46",
-    fill_danger: "#f87171",
-    fill_success: "#fbbf24",
-    fill_warning: "#fbbf24",
-    text_danger: "#f87171",
-    text_success: "#fbbf24",
-    # Deep Green
-    fill_page: "#022c22",
-    # Surface Green
-    fill_surface: "#064e3b",
-    fill_muted: "#065f46",
-    border_default: "#065f46",
-    border_subtle: "#064e3b",
-    border_input: "#065f46",
-    border_focus: "#fbbf24",
-    fill_glass: "#064e3b",
-    border_glass: "#065f46",
-    shadow_color: "rgba(0,0,0,0.3)",
-    shadow_color_strong: "rgba(0,0,0,0.5)",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    focus_ring: "#fbbf24",
-    highlight_primary: "#fbbf24",
-    font_body: "'Georgia', serif",
-    font_heading: "'Georgia', serif"
-  )
-
-  # THEME: LAVENDER (Soft, Playful, Light)
-  # Palette: White, Purple, Violet.
-
-  css_theme(:semantic, :lavender,
-    text_primary: "#4c1d95",
-    text_secondary: "#6d28d9",
-    text_muted: "#8b5cf6",
-    text_on_primary: "#ffffff",
-    text_accent: "#7c3aed",
-    text_link: "#7c3aed",
-    fill_primary: "#8b5cf6",
-    # Lavender Hover: Deep Purple
-    fill_primary_hover: "#5b21b6",
-    # Distinct from surface for the style guide palette.
-    fill_secondary: "#ddd6fe",
-    fill_danger: "#db2777",
-    fill_success: "#8b5cf6",
-    fill_warning: "#8b5cf6",
-    text_danger: "#db2777",
-    text_success: "#8b5cf6",
-    fill_page: "#ffffff",
-    fill_surface: "#f5f3ff",
-    fill_muted: "#ede9fe",
-    border_default: "#ddd6fe",
-    border_subtle: "#ede9fe",
-    border_input: "#c4b5fd",
-    border_focus: "#8b5cf6",
-    fill_glass: "#ffffff",
-    border_glass: "#ddd6fe",
-    shadow_color: "rgba(139, 92, 246, 0.15)",
-    shadow_color_strong: "rgba(139, 92, 246, 0.25)",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    focus_ring: "#8b5cf6",
-    highlight_primary: "#7c3aed",
-    # Playful font
-    font_body: "'Comic Sans MS', 'Chalkboard SE', sans-serif",
-    font_heading: "'Comic Sans MS', 'Chalkboard SE', sans-serif"
-  )
-
-  # THEME: BRUTAL (Raw, Bold, High Contrast)
-  # Palette: Silver, Black, Blue.
-
-  css_theme(:semantic, :brutal,
-    text_primary: "#000000",
-    text_secondary: "#333333",
-    text_muted: "#666666",
-    text_on_primary: "#ffffff",
-    text_accent: "#2563eb",
-    text_link: "#2563eb",
-    fill_primary: "#2563eb",
-    # Brutal Hover: Black (High contrast)
-    fill_primary_hover: "#000000",
-    # Distinct from surface for the style guide palette.
-    fill_secondary: "#e5e7eb",
-    fill_danger: "#ef4444",
-    fill_success: "#2563eb",
-    fill_warning: "#2563eb",
-    text_danger: "#ef4444",
-    text_success: "#2563eb",
-    fill_page: "#e5e7eb",
-    fill_surface: "#ffffff",
-    fill_muted: "#d1d5db",
-    border_default: "#000000",
-    border_subtle: "#000000",
-    border_input: "#000000",
-    border_focus: "#2563eb",
-    fill_glass: "#ffffff",
-    border_glass: "#000000",
-    shadow_color: "#000000",
-    shadow_color_strong: "#000000",
-    overlay_backdrop: "rgba(0,0,0,0.4)",
-    focus_ring: "#2563eb",
-    highlight_primary: "#2563eb",
-    font_body: "'Courier New', Courier, monospace",
-    font_heading: "'Impact', 'Arial Black', sans-serif"
-  )
-
-  # ===========================================================================
-  # Spacing
-  # ===========================================================================
-
-  css_vars(:space,
-    "0.5": "0.125rem",
-    "1": "0.25rem",
-    "1.5": "0.375rem",
-    "2": "0.5rem",
-    "2.5": "0.625rem",
-    "3": "0.75rem",
-    "3.5": "0.875rem",
-    "4": "1rem",
-    "5": "1.25rem",
-    "6": "1.5rem",
-    "8": "2rem",
-    "10": "2.5rem",
-    "12": "3rem",
-    "16": "4rem"
-  )
-
-  css_theme(:space, :compact,
-    "0.5": "0.1rem",
-    "1": "0.2rem",
-    "1.5": "0.3rem",
-    "2": "0.4rem",
-    "2.5": "0.5rem",
-    "3": "0.6rem",
-    "3.5": "0.7rem",
-    "4": "0.8rem",
-    "5": "1rem",
-    "6": "1.2rem",
-    "8": "1.6rem",
-    "10": "2rem",
-    "12": "2.4rem",
-    "16": "3.2rem"
-  )
-
-  css_theme(:space, :cozy,
-    "0.5": "0.15rem",
-    "1": "0.3rem",
-    "1.5": "0.45rem",
-    "2": "0.65rem",
-    "2.5": "0.75rem",
-    "3": "0.9rem",
-    "3.5": "1.05rem",
-    "4": "1.2rem",
-    "5": "1.5rem",
-    "6": "1.8rem",
-    "8": "2.4rem",
-    "10": "3rem",
-    "12": "3.6rem",
-    "16": "4.8rem"
-  )
+  use LiveStyle
 
   # ===========================================================================
   # Typography
   # ===========================================================================
 
-  css_consts(:font,
-    sans: "'Inter', system-ui, -apple-system, sans-serif",
-    mono: "ui-monospace, monospace"
+  consts(
+    font_sans: "'Inter', system-ui, -apple-system, sans-serif",
+    font_mono: "ui-monospace, monospace"
   )
 
-  css_consts(:font_weight,
-    normal: "400",
-    medium: "500",
-    semibold: "600",
-    bold: "700"
+  consts(
+    font_weight_normal: "400",
+    font_weight_medium: "500",
+    font_weight_semibold: "600",
+    font_weight_bold: "700"
   )
 
-  css_consts(:font_size,
-    xs: "0.75rem",
-    sm: "0.875rem",
-    base: "1rem",
-    lg: "1.125rem",
-    xl: "1.25rem",
-    "2xl": "1.5rem",
-    "3xl": "1.875rem",
-    "4xl": "2.25rem",
-    "5xl": "3rem"
+  consts(
+    font_size_xs: "0.75rem",
+    font_size_sm: "0.875rem",
+    font_size_base: "1rem",
+    font_size_lg: "1.125rem",
+    font_size_xl: "1.25rem",
+    font_size_2xl: "1.5rem",
+    font_size_3xl: "1.875rem",
+    font_size_4xl: "2.25rem",
+    font_size_5xl: "3rem"
   )
 
-  css_consts(:leading,
-    none: "1",
-    tight: "1.25",
-    normal: "1.5",
-    relaxed: "1.75"
+  consts(
+    leading_none: "1",
+    leading_tight: "1.25",
+    leading_normal: "1.5",
+    leading_relaxed: "1.75"
   )
 
   # ===========================================================================
   # Border radius
   # ===========================================================================
 
-  css_consts(:radius,
-    none: "0",
-    sm: "0.125rem",
-    default: "0.25rem",
-    md: "0.375rem",
-    lg: "0.5rem",
-    xl: "0.75rem",
-    "2xl": "1rem",
-    "3xl": "1.5rem",
-    full: "9999px"
+  consts(
+    radius_none: "0",
+    radius_sm: "0.125rem",
+    radius_default: "0.25rem",
+    radius_md: "0.375rem",
+    radius_lg: "0.5rem",
+    radius_xl: "0.75rem",
+    radius_2xl: "1rem",
+    radius_3xl: "1.5rem",
+    radius_full: "9999px"
   )
 
   # ===========================================================================
   # Shadows
   # ===========================================================================
 
-  css_consts(:shadow,
-    sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
-    default: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
-    md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
-    lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
-  )
-
-  # ===========================================================================
-  # Animation
-  # ===========================================================================
-
-  css_vars(:anim,
-    angle: angle("0deg"),
-    hue: angle("260deg"),
-    chroma: number(0.22)
-  )
-
-  css_keyframes(:spin,
-    from: [transform: "rotate(0deg)"],
-    to: [transform: "rotate(360deg)"]
-  )
-
-  css_keyframes(:pulse,
-    "0%, 100%": [opacity: "1"],
-    "50%": [opacity: "0.5"]
+  consts(
+    shadow_sm: "0 1px 2px 0 rgb(0 0 0 / 0.05)",
+    shadow_default: "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+    shadow_md: "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
+    shadow_lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)"
   )
 
   # ===========================================================================
   # Constants
   # ===========================================================================
 
-  css_consts(:breakpoint,
-    sm: "@media (max-width: 640px)",
-    md: "@media (min-width: 641px) and (max-width: 1024px)",
-    lg: "@media (min-width: 1025px)"
+  consts(
+    breakpoint_sm: "@media (max-width: 640px)",
+    breakpoint_md: "@media (min-width: 641px) and (max-width: 1024px)",
+    breakpoint_lg: "@media (min-width: 1025px)"
   )
 
-  css_consts(:z,
-    dropdown: "10",
-    sticky: "20",
-    fixed: "30",
-    modal_backdrop: "40",
-    modal: "50",
-    popover: "60",
-    tooltip: "70"
+  consts(
+    z_dropdown: "10",
+    z_sticky: "20",
+    z_fixed: "30",
+    z_modal_backdrop: "40",
+    z_modal: "50",
+    z_popover: "60",
+    z_tooltip: "70"
+  )
+
+  # ===========================================================================
+  # Keyframes
+  # ===========================================================================
+
+  keyframes(:spin,
+    from: [transform: "rotate(0deg)"],
+    to: [transform: "rotate(360deg)"]
+  )
+
+  keyframes(:pulse,
+    "0%, 100%": [opacity: "1"],
+    "50%": [opacity: "0.5"]
   )
 
   # ===========================================================================
   # Table Demo - Markers
   # ===========================================================================
 
-  @row_marker LiveStyle.Marker.define(:row)
+  @row_marker LiveStyle.marker(:row)
   def row_marker, do: @row_marker
 
   # ===========================================================================
   # View Transitions
   # ===========================================================================
 
-  css_keyframes(:vt_scale_in,
+  keyframes(:vt_scale_in,
     from: [opacity: "0", transform: "scale(0.8)"],
     to: [opacity: "1", transform: "scale(1)"]
   )
 
-  css_keyframes(:vt_scale_out,
+  keyframes(:vt_scale_out,
     from: [opacity: "1", transform: "scale(1)"],
     to: [opacity: "0", transform: "scale(0.8)"]
   )
 
-  css_keyframes(:vt_fade_in,
+  keyframes(:vt_fade_in,
     from: [opacity: "0"],
     to: [opacity: "1"]
   )
 
-  css_keyframes(:vt_fade_out,
+  keyframes(:vt_fade_out,
     from: [opacity: "1"],
     to: [opacity: "0"]
   )
 
-  css_view_transition(:todo_transition,
+  view_transition_class(:todo_transition,
     old: [
       pointer_events: "none",
-      animation_name: css_keyframes(:vt_scale_out),
+      animation_name: keyframes(:vt_scale_out),
       animation_duration: "250ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"
     ],
     new: [
       pointer_events: "none",
-      animation_name: css_keyframes(:vt_scale_in),
+      animation_name: keyframes(:vt_scale_in),
       animation_duration: "250ms",
       animation_timing_function: "ease-out",
       animation_fill_mode: "both"

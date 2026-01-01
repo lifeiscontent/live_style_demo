@@ -2,29 +2,32 @@ defmodule LiveStyleDemoWeb.PopoverLive do
   use LiveStyleDemoWeb, :live_view
 
   require LiveStyleDemoWeb.Tokens
-  alias LiveStyleDemoWeb.Tokens
 
-  css_class(:demo_row,
+  alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
+
+  class(:demo_row,
     display: "flex",
     flex_wrap: "wrap",
-    gap: css_var({Tokens, :space, :"4"}),
-    margin_bottom: css_var({Tokens, :space, :"8"})
+    gap: var({Space, :"4"}),
+    margin_bottom: var({Space, :"8"})
   )
 
   # ============================================================================
   # Demo 1: Basic Popover
   # ============================================================================
 
-  css_class(:popover,
-    padding: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:popover,
+    padding: var({Space, :"6"}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_glass}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border_color: var({Semantic, :border_glass}),
+    border_radius: const({Tokens, :radius_lg}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
-    max_width: "min(300px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))",
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}",
+    max_width: "min(300px, calc(100vw - #{var({Space, :"8"})}))",
     # Center the popover
     position: "fixed",
     inset: "0",
@@ -33,37 +36,37 @@ defmodule LiveStyleDemoWeb.PopoverLive do
     margin: "auto",
     # StyleX pattern: pseudo-element as top-level key
     "::backdrop": %{
-      background_color: css_var({Tokens, :semantic, :overlay_backdrop})
+      background_color: var({Semantic, :overlay_backdrop})
     }
   )
 
-  css_class(:popover_title,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_var({Tokens, :space, :"2"})
+  class(:popover_title,
+    font_size: const({Tokens, :font_size_lg}),
+    font_weight: const({Tokens, :font_weight_semibold}),
+    color: var({Semantic, :text_primary}),
+    margin_bottom: var({Space, :"2"})
   )
 
-  css_class(:popover_text,
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed})
+  class(:popover_text,
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed})
   )
 
   # ============================================================================
   # Demo 2: Manual Popover (no light dismiss)
   # ============================================================================
 
-  css_class(:manual_popover,
-    padding: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:manual_popover,
+    padding: var({Space, :"6"}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_glass}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border_color: var({Semantic, :border_glass}),
+    border_radius: const({Tokens, :radius_lg}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
-    max_width: "min(350px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))",
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}",
+    max_width: "min(350px, calc(100vw - #{var({Space, :"8"})}))",
     # Center the popover
     position: "fixed",
     inset: "0",
@@ -71,39 +74,39 @@ defmodule LiveStyleDemoWeb.PopoverLive do
     height: "fit-content",
     margin: "auto",
     "::backdrop": %{
-      background_color: css_var({Tokens, :semantic, :overlay_backdrop}),
+      background_color: var({Semantic, :overlay_backdrop}),
       backdrop_filter: "blur(2px)"
     }
   )
 
-  css_class(:popover_header,
+  class(:popover_header,
     display: "flex",
     align_items: "center",
     justify_content: "space-between",
-    margin_bottom: css_var({Tokens, :space, :"4"})
+    margin_bottom: var({Space, :"4"})
   )
 
-  css_class(:popover_close,
-    padding: css_var({Tokens, :space, :"1"}),
+  class(:popover_close,
+    padding: var({Space, :"1"}),
     background: "none",
     border: "none",
     cursor: "pointer",
-    border_radius: css_const({Tokens, :radius, :sm}),
+    border_radius: const({Tokens, :radius_sm}),
     color: %{
-      :default => css_var({Tokens, :semantic, :text_muted}),
-      ":hover" => css_var({Tokens, :semantic, :text_primary})
+      :default => var({Semantic, :text_muted}),
+      ":hover" => var({Semantic, :text_primary})
     },
     background_color: %{
       :default => "transparent",
-      ":hover" => css_var({Tokens, :semantic, :fill_muted})
+      ":hover" => var({Semantic, :fill_muted})
     }
   )
 
-  css_class(:popover_actions,
+  class(:popover_actions,
     display: "flex",
     flex_wrap: "wrap",
-    gap: css_var({Tokens, :space, :"2"}),
-    margin_top: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"2"}),
+    margin_top: var({Space, :"4"})
   )
 
   # ============================================================================
@@ -111,18 +114,18 @@ defmodule LiveStyleDemoWeb.PopoverLive do
   # ============================================================================
 
   # Button that triggers the menu - defines an anchor
-  css_class(:menu_trigger,
+  class(:menu_trigger,
     anchor_name: "--menu-anchor"
   )
 
-  css_class(:menu_position,
+  class(:menu_position,
     # Anchor position below the trigger button
     position: "fixed",
     position_anchor: "--menu-anchor",
     inset: "unset",
     top: "anchor(bottom)",
     left: "anchor(left)",
-    margin_top: css_var({Tokens, :space, :"1"}),
+    margin_top: var({Space, :"1"}),
     # Reset browser default popover styles on the wrapper
     border: "none",
     padding: "0",
@@ -136,12 +139,12 @@ defmodule LiveStyleDemoWeb.PopoverLive do
   # ============================================================================
 
   # Layout concern: where the toast appears.
-  css_class(:toast_position,
+  class(:toast_position,
     position: "fixed",
     top: "auto",
     left: "auto",
-    bottom: "max(#{css_var({Tokens, :space, :"4"})}, env(safe-area-inset-bottom))",
-    right: "max(#{css_var({Tokens, :space, :"4"})}, env(safe-area-inset-right))",
+    bottom: "max(#{var({Space, :"4"})}, env(safe-area-inset-bottom))",
+    right: "max(#{var({Space, :"4"})}, env(safe-area-inset-right))",
     # Reset browser default popover styles on the wrapper
     border: "none",
     padding: "0",
@@ -176,14 +179,14 @@ defmodule LiveStyleDemoWeb.PopoverLive do
           for light dismiss behavior.
         </.demo_section_description>
 
-        <div class={css_class([:demo_row])}>
+        <div {css(:demo_row)}>
           <.button variant={:primary} popovertarget="basic-popover">
             Open Popover
           </.button>
 
-          <div id="basic-popover" popover="auto" class={css_class([:popover])}>
-            <h3 class={css_class([:popover_title])}>Hello!</h3>
-            <p class={css_class([:popover_text])}>
+          <div id="basic-popover" popover="auto" {css(:popover)}>
+            <h3 {css(:popover_title)}>Hello!</h3>
+            <p {css(:popover_text)}>
               This is a native HTML popover. It automatically positions itself and handles
               keyboard navigation. Click outside to dismiss.
             </p>
@@ -200,16 +203,16 @@ defmodule LiveStyleDemoWeb.PopoverLive do
           Great for confirmation dialogs.
         </.demo_section_description>
 
-        <div class={css_class([:demo_row])}>
+        <div {css(:demo_row)}>
           <.button variant={:secondary} popovertarget="manual-popover">
             Confirm Action
           </.button>
 
-          <div id="manual-popover" popover="manual" class={css_class([:manual_popover])}>
-            <div class={css_class([:popover_header])}>
-              <h3 class={css_class([:popover_title])}>Confirm Delete</h3>
+          <div id="manual-popover" popover="manual" {css(:manual_popover)}>
+            <div {css(:popover_header)}>
+              <h3 {css(:popover_title)}>Confirm Delete</h3>
               <button
-                class={css_class([:popover_close])}
+                {css(:popover_close)}
                 popovertarget="manual-popover"
                 popovertargetaction="hide"
               >
@@ -223,10 +226,10 @@ defmodule LiveStyleDemoWeb.PopoverLive do
                 </svg>
               </button>
             </div>
-            <p class={css_class([:popover_text])}>
+            <p {css(:popover_text)}>
               Are you sure you want to delete this item? This action cannot be undone.
             </p>
-            <div class={css_class([:popover_actions])}>
+            <div {css(:popover_actions)}>
               <.button
                 variant={:secondary}
                 popovertarget="manual-popover"
@@ -253,10 +256,10 @@ defmodule LiveStyleDemoWeb.PopoverLive do
           and dismiss behavior for free.
         </.demo_section_description>
 
-        <div class={css_class([:demo_row])}>
+        <div {css(:demo_row)}>
           <.button
             variant={:secondary}
-            class={css_class([:menu_trigger])}
+            {css(:menu_trigger)}
             popovertarget="menu-popover"
           >
             Options ▾
@@ -265,7 +268,7 @@ defmodule LiveStyleDemoWeb.PopoverLive do
           <div
             id="menu-popover"
             popover="auto"
-            class={css_class([:menu_position])}
+            {css(:menu_position)}
           >
             <.menu>
               <.menu_item popovertarget="menu-popover" popovertargetaction="hide">
@@ -329,19 +332,19 @@ defmodule LiveStyleDemoWeb.PopoverLive do
           They appear in the top layer, above all other content.
         </.demo_section_description>
 
-        <div class={css_class([:demo_row])}>
+        <div {css(:demo_row)}>
           <.button variant={:primary} popovertarget="toast-success">
             Show Success Toast
           </.button>
         </div>
 
-        <div id="toast-success" popover="auto" class={css_class([:toast_position])}>
+        <div id="toast-success" popover="auto" {css(:toast_position)}>
           <.toast variant={:success}>
             Changes saved successfully!
             <:actions>
               <button
                 type="button"
-                class={css_class([:toast_close])}
+                {css(:toast_close)}
                 popovertarget="toast-success"
                 popovertargetaction="hide"
                 aria-label="close"

@@ -3,59 +3,62 @@ defmodule LiveStyleDemoWeb.UIComponents do
   Atomic UI components built with LiveStyle.
   """
   use Phoenix.Component
-  use LiveStyle.Sheet
+  use LiveStyle
   use Gettext, backend: LiveStyleDemoWeb.Gettext
 
+  alias Phoenix.HTML.Form
   alias Phoenix.LiveView.JS
 
   # Ensure Tokens is compiled first
   require LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
   # ============================================================================
   # Flash Styles
   # ============================================================================
 
-  css_class(:flash_container,
+  class(:flash_container,
     display: "block"
   )
 
-  css_class(:flash_alert,
+  class(:flash_alert,
     display: "flex",
     align_items: "flex-start",
-    gap: css_var({Tokens, :space, :"3"}),
-    padding: css_var({Tokens, :space, :"4"}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
+    gap: var({Space, :"3"}),
+    padding: var({Space, :"4"}),
+    border_radius: const({Tokens, :radius_lg}),
+    box_shadow: const({Tokens, :shadow_lg}),
     max_width: "24rem"
   )
 
-  css_class(:flash_info,
-    background_color: css_var({Tokens, :semantic, :fill_surface}),
+  class(:flash_info,
+    background_color: var({Semantic, :fill_surface}),
     border_width: "1px",
     border_style: "solid",
-    border_color: css_var({Tokens, :semantic, :border_default})
+    border_color: var({Semantic, :border_default})
   )
 
-  css_class(:flash_error,
+  class(:flash_error,
     background_color:
-      "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 10%, #{css_var({Tokens, :semantic, :fill_surface})})",
+      "color-mix(in oklab, #{var({Semantic, :fill_danger})} 10%, #{var({Semantic, :fill_surface})})",
     border_width: "1px",
     border_style: "solid",
     border_color:
-      "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 30%, #{css_var({Tokens, :semantic, :fill_surface})})"
+      "color-mix(in oklab, #{var({Semantic, :fill_danger})} 30%, #{var({Semantic, :fill_surface})})"
   )
 
-  css_class(:flash_content,
+  class(:flash_content,
     flex: "1"
   )
 
-  css_class(:flash_title,
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    margin_bottom: css_var({Tokens, :space, :"1"})
+  class(:flash_title,
+    font_weight: const({Tokens, :font_weight_semibold}),
+    margin_bottom: var({Space, :"1"})
   )
 
-  css_class(:flash_close,
+  class(:flash_close,
     background: "none",
     border: "none",
     cursor: "pointer",
@@ -67,38 +70,38 @@ defmodule LiveStyleDemoWeb.UIComponents do
   # Toast Styles
   # ============================================================================
 
-  css_class(:toast_base,
+  class(:toast_base,
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"3"}),
-    padding: css_var({Tokens, :space, :"4"}),
-    background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_on_primary}),
-    border_radius: css_const({Tokens, :radius, :lg}),
-    box_shadow: css_const({Tokens, :shadow, :lg}),
-    min_width: "min(280px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))",
-    max_width: "min(360px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))"
+    gap: var({Space, :"3"}),
+    padding: var({Space, :"4"}),
+    background_color: var({Semantic, :fill_primary}),
+    color: var({Semantic, :text_on_primary}),
+    border_radius: const({Tokens, :radius_lg}),
+    box_shadow: const({Tokens, :shadow_lg}),
+    min_width: "min(280px, calc(100vw - #{var({Space, :"8"})}))",
+    max_width: "min(360px, calc(100vw - #{var({Space, :"8"})}))"
   )
 
-  css_class(:toast_success,
-    background_color: css_var({Tokens, :semantic, :fill_success})
+  class(:toast_success,
+    background_color: var({Semantic, :fill_success})
   )
 
-  css_class(:toast_danger,
-    background_color: css_var({Tokens, :semantic, :fill_danger})
+  class(:toast_danger,
+    background_color: var({Semantic, :fill_danger})
   )
 
-  css_class(:toast_icon,
+  class(:toast_icon,
     flex_shrink: "0"
   )
 
-  css_class(:toast_message,
+  class(:toast_message,
     flex: "1",
-    font_size: css_const({Tokens, :font_size, :sm})
+    font_size: const({Tokens, :font_size_sm})
   )
 
-  css_class(:toast_close,
-    padding: css_var({Tokens, :space, :"1"}),
+  class(:toast_close,
+    padding: var({Space, :"1"}),
     background: "none",
     border: "none",
     cursor: "pointer",
@@ -113,48 +116,47 @@ defmodule LiveStyleDemoWeb.UIComponents do
   # Menu Styles
   # ============================================================================
 
-  css_class(:menu_panel,
-    padding: css_var({Tokens, :space, :"2"}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:menu_panel,
+    padding: var({Space, :"2"}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
     border: "1px solid",
-    border_color: css_var({Tokens, :semantic, :border_glass}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border_color: var({Semantic, :border_glass}),
+    border_radius: const({Tokens, :radius_lg}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}",
     min_width: "180px"
   )
 
-  css_class(:menu_item,
+  class(:menu_item,
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    padding_block: css_var({Tokens, :space, :"2"}),
-    padding_inline: css_var({Tokens, :space, :"3"}),
-    border_radius: css_const({Tokens, :radius, :md}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_primary}),
+    gap: var({Space, :"2"}),
+    padding_block: var({Space, :"2"}),
+    padding_inline: var({Space, :"3"}),
+    border_radius: const({Tokens, :radius_md}),
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_primary}),
     cursor: "pointer",
     transition: "background-color 0.15s ease",
     background_color: %{
       :default => "transparent",
-      ":hover" => css_var({Tokens, :semantic, :fill_muted})
+      ":hover" => var({Semantic, :fill_muted})
     }
   )
 
-  css_class(:menu_divider,
+  class(:menu_divider,
     height: "1px",
-    background_color: css_var({Tokens, :semantic, :border_subtle}),
-    margin_block: css_var({Tokens, :space, :"1"}),
+    background_color: var({Semantic, :border_subtle}),
+    margin_block: var({Space, :"1"}),
     margin_inline: "0"
   )
 
-  css_class(:menu_item_danger,
-    color: css_var({Tokens, :semantic, :fill_danger}),
+  class(:menu_item_danger,
+    color: var({Semantic, :fill_danger}),
     background_color: %{
       :default => "transparent",
-      ":hover" =>
-        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 15%, transparent)"
+      ":hover" => "color-mix(in oklab, #{var({Semantic, :fill_danger})} 15%, transparent)"
     }
   )
 
@@ -162,37 +164,37 @@ defmodule LiveStyleDemoWeb.UIComponents do
   # Modal Styles
   # ============================================================================
 
-  css_class(:modal_base,
-    padding: css_var({Tokens, :space, :"6"}),
-    background_color: css_var({Tokens, :semantic, :fill_glass}),
+  class(:modal_base,
+    padding: var({Space, :"6"}),
+    background_color: var({Semantic, :fill_glass}),
     backdrop_filter: "blur(12px) saturate(1.1)",
-    border: "1px solid #{css_var({Tokens, :semantic, :border_glass})}",
-    border_radius: css_const({Tokens, :radius, :lg}),
+    border: "1px solid #{var({Semantic, :border_glass})}",
+    border_radius: const({Tokens, :radius_lg}),
     box_shadow:
-      "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}, 0 22px 70px -62px #{css_var({Tokens, :semantic, :shadow_color_strong})}",
-    max_width: "min(400px, calc(100vw - #{css_var({Tokens, :space, :"8"})}))"
+      "0 1px 0 0 #{var({Semantic, :border_glass})}, 0 22px 70px -62px #{var({Semantic, :shadow_color_strong})}",
+    max_width: "min(400px, calc(100vw - #{var({Space, :"8"})}))"
   )
 
-  css_class(:modal_title,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_var({Tokens, :space, :"2"})
+  class(:modal_title,
+    font_size: const({Tokens, :font_size_lg}),
+    font_weight: const({Tokens, :font_weight_semibold}),
+    color: var({Semantic, :text_primary}),
+    margin_bottom: var({Space, :"2"})
   )
 
-  css_class(:modal_body,
+  class(:modal_body,
     display: "grid",
-    gap: css_var({Tokens, :space, :"4"}),
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed}),
-    margin_bottom: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"}),
+    font_size: const({Tokens, :font_size_base}),
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed}),
+    margin_bottom: var({Space, :"4"})
   )
 
-  css_class(:modal_actions,
+  class(:modal_actions,
     display: "flex",
     flex_wrap: "wrap",
-    gap: css_var({Tokens, :space, :"2"}),
+    gap: var({Space, :"2"}),
     justify_content: "flex-end"
   )
 
@@ -200,25 +202,25 @@ defmodule LiveStyleDemoWeb.UIComponents do
   # Tooltip Styles
   # ============================================================================
 
-  css_class(:tooltip,
+  class(:tooltip,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"1"}),
+    gap: var({Space, :"1"}),
     white_space: "nowrap",
-    padding_block: css_var({Tokens, :space, :"1"}),
-    padding_inline: css_var({Tokens, :space, :"2"}),
-    background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_on_primary}),
-    font_size: css_const({Tokens, :font_size, :xs}),
-    border_radius: css_const({Tokens, :radius, :md}),
-    box_shadow: css_const({Tokens, :shadow, :md})
+    padding_block: var({Space, :"1"}),
+    padding_inline: var({Space, :"2"}),
+    background_color: var({Semantic, :fill_primary}),
+    color: var({Semantic, :text_on_primary}),
+    font_size: const({Tokens, :font_size_xs}),
+    border_radius: const({Tokens, :radius_md}),
+    box_shadow: const({Tokens, :shadow_md})
   )
 
   # ============================================================================
   # Icon Styles
   # ============================================================================
 
-  css_class(:icon_base,
+  class(:icon_base,
     display: "inline-block",
     flex_shrink: "0",
     fill: "none",
@@ -228,12 +230,12 @@ defmodule LiveStyleDemoWeb.UIComponents do
     stroke_linejoin: "round"
   )
 
-  css_class(:icon_sm,
+  class(:icon_sm,
     width: "1rem",
     height: "1rem"
   )
 
-  css_class(:icon_md,
+  class(:icon_md,
     width: "1.25rem",
     height: "1.25rem"
   )
@@ -242,89 +244,88 @@ defmodule LiveStyleDemoWeb.UIComponents do
   # Input Styles
   # ============================================================================
 
-  css_class(:input_wrapper,
-    margin_bottom: css_var({Tokens, :space, :"4"})
+  class(:input_wrapper,
+    margin_bottom: var({Space, :"4"})
   )
 
-  css_class(:input_label,
+  class(:input_label,
     display: "block",
-    font_size: css_const({Tokens, :font_size, :sm}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    color: css_var({Tokens, :semantic, :text_primary}),
-    margin_bottom: css_var({Tokens, :space, :"1"})
+    font_size: const({Tokens, :font_size_sm}),
+    font_weight: const({Tokens, :font_weight_medium}),
+    color: var({Semantic, :text_primary}),
+    margin_bottom: var({Space, :"1"})
   )
 
-  css_class(:input_field,
+  class(:input_field,
     display: "block",
     width: "100%",
-    padding_block: css_var({Tokens, :space, :"2"}),
-    padding_inline: css_var({Tokens, :space, :"3"}),
-    font_size: css_const({Tokens, :font_size, :base}),
-    line_height: css_const({Tokens, :leading, :normal}),
+    padding_block: var({Space, :"2"}),
+    padding_inline: var({Space, :"3"}),
+    font_size: const({Tokens, :font_size_base}),
+    line_height: const({Tokens, :leading_normal}),
     border_width: "1px",
     border_style: "solid",
     border_color: [
-      default: css_var({Tokens, :semantic, :border_input}),
-      ":focus": css_var({Tokens, :semantic, :border_focus})
+      default: var({Semantic, :border_input}),
+      ":focus": var({Semantic, :border_focus})
     ],
-    border_radius: css_const({Tokens, :radius, :md}),
-    background_color: css_var({Tokens, :semantic, :fill_page}),
-    color: css_var({Tokens, :semantic, :text_primary}),
+    border_radius: const({Tokens, :radius_md}),
+    background_color: var({Semantic, :fill_page}),
+    color: var({Semantic, :text_primary}),
     outline: "none",
     box_shadow: [
       default: "none",
-      ":focus": "0 0 0 2px #{css_var({Tokens, :semantic, :focus_ring})}"
+      ":focus": "0 0 0 2px #{var({Semantic, :focus_ring})}"
     ],
     transition: "border-color 160ms ease, box-shadow 160ms ease"
   )
 
-  css_class(:input_error,
+  class(:input_error,
     border_color: [
-      default: css_var({Tokens, :semantic, :fill_danger}),
-      ":focus": css_var({Tokens, :semantic, :fill_danger})
+      default: var({Semantic, :fill_danger}),
+      ":focus": var({Semantic, :fill_danger})
     ],
     box_shadow: [
       default: "none",
-      ":focus":
-        "0 0 0 3px color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 20%, transparent)"
+      ":focus": "0 0 0 3px color-mix(in oklab, #{var({Semantic, :fill_danger})} 20%, transparent)"
     ]
   )
 
-  css_class(:error_message,
+  class(:error_message,
     display: "flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"1"}),
-    margin_top: css_var({Tokens, :space, :"1"}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    color: css_var({Tokens, :semantic, :text_danger})
+    gap: var({Space, :"1"}),
+    margin_top: var({Space, :"1"}),
+    font_size: const({Tokens, :font_size_sm}),
+    color: var({Semantic, :text_danger})
   )
 
   # Checkbox
   # Keep it native: the input is the checkbox.
 
-  css_class(:checkbox_label,
+  class(:checkbox_label,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"2"}),
+    gap: var({Space, :"2"}),
     cursor: "pointer"
   )
 
-  css_class(:checkbox_text,
-    font_size: css_const({Tokens, :font_size, :base}),
-    color: css_var({Tokens, :semantic, :text_primary})
+  class(:checkbox_text,
+    font_size: const({Tokens, :font_size_base}),
+    color: var({Semantic, :text_primary})
   )
 
-  css_class(:checkbox_input,
+  class(:checkbox_input,
     appearance: "auto",
     width: "1.25rem",
     height: "1.25rem",
     margin: "0",
     flex_shrink: "0",
     cursor: "pointer",
-    accent_color: css_var({Tokens, :semantic, :fill_primary}),
+    accent_color: var({Semantic, :fill_primary}),
     outline: [
       default: "none",
-      ":focus-visible": "2px solid #{css_var({Tokens, :semantic, :focus_ring})}"
+      ":focus-visible": "2px solid #{var({Semantic, :focus_ring})}"
     ],
     outline_offset: [default: "0", ":focus-visible": "2px"]
   )
@@ -333,18 +334,18 @@ defmodule LiveStyleDemoWeb.UIComponents do
   # Button Styles
   # ============================================================================
 
-  css_class(:btn_base,
+  class(:btn_base,
     position: "relative",
     display: "inline-flex",
     align_items: "center",
     justify_content: "center",
-    gap: css_var({Tokens, :space, :"2"}),
-    padding_block: css_var({Tokens, :space, :"3"}),
-    padding_inline: css_var({Tokens, :space, :"6"}),
-    font_size: css_const({Tokens, :font_size, :base}),
-    font_weight: css_const({Tokens, :font_weight, :semibold}),
-    line_height: css_const({Tokens, :leading, :none}),
-    border_radius: css_const({Tokens, :radius, :lg}),
+    gap: var({Space, :"2"}),
+    padding_block: var({Space, :"3"}),
+    padding_inline: var({Space, :"6"}),
+    font_size: const({Tokens, :font_size_base}),
+    font_weight: const({Tokens, :font_weight_semibold}),
+    line_height: const({Tokens, :leading_none}),
+    border_radius: const({Tokens, :radius_lg}),
     text_decoration: "none",
     white_space: "nowrap",
     border: "1px solid transparent",
@@ -358,26 +359,26 @@ defmodule LiveStyleDemoWeb.UIComponents do
       "transform 160ms ease, box-shadow 160ms ease, border-color 160ms ease, background-color 160ms ease, color 160ms ease, filter 160ms ease",
     outline: [
       default: "none",
-      ":focus-visible": "2px solid #{css_var({Tokens, :semantic, :focus_ring})}"
+      ":focus-visible": "2px solid #{var({Semantic, :focus_ring})}"
     ],
     outline_offset: [default: "0", ":focus-visible": "2px"]
   )
 
-  css_class(:btn_sm,
-    padding_block: css_var({Tokens, :space, :"2"}),
-    padding_inline: css_var({Tokens, :space, :"4"}),
-    font_size: css_const({Tokens, :font_size, :sm}),
-    border_radius: css_const({Tokens, :radius, :md})
+  class(:btn_sm,
+    padding_block: var({Space, :"2"}),
+    padding_inline: var({Space, :"4"}),
+    font_size: const({Tokens, :font_size_sm}),
+    border_radius: const({Tokens, :radius_md})
   )
 
-  css_class(:btn_primary,
+  class(:btn_primary,
     background_color: [
-      default: css_var({Tokens, :semantic, :fill_primary}),
-      ":hover": css_var({Tokens, :semantic, :fill_primary_hover})
+      default: var({Semantic, :fill_primary}),
+      ":hover": var({Semantic, :fill_primary_hover})
     ],
     color: [
-      default: css_var({Tokens, :semantic, :text_on_primary}),
-      ":hover": css_var({Tokens, :semantic, :text_on_primary})
+      default: var({Semantic, :text_on_primary}),
+      ":hover": var({Semantic, :text_on_primary})
     ],
     box_shadow: "none",
     border: "1px solid transparent",
@@ -387,95 +388,94 @@ defmodule LiveStyleDemoWeb.UIComponents do
     ]
   )
 
-  css_class(:btn_secondary,
+  class(:btn_secondary,
     background_color: [
-      default: css_var({Tokens, :semantic, :fill_glass}),
-      ":hover": css_var({Tokens, :semantic, :fill_secondary})
+      default: var({Semantic, :fill_glass}),
+      ":hover": var({Semantic, :fill_secondary})
     ],
     backdrop_filter: "blur(10px) saturate(1.2)",
-    color: css_var({Tokens, :semantic, :text_primary}),
+    color: var({Semantic, :text_primary}),
     border_width: "1px",
     border_style: "solid",
     border_color: [
-      default: css_var({Tokens, :semantic, :border_glass}),
-      ":hover": css_var({Tokens, :semantic, :border_focus})
+      default: var({Semantic, :border_glass}),
+      ":hover": var({Semantic, :border_focus})
     ],
     box_shadow: [
-      default: "0 1px 0 0 #{css_var({Tokens, :semantic, :border_glass})}",
-      ":hover": "0 10px 30px -26px #{css_var({Tokens, :semantic, :shadow_color})}"
+      default: "0 1px 0 0 #{var({Semantic, :border_glass})}",
+      ":hover": "0 10px 30px -26px #{var({Semantic, :shadow_color})}"
     ]
   )
 
-  css_class(:btn_danger,
+  class(:btn_danger,
     background_color: [
-      default: css_var({Tokens, :semantic, :fill_danger}),
+      default: var({Semantic, :fill_danger}),
       ":hover":
-        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 85%, #{css_var({Tokens, :semantic, :text_primary})})"
+        "color-mix(in oklab, #{var({Semantic, :fill_danger})} 85%, #{var({Semantic, :text_primary})})"
     ],
-    color: css_var({Tokens, :semantic, :text_on_primary}),
+    color: var({Semantic, :text_on_primary}),
     border_color: [
       default: "transparent",
-      ":hover":
-        "color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 45%, transparent)"
+      ":hover": "color-mix(in oklab, #{var({Semantic, :fill_danger})} 45%, transparent)"
     ],
     box_shadow: [
       default:
-        "0 18px 60px -48px color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 35%, transparent), 0 14px 40px -34px #{css_var({Tokens, :semantic, :shadow_color})}",
+        "0 18px 60px -48px color-mix(in oklab, #{var({Semantic, :fill_danger})} 35%, transparent), 0 14px 40px -34px #{var({Semantic, :shadow_color})}",
       ":hover":
-        "0 26px 70px -52px color-mix(in oklab, #{css_var({Tokens, :semantic, :fill_danger})} 40%, transparent), 0 18px 50px -40px #{css_var({Tokens, :semantic, :shadow_color_strong})}"
+        "0 26px 70px -52px color-mix(in oklab, #{var({Semantic, :fill_danger})} 40%, transparent), 0 18px 50px -40px #{var({Semantic, :shadow_color_strong})}"
     ]
   )
 
-  css_class(:btn_ghost,
+  class(:btn_ghost,
     background_color: [
       default: "transparent",
-      ":hover": css_var({Tokens, :semantic, :fill_muted})
+      ":hover": var({Semantic, :fill_muted})
     ],
-    color: css_var({Tokens, :semantic, :text_secondary})
+    color: var({Semantic, :text_secondary})
   )
 
   # ============================================================================
   # Badge Styles
   # ============================================================================
 
-  css_class(:badge_base,
+  class(:badge_base,
     display: "inline-flex",
     align_items: "center",
-    gap: css_var({Tokens, :space, :"1.5"}),
-    padding_block: css_var({Tokens, :space, :"1"}),
-    padding_inline: css_var({Tokens, :space, :"2.5"}),
-    border_radius: css_const({Tokens, :radius, :full}),
-    font_size: css_const({Tokens, :font_size, :xs}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
-    line_height: css_const({Tokens, :leading, :none}),
+    gap: var({Space, :"1.5"}),
+    padding_block: var({Space, :"1"}),
+    padding_inline: var({Space, :"2.5"}),
+    border_radius: const({Tokens, :radius_full}),
+    font_size: const({Tokens, :font_size_xs}),
+    font_weight: const({Tokens, :font_weight_medium}),
+    line_height: const({Tokens, :leading_none}),
     white_space: "nowrap"
   )
 
-  css_class(:badge_neutral,
-    background_color: css_var({Tokens, :semantic, :fill_surface}),
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_default})}"
+  class(:badge_neutral,
+    background_color: var({Semantic, :fill_surface}),
+    color: var({Semantic, :text_secondary}),
+    border: "1px solid #{var({Semantic, :border_default})}"
   )
 
-  css_class(:badge_primary,
-    background_color: css_var({Tokens, :semantic, :fill_primary}),
-    color: css_var({Tokens, :semantic, :text_on_primary}),
+  class(:badge_primary,
+    background_color: var({Semantic, :fill_primary}),
+    color: var({Semantic, :text_on_primary}),
     border: "1px solid transparent"
   )
 
-  css_class(:badge_outline,
+  class(:badge_outline,
     background_color: "transparent",
-    color: css_var({Tokens, :semantic, :text_primary}),
-    border: "1px solid #{css_var({Tokens, :semantic, :border_default})}"
+    color: var({Semantic, :text_primary}),
+    border: "1px solid #{var({Semantic, :border_default})}"
   )
 
   # ============================================================================
   # Link Styles
   # ============================================================================
 
-  css_class(:link,
-    color: css_var({Tokens, :semantic, :text_link}),
-    font_weight: css_const({Tokens, :font_weight, :medium}),
+  class(:link,
+    color: var({Semantic, :text_link}),
+    font_weight: const({Tokens, :font_weight_medium}),
     text_decoration: [
       default: "none",
       ":hover": "underline"
@@ -501,29 +501,22 @@ defmodule LiveStyleDemoWeb.UIComponents do
   def flash(assigns) do
     assigns = assign_new(assigns, :id, fn -> "flash-#{assigns.kind}" end)
 
-    class = css_class([:flash_container])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
     <div
       :if={msg = render_slot(@inner_block) || Phoenix.Flash.get(@flash, @kind)}
       id={@id}
       phx-click={JS.push("lv:clear-flash", value: %{key: @kind}) |> hide("##{@id}")}
       role="alert"
-      class={@computed_class}
+      {css([:flash_container, @class])}
       {@rest}
     >
-      <div class={
-        css_class([:flash_alert, @kind == :info && :flash_info, @kind == :error && :flash_error])
-      }>
+      <div {css([:flash_alert, @kind == :info && :flash_info, @kind == :error && :flash_error])}>
         <.icon name={if @kind == :info, do: "info", else: "alert"} size={:md} />
-        <div class={css_class([:flash_content])}>
-          <p :if={@title} class={css_class([:flash_title])}>{@title}</p>
+        <div {css(:flash_content)}>
+          <p :if={@title} {css(:flash_title)}>{@title}</p>
           <p>{msg}</p>
         </div>
-        <button type="button" class={css_class([:flash_close])} aria-label={gettext("close")}>
+        <button type="button" {css(:flash_close)} aria-label={gettext("close")}>
           <.icon name="close" size={:md} />
         </button>
       </div>
@@ -539,22 +532,22 @@ defmodule LiveStyleDemoWeb.UIComponents do
 
   def skip_link(assigns) do
     ~H"""
-    <a href={@target} class={css_class([:skip_link])}>
+    <a href={@target} {css(:skip_link)}>
       {render_slot(@inner_block)}
     </a>
     """
   end
 
-  css_class(:skip_link,
+  class(:skip_link,
     position: [default: "absolute", ":focus": "fixed"],
-    top: [default: "auto", ":focus": css_var({Tokens, :space, :"4"})],
-    left: [default: "auto", ":focus": css_var({Tokens, :space, :"4"})],
+    top: [default: "auto", ":focus": var({Space, :"4"})],
+    left: [default: "auto", ":focus": var({Space, :"4"})],
     z_index: [default: "auto", ":focus": "100"],
     width: [default: "1px", ":focus": "auto"],
     height: [default: "1px", ":focus": "auto"],
     padding: [
       default: "0",
-      ":focus": "#{css_var({Tokens, :space, :"2"})} #{css_var({Tokens, :space, :"4"})}"
+      ":focus": "#{var({Space, :"2"})} #{var({Space, :"4"})}"
     ],
     margin: [default: "-1px", ":focus": "0"],
     overflow: [default: "hidden", ":focus": "visible"],
@@ -563,17 +556,17 @@ defmodule LiveStyleDemoWeb.UIComponents do
     border_width: "0",
     background_color: [
       default: "transparent",
-      ":focus": css_var({Tokens, :semantic, :fill_surface})
+      ":focus": var({Semantic, :fill_surface})
     ],
-    color: [default: "inherit", ":focus": css_var({Tokens, :semantic, :text_primary})],
-    border_radius: [default: "0", ":focus": css_const({Tokens, :radius, :lg})],
-    box_shadow: [default: "none", ":focus": css_const({Tokens, :shadow, :lg})],
+    color: [default: "inherit", ":focus": var({Semantic, :text_primary})],
+    border_radius: [default: "0", ":focus": const({Tokens, :radius_lg})],
+    box_shadow: [default: "none", ":focus": const({Tokens, :shadow_lg})],
     border: [
       default: "none",
-      ":focus": "1px solid #{css_var({Tokens, :semantic, :border_default})}"
+      ":focus": "1px solid #{var({Semantic, :border_default})}"
     ],
     text_decoration: [default: "none", ":focus": "none"],
-    font_weight: [default: "normal", ":focus": css_const({Tokens, :font_weight, :semibold})]
+    font_weight: [default: "normal", ":focus": const({Tokens, :font_weight_semibold})]
   )
 
   @doc """
@@ -614,29 +607,38 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:inner_block, required: true)
 
   def button(%{rest: rest} = assigns) do
-    class =
-      css_class([
-        :btn_base,
-        assigns.size == :sm && :btn_sm,
-        assigns.variant == :primary && :btn_primary,
-        assigns.variant == :secondary && :btn_secondary,
-        assigns.variant == :danger && :btn_danger,
-        assigns.variant == :ghost && :btn_ghost
-      ])
-
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     if rest[:href] || rest[:navigate] || rest[:patch] do
       ~H"""
-      <.link class={@computed_class} {@rest}>
+      <.link
+        {css([
+          :btn_base,
+          @size == :sm && :btn_sm,
+          @variant == :primary && :btn_primary,
+          @variant == :secondary && :btn_secondary,
+          @variant == :danger && :btn_danger,
+          @variant == :ghost && :btn_ghost,
+          @class
+        ])}
+        {@rest}
+      >
         {render_slot(@inner_block)}
       </.link>
       """
     else
       ~H"""
-      <button type={@type} class={@computed_class} {@rest}>
+      <button
+        type={@type}
+        {css([
+          :btn_base,
+          @size == :sm && :btn_sm,
+          @variant == :primary && :btn_primary,
+          @variant == :secondary && :btn_secondary,
+          @variant == :danger && :btn_danger,
+          @variant == :ghost && :btn_ghost,
+          @class
+        ])}
+        {@rest}
+      >
         {render_slot(@inner_block)}
       </button>
       """
@@ -658,15 +660,6 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:actions)
 
   def toast(assigns) do
-    class =
-      css_class([
-        :toast_base,
-        assigns.variant == :success && :toast_success,
-        assigns.variant == :danger && :toast_danger
-      ])
-
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
     icon_name =
       assigns.icon ||
         case assigns.variant do
@@ -675,15 +668,21 @@ defmodule LiveStyleDemoWeb.UIComponents do
           _ -> nil
         end
 
-    assigns =
-      assigns
-      |> assign(:computed_class, class)
-      |> assign(:icon_name, icon_name)
+    assigns = assign(assigns, :icon_name, icon_name)
 
     ~H"""
-    <div class={@computed_class} role={@role} {@rest}>
-      <.icon :if={@icon_name} name={@icon_name} size={:md} class={css_class([:toast_icon])} />
-      <span class={css_class([:toast_message])}>{render_slot(@inner_block)}</span>
+    <div
+      {css([
+        :toast_base,
+        @variant == :success && :toast_success,
+        @variant == :danger && :toast_danger,
+        @class
+      ])}
+      role={@role}
+      {@rest}
+    >
+      <.icon :if={@icon_name} name={@icon_name} size={:md} {css(:toast_icon)} />
+      <span {css(:toast_message)}>{render_slot(@inner_block)}</span>
       <div :if={@actions != []}>
         {render_slot(@actions)}
       </div>
@@ -704,20 +703,15 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:actions)
 
   def modal(assigns) do
-    class = css_class([:modal_base])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
-    <div class={@computed_class} {@rest}>
-      <h3 :if={@title} class={css_class([:modal_title])}>{@title}</h3>
+    <div {css([:modal_base, @class])} {@rest}>
+      <h3 :if={@title} {css(:modal_title)}>{@title}</h3>
 
-      <div class={css_class([:modal_body])}>
+      <div {css(:modal_body)}>
         {render_slot(@inner_block)}
       </div>
 
-      <div :if={@actions != []} class={css_class([:modal_actions])}>
+      <div :if={@actions != []} {css(:modal_actions)}>
         {render_slot(@actions)}
       </div>
     </div>
@@ -734,13 +728,8 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:inner_block, required: true)
 
   def text_link(assigns) do
-    class = css_class([:link])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
-    <.link class={@computed_class} {@rest}>
+    <.link {css([:link, @class])} {@rest}>
       {render_slot(@inner_block)}
     </.link>
     """
@@ -758,13 +747,8 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:inner_block, required: true)
 
   def tooltip(assigns) do
-    class = css_class([:tooltip])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
-    <span class={@computed_class} {@rest}>
+    <span {css([:tooltip, @class])} {@rest}>
       {render_slot(@inner_block)}
     </span>
     """
@@ -782,13 +766,8 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:inner_block, required: true)
 
   def menu(assigns) do
-    class = css_class([:menu_panel])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
-    <div id={@id} class={@computed_class} {@rest}>
+    <div id={@id} {css([:menu_panel, @class])} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -808,13 +787,8 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:inner_block, required: true)
 
   def menu_item(assigns) do
-    class = css_class([:menu_item, assigns.danger && :menu_item_danger])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
-    <div class={@computed_class} {@rest}>
+    <div {css([:menu_item, @danger && :menu_item_danger, @class])} {@rest}>
       {render_slot(@inner_block)}
     </div>
     """
@@ -825,7 +799,7 @@ defmodule LiveStyleDemoWeb.UIComponents do
   """
   def menu_divider(assigns) do
     ~H"""
-    <div class={css_class([:menu_divider])}></div>
+    <div {css(:menu_divider)}></div>
     """
   end
 
@@ -839,13 +813,8 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:inner_block, required: true)
 
   def label(assigns) do
-    class = css_class([:input_label])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
-    <label for={@for} class={@computed_class} {@rest}>
+    <label for={@for} {css([:input_label, @class])} {@rest}>
       {render_slot(@inner_block)}
     </label>
     """
@@ -860,13 +829,8 @@ defmodule LiveStyleDemoWeb.UIComponents do
   slot(:inner_block, required: true)
 
   def error(assigns) do
-    class = css_class([:error_message])
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
-    <p class={@computed_class} {@rest}>
+    <p {css([:error_message, @class])} {@rest}>
       <.icon name="alert" size={:sm} />
       {render_slot(@inner_block)}
     </p>
@@ -901,15 +865,6 @@ defmodule LiveStyleDemoWeb.UIComponents do
   end
 
   def input(assigns) do
-    class =
-      if assigns.type == "checkbox" do
-        css_class([:checkbox_input])
-      else
-        css_class([:input_field, assigns.error && :input_error])
-      end
-
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
     checked =
       cond do
         assigns.type != "checkbox" ->
@@ -919,17 +874,16 @@ defmodule LiveStyleDemoWeb.UIComponents do
           assigns.checked
 
         true ->
-          Phoenix.HTML.Form.normalize_value("checkbox", assigns.value)
+          Form.normalize_value("checkbox", assigns.value)
       end
 
     value =
       if assigns.type == "checkbox",
         do: assigns.value,
-        else: Phoenix.HTML.Form.normalize_value(assigns.type, assigns.value)
+        else: Form.normalize_value(assigns.type, assigns.value)
 
     assigns =
       assigns
-      |> assign(:computed_class, class)
       |> assign(:computed_checked, checked)
       |> assign(:computed_value, value)
 
@@ -940,7 +894,12 @@ defmodule LiveStyleDemoWeb.UIComponents do
       id={@id}
       value={@computed_value}
       checked={@computed_checked}
-      class={@computed_class}
+      {css([
+        @type == "checkbox" && :checkbox_input,
+        @type != "checkbox" && :input_field,
+        @type != "checkbox" && @error && :input_error,
+        @class
+      ])}
       {@rest}
     />
     """
@@ -974,34 +933,10 @@ defmodule LiveStyleDemoWeb.UIComponents do
   end
 
   def field(assigns) do
-    wrapper_class = css_class([:input_wrapper])
-
-    wrapper_class =
-      if assigns.class, do: wrapper_class <> " " <> assigns.class, else: wrapper_class
-
-    assigns = assign(assigns, :computed_wrapper_class, wrapper_class)
-
     if assigns.type == "checkbox" do
-      label_class = css_class([:checkbox_label])
-
-      label_class =
-        if assigns.label_class, do: label_class <> " " <> assigns.label_class, else: label_class
-
-      label_text_class = css_class([:checkbox_text])
-
-      label_text_class =
-        if assigns.label_text_class,
-          do: label_text_class <> " " <> assigns.label_text_class,
-          else: label_text_class
-
-      assigns =
-        assigns
-        |> assign(:computed_label_class, label_class)
-        |> assign(:computed_label_text_class, label_text_class)
-
       ~H"""
-      <div class={@computed_wrapper_class}>
-        <label class={@computed_label_class}>
+      <div {css([:input_wrapper, @class])}>
+        <label {css([:checkbox_label, @label_class])}>
           <.input
             type="checkbox"
             name={@name}
@@ -1012,7 +947,7 @@ defmodule LiveStyleDemoWeb.UIComponents do
             {@rest}
           />
 
-          <span :if={@label} class={@computed_label_text_class}>
+          <span :if={@label} {css([:checkbox_text, @label_text_class])}>
             {@label}
           </span>
         </label>
@@ -1022,7 +957,7 @@ defmodule LiveStyleDemoWeb.UIComponents do
       """
     else
       ~H"""
-      <div class={@computed_wrapper_class}>
+      <div {css([:input_wrapper, @class])}>
         <.label :if={@label} for={@id} class={@label_class}>
           {@label}
         </.label>
@@ -1053,14 +988,13 @@ defmodule LiveStyleDemoWeb.UIComponents do
   def badge(assigns) do
     ~H"""
     <span
-      class={
-        css_class([
-          :badge_base,
-          @variant == :neutral && :badge_neutral,
-          @variant == :primary && :badge_primary,
-          @variant == :outline && :badge_outline
-        ]) <> " " <> (@class || "")
-      }
+      {css([
+        :badge_base,
+        @variant == :neutral && :badge_neutral,
+        @variant == :primary && :badge_primary,
+        @variant == :outline && :badge_outline,
+        @class
+      ])}
       {@rest}
     >
       {render_slot(@inner_block)}
@@ -1079,20 +1013,14 @@ defmodule LiveStyleDemoWeb.UIComponents do
   attr(:class, :string, default: nil)
 
   def icon(assigns) do
-    class =
-      css_class([
-        :icon_base,
-        assigns.size == :sm && :icon_sm,
-        assigns.size == :md && :icon_md
-      ])
-
-    class = if assigns.class, do: class <> " " <> assigns.class, else: class
-
-    assigns = assign(assigns, :computed_class, class)
-
     ~H"""
     <svg
-      class={@computed_class}
+      {css([
+        :icon_base,
+        @size == :sm && :icon_sm,
+        @size == :md && :icon_md,
+        @class
+      ])}
       viewBox="0 0 24 24"
       aria-hidden="true"
     >

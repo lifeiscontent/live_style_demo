@@ -4,58 +4,60 @@ defmodule LiveStyleDemoWeb.DemosLive do
   require LiveStyleDemoWeb.Tokens
 
   alias LiveStyleDemoWeb.Tokens
+  alias LiveStyleDemoWeb.Tokens.Semantic
+  alias LiveStyleDemoWeb.Tokens.Space
 
-  css_class(:stack,
+  class(:stack,
     display: "grid",
-    gap: css_var({Tokens, :space, :"10"})
+    gap: var({Space, :"10"})
   )
 
-  css_class(:section,
+  class(:section,
     display: "grid",
-    gap: css_var({Tokens, :space, :"4"})
+    gap: var({Space, :"4"})
   )
 
-  css_class(:section_header,
+  class(:section_header,
     display: "grid",
-    gap: css_var({Tokens, :space, :"1"})
+    gap: var({Space, :"1"})
   )
 
-  css_class(:section_title,
-    font_size: css_const({Tokens, :font_size, :xl}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+  class(:section_title,
+    font_size: const({Tokens, :font_size_xl}),
+    font_weight: const({Tokens, :font_weight_bold}),
     letter_spacing: "-0.02em",
-    line_height: css_const({Tokens, :leading, :tight})
+    line_height: const({Tokens, :leading_tight})
   )
 
-  css_class(:section_text,
+  class(:section_text,
     max_width: "80ch",
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed})
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed})
   )
 
-  css_class(:grid,
+  class(:grid,
     display: "grid",
-    gap: css_var({Tokens, :space, :"6"}),
+    gap: var({Space, :"6"}),
     grid_template_columns: "repeat(auto-fit, minmax(min(280px, 100%), 1fr))"
   )
 
-  css_class(:title,
-    font_size: css_const({Tokens, :font_size, :lg}),
-    font_weight: css_const({Tokens, :font_weight, :bold}),
+  class(:title,
+    font_size: const({Tokens, :font_size_lg}),
+    font_weight: const({Tokens, :font_weight_bold}),
     letter_spacing: "-0.02em",
-    line_height: css_const({Tokens, :leading, :tight}),
-    color: css_var({Tokens, :semantic, :text_primary})
+    line_height: const({Tokens, :leading_tight}),
+    color: var({Semantic, :text_primary})
   )
 
-  css_class(:text,
-    color: css_var({Tokens, :semantic, :text_secondary}),
-    line_height: css_const({Tokens, :leading, :relaxed}),
-    font_size: css_const({Tokens, :font_size, :base})
+  class(:text,
+    color: var({Semantic, :text_secondary}),
+    line_height: const({Tokens, :leading_relaxed}),
+    font_size: const({Tokens, :font_size_base})
   )
 
-  css_class(:link_area,
+  class(:link_area,
     margin_top: "auto",
-    padding_top: css_var({Tokens, :space, :"4"})
+    padding_top: var({Space, :"4"})
   )
 
   @impl true
@@ -67,10 +69,10 @@ defmodule LiveStyleDemoWeb.DemosLive do
     ~H"""
     <.card as={:section} interactive>
       <div>
-        <h3 class={css_class([:title])}>{@title}</h3>
+        <h3 {css(:title)}>{@title}</h3>
       </div>
-      <p :if={@text} class={css_class([:text])}>{@text}</p>
-      <div class={css_class([:link_area])}>
+      <p :if={@text} {css(:text)}>{@text}</p>
+      <div {css(:link_area)}>
         <.button variant={:secondary} navigate={@to}>
           Open →
         </.button>
@@ -88,16 +90,16 @@ defmodule LiveStyleDemoWeb.DemosLive do
       page_title="Demos"
       page_subtitle="A curated set of modern CSS capabilities—compiled for Phoenix LiveView."
     >
-      <div class={css_class([:stack])}>
-        <section class={css_class([:section])}>
-          <header class={css_class([:section_header])}>
-            <h2 class={css_class([:section_title])}>Flagships</h2>
-            <p class={css_class([:section_text])}>
+      <div {css(:stack)}>
+        <section {css(:section)}>
+          <header {css(:section_header)}>
+            <h2 {css(:section_title)}>Flagships</h2>
+            <p {css(:section_text)}>
               The "Ah-ha" moments. Clean templates, zero-runtime tokens, and APIs that usually require JS libraries.
             </p>
           </header>
 
-          <div class={css_class([:grid])}>
+          <div {css(:grid)}>
             <.demo_card
               title="Theming"
               text="Swap spacing scales and colors instantly with zero runtime overhead."
@@ -126,15 +128,15 @@ defmodule LiveStyleDemoWeb.DemosLive do
           </div>
         </section>
 
-        <section class={css_class([:section])}>
-          <header class={css_class([:section_header])}>
-            <h2 class={css_class([:section_title])}>Selectors & UI APIs</h2>
-            <p class={css_class([:section_text])}>
+        <section {css(:section)}>
+          <header {css(:section_header)}>
+            <h2 {css(:section_title)}>Selectors & UI APIs</h2>
+            <p {css(:section_text)}>
               Things you usually install a library for. Handled natively in CSS.
             </p>
           </header>
 
-          <div class={css_class([:grid])}>
+          <div {css(:grid)}>
             <.demo_card
               title="Parent Selector :has()"
               text="Style parents based on children. No more state lifting for simple UI."
@@ -148,15 +150,15 @@ defmodule LiveStyleDemoWeb.DemosLive do
           </div>
         </section>
 
-        <section class={css_class([:section])}>
-          <header class={css_class([:section_header])}>
-            <h2 class={css_class([:section_title])}>Responsive & Motion</h2>
-            <p class={css_class([:section_text])}>
+        <section {css(:section)}>
+          <header {css(:section_header)}>
+            <h2 {css(:section_title)}>Responsive & Motion</h2>
+            <p {css(:section_text)}>
               Responsive components and scroll-linked animations—no JS frameworks required.
             </p>
           </header>
 
-          <div class={css_class([:grid])}>
+          <div {css(:grid)}>
             <.demo_card
               title="Container Queries"
               text="Components that adapt to their container, not the viewport."
@@ -175,15 +177,15 @@ defmodule LiveStyleDemoWeb.DemosLive do
           </div>
         </section>
 
-        <section class={css_class([:section])}>
-          <header class={css_class([:section_header])}>
-            <h2 class={css_class([:section_title])}>Visual Systems</h2>
-            <p class={css_class([:section_text])}>
+        <section {css(:section)}>
+          <header {css(:section_header)}>
+            <h2 {css(:section_title)}>Visual Systems</h2>
+            <p {css(:section_text)}>
               Tokens + color science + effects.
             </p>
           </header>
 
-          <div class={css_class([:grid])}>
+          <div {css(:grid)}>
             <.demo_card
               title="Focus Card"
               text="High-fidelity interactivity with zero JavaScript."
@@ -192,15 +194,15 @@ defmodule LiveStyleDemoWeb.DemosLive do
           </div>
         </section>
 
-        <section class={css_class([:section])}>
-          <header class={css_class([:section_header])}>
-            <h2 class={css_class([:section_title])}>App & Components</h2>
-            <p class={css_class([:section_text])}>
+        <section {css(:section)}>
+          <header {css(:section_header)}>
+            <h2 {css(:section_title)}>App & Components</h2>
+            <p {css(:section_text)}>
               Traditional UI patterns—plus a small LiveView app showing how these pieces combine.
             </p>
           </header>
 
-          <div class={css_class([:grid])}>
+          <div {css(:grid)}>
             <.demo_card
               title="Todo App"
               text="A fully functional app showcasing transitions and state."
