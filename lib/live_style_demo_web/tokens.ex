@@ -21,7 +21,7 @@ defmodule LiveStyleDemoWeb.Tokens do
         padding: var({LiveStyleDemoWeb.Tokens.Space, :"4"})
 
       # Apply dark theme:
-      <div class={theme({LiveStyleDemoWeb.Tokens.Semantic, :terminal})}>
+      <div class={theme_class({LiveStyleDemoWeb.Tokens.Semantic, :terminal})}>
         ...
       </div>
   """
@@ -154,7 +154,7 @@ defmodule LiveStyleDemoWeb.Tokens do
     to: [opacity: "0"]
   )
 
-  view_transition_class(:todo_transition,
+  view_transition(:todo_transition,
     old: [
       pointer_events: "none",
       animation_name: keyframes(:vt_scale_out),

@@ -1,8 +1,6 @@
 defmodule LiveStyleDemoWeb.ThemingLive do
   use LiveStyleDemoWeb, :live_view
 
-  require LiveStyleDemoWeb.Tokens
-
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space
@@ -185,8 +183,8 @@ defmodule LiveStyleDemoWeb.ThemingLive do
   end
 
   defp scale_class(:default), do: nil
-  defp scale_class(:compact), do: theme({Space, :compact})
-  defp scale_class(:cozy), do: theme({Space, :cozy})
+  defp scale_class(:compact), do: theme_class({Space, :compact})
+  defp scale_class(:cozy), do: theme_class({Space, :cozy})
 
   defp toggle_active_class(true), do: css(:toggle_btn_active).class
   defp toggle_active_class(false), do: nil

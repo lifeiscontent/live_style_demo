@@ -1,8 +1,6 @@
 defmodule LiveStyleDemoWeb.PopoverLive do
   use LiveStyleDemoWeb, :live_view
 
-  require LiveStyleDemoWeb.Tokens
-
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space

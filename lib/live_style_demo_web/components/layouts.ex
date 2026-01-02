@@ -6,8 +6,6 @@ defmodule LiveStyleDemoWeb.Layouts do
   use LiveStyleDemoWeb, :html
   use LiveStyle
 
-  require LiveStyleDemoWeb.Tokens
-
   alias LiveStyleDemoWeb.Tokens.Space
 
   import LiveStyleDemoWeb.UIComponents

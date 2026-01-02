@@ -3,7 +3,7 @@ defmodule LiveStyleDemoWeb.Tokens.Anim do
   Animation design tokens (CSS custom properties for animations).
   """
   use LiveStyle
-  import LiveStyle.TypedProperty
+  import LiveStyle.Types
 
   vars(
     angle: angle("0deg"),

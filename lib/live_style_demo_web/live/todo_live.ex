@@ -1,9 +1,6 @@
 defmodule LiveStyleDemoWeb.TodoLive do
   use LiveStyleDemoWeb, :live_view
 
-  # Ensure Tokens is compiled first
-  require LiveStyleDemoWeb.Tokens
-
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space
@@ -35,7 +32,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # View Transitions
   # ============================================================================
 
-  view_transition_class(:todo_item,
+  view_transition(:todo_item,
     group: [
       pointer_events: "none",
       animation_duration: ".22s",

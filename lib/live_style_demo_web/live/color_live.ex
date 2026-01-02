@@ -1,8 +1,6 @@
 defmodule LiveStyleDemoWeb.ColorLive do
   use LiveStyleDemoWeb, :live_view
 
-  require LiveStyleDemoWeb.Tokens
-
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Anim
   alias LiveStyleDemoWeb.Tokens.Semantic
@@ -159,7 +157,7 @@ defmodule LiveStyleDemoWeb.ColorLive do
     );
 
     /* With CSS Variables */
-    @property {LiveStyle.Vars.lookup!({Tokens.Anim, :hue}).ident} &#123;
+    @property {LiveStyle.Vars.fetch!({Tokens.Anim, :hue})[:ident]} &#123;
       syntax: "&lt;angle&gt;";
       inherits: true;
       initial-value: 260deg;

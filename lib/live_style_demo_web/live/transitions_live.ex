@@ -3,9 +3,6 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
 
   require Logger
 
-  # Ensure Tokens is compiled first
-  require LiveStyleDemoWeb.Tokens
-
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space
@@ -48,7 +45,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
 
   # Card transition: smooth position animation for shuffling
   # Uses default crossfade for enter/exit
-  view_transition_class(:card,
+  view_transition(:card,
     group: [
       # Prevent transition pseudo-elements from swallowing clicks.
       pointer_events: "none",
@@ -57,7 +54,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     ]
   )
 
-  view_transition_class(:list_item,
+  view_transition(:list_item,
     group: [
       pointer_events: "none",
       animation_duration: ".18s",

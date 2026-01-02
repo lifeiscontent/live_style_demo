@@ -31,16 +31,16 @@ config :esbuild,
     env: %{"NODE_PATH" => [Path.expand("../deps", __DIR__), Mix.Project.build_path()]}
   ],
   css: [
-    args: ~w(css/app.css --bundle --outdir=../priv/static/assets),
+    args: ~w(css/app.css --bundle --outdir=../priv/static/assets/css),
     cd: Path.expand("../assets", __DIR__)
   ]
 
 # Configure LiveStyle
+# Note: prefix_css and deprecated? must use runtime config since these
+# modules are compiled after config.exs is evaluated
 config :live_style,
-  prefix_css: &AutoprefixerEx.prefix_css/2,
-  deprecated?: &CSSCompatDataEx.deprecated?/1,
   default: [
-    output: "priv/static/assets/live.css",
+    output: "priv/static/assets/css/live.css",
     cd: Path.expand("..", __DIR__)
   ]
 

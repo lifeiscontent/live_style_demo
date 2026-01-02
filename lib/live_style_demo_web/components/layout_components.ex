@@ -5,8 +5,6 @@ defmodule LiveStyleDemoWeb.LayoutComponents do
   use Phoenix.Component
   use LiveStyle
 
-  # Ensure Tokens is compiled first
-  require LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space

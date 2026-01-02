@@ -16,8 +16,6 @@ defmodule LiveStyleDemoWeb.ShellComponents do
     router: LiveStyleDemoWeb.Router,
     statics: LiveStyleDemoWeb.static_paths()
 
-  # Ensure tokens/styles compile first
-  require LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space

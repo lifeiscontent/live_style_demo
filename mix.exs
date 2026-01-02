@@ -78,10 +78,11 @@ defmodule LiveStyleDemo.MixProject do
     [
       setup: ["deps.get", "assets.setup", "assets.build"],
       "assets.setup": ["esbuild.install --if-missing"],
-      "assets.build": ["compile", "esbuild live_style_demo", "live_style default"],
+      "assets.build": ["compile", "esbuild live_style_demo", "esbuild css", "live_style default"],
       "assets.deploy": [
         "live_style default",
         "esbuild live_style_demo --minify",
+        "esbuild css --minify",
         "phx.digest"
       ],
       precommit: [

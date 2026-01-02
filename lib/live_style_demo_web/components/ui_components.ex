@@ -9,8 +9,6 @@ defmodule LiveStyleDemoWeb.UIComponents do
   alias Phoenix.HTML.Form
   alias Phoenix.LiveView.JS
 
-  # Ensure Tokens is compiled first
-  require LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space

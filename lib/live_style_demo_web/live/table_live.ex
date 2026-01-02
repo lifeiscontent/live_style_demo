@@ -15,9 +15,6 @@ defmodule LiveStyleDemoWeb.TableLive do
   alias LiveStyle.Marker
   alias LiveStyle.When
 
-  # Ensure Tokens is compiled first
-  require LiveStyleDemoWeb.Tokens
-
   alias LiveStyleDemoWeb.Tokens
   alias LiveStyleDemoWeb.Tokens.Semantic
   alias LiveStyleDemoWeb.Tokens.Space
