@@ -36,9 +36,10 @@ config :esbuild,
   ]
 
 # Configure LiveStyle
-# Note: prefix_css and deprecated? must use runtime config since these
-# modules are compiled after config.exs is evaluated
+# Use MFA tuples instead of function captures to avoid compile-order issues
 config :live_style,
+  prefix_css: {AutoprefixerEx, :prefix_css},
+  deprecated?: {CSSCompatDataEx, :deprecated?},
   default: [
     output: "priv/static/assets/css/live.css",
     cd: Path.expand("..", __DIR__)

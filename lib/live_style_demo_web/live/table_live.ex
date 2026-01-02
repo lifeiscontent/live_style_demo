@@ -90,7 +90,7 @@ defmodule LiveStyleDemoWeb.TableLive do
                    [
                      {:default, nil},
                      {When.ancestor(":has(td:nth-of-type(#{n}):hover)"),
-                       var({Semantic, :text_on_primary})}
+                      var({Semantic, :text_on_primary})}
                    ]}
                 end)
 
@@ -104,14 +104,16 @@ defmodule LiveStyleDemoWeb.TableLive do
     color:
       [
         {:default, var({Semantic, :text_secondary})},
-        {When.ancestor(":hover", @row_marker), [
-          {:default, var({Semantic, :text_on_primary})},
-          {":nth-child(1)", var({Semantic, :text_secondary})}
-        ]},
-        {":hover", [
-          {:default, var({Semantic, :text_on_primary})},
-          {":nth-child(1)", var({Semantic, :text_secondary})}
-        ]}
+        {When.ancestor(":hover", @row_marker),
+         [
+           {:default, var({Semantic, :text_on_primary})},
+           {":nth-child(1)", var({Semantic, :text_secondary})}
+         ]},
+        {":hover",
+         [
+           {:default, var({Semantic, :text_on_primary})},
+           {":nth-child(1)", var({Semantic, :text_secondary})}
+         ]}
       ] ++ @column_color,
     font_weight: "200",
     opacity:
@@ -130,10 +132,11 @@ defmodule LiveStyleDemoWeb.TableLive do
         # Highlight row on hover
         {When.ancestor(":hover", @row_marker), @highlight},
         # Highlight hovered cell
-        {":hover", [
-          {:default, @highlight},
-          {":nth-child(1)", "transparent"}
-        ]},
+        {":hover",
+         [
+           {:default, @highlight},
+           {":nth-child(1)", "transparent"}
+         ]},
         # First column never gets background
         {":nth-child(1)", "transparent"}
       ] ++ @column_background
