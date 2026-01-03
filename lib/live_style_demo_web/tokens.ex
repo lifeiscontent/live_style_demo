@@ -154,7 +154,7 @@ defmodule LiveStyleDemoWeb.Tokens do
     to: [opacity: "0"]
   )
 
-  view_transition(:todo_transition,
+  view_transition_class(:todo_transition,
     old: [
       pointer_events: "none",
       animation_name: keyframes(:vt_scale_out),

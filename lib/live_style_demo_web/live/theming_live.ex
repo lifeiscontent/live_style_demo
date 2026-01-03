@@ -200,7 +200,7 @@ defmodule LiveStyleDemoWeb.ThemingLive do
   end
 
   defp diff_lines(scale) when scale in [:compact, :cozy] do
-    title = "theme(:space, :#{scale}, ...)"
+    title = "theme_class(:space, :#{scale}, ...)"
 
     changes =
       case scale do

@@ -24,7 +24,7 @@ defmodule LiveStyleDemoWeb.Tokens.Space do
     "16": "4rem"
   )
 
-  theme(:compact,
+  theme_class(:compact,
     "0.5": "0.1rem",
     "1": "0.2rem",
     "1.5": "0.3rem",
@@ -41,7 +41,7 @@ defmodule LiveStyleDemoWeb.Tokens.Space do
     "16": "3.2rem"
   )
 
-  theme(:cozy,
+  theme_class(:cozy,
     "0.5": "0.15rem",
     "1": "0.3rem",
     "1.5": "0.45rem",

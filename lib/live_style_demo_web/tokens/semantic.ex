@@ -65,7 +65,7 @@ defmodule LiveStyleDemoWeb.Tokens.Semantic do
   # THEME: TERMINAL (Developer focused, High Contrast)
   # Palette: Black, Green, White.
 
-  theme(:terminal,
+  theme_class(:terminal,
     text_primary: "#00ff00",
     text_secondary: "#00aa00",
     text_muted: "#005500",
@@ -102,7 +102,7 @@ defmodule LiveStyleDemoWeb.Tokens.Semantic do
   # THEME: BLUEPRINT (Technical, Precise)
   # Palette: Blueprint Blue, White, Darker Blue.
 
-  theme(:blueprint,
+  theme_class(:blueprint,
     text_primary: "#ffffff",
     text_secondary: "#a0c0ff",
     text_muted: "#5070a0",
@@ -143,7 +143,7 @@ defmodule LiveStyleDemoWeb.Tokens.Semantic do
   # THEME: SOLAR (Warm, Light, Sophisticated)
   # Palette: Cream, Deep Teal, Magenta.
 
-  theme(:solar,
+  theme_class(:solar,
     text_primary: "#002b36",
     text_secondary: "#586e75",
     text_muted: "#93a1a1",
@@ -182,7 +182,7 @@ defmodule LiveStyleDemoWeb.Tokens.Semantic do
   # THEME: NAVY (Dark, Deep, Cyber-lite)
   # Palette: Navy, Light Blue, Teal.
 
-  theme(:navy,
+  theme_class(:navy,
     text_primary: "#e6f1ff",
     text_secondary: "#8892b0",
     text_muted: "#495670",
@@ -221,7 +221,7 @@ defmodule LiveStyleDemoWeb.Tokens.Semantic do
   # THEME: FOREST (Organic, Calm, Dark)
   # Palette: Deep Green, Off-White, Gold.
 
-  theme(:forest,
+  theme_class(:forest,
     text_primary: "#ecfdf5",
     text_secondary: "#a7f3d0",
     text_muted: "#6ee7b7",
@@ -261,7 +261,7 @@ defmodule LiveStyleDemoWeb.Tokens.Semantic do
   # THEME: LAVENDER (Soft, Playful, Light)
   # Palette: White, Purple, Violet.
 
-  theme(:lavender,
+  theme_class(:lavender,
     text_primary: "#4c1d95",
     text_secondary: "#6d28d9",
     text_muted: "#8b5cf6",
@@ -300,7 +300,7 @@ defmodule LiveStyleDemoWeb.Tokens.Semantic do
   # THEME: BRUTAL (Raw, Bold, High Contrast)
   # Palette: Silver, Black, Blue.
 
-  theme(:brutal,
+  theme_class(:brutal,
     text_primary: "#000000",
     text_secondary: "#333333",
     text_muted: "#666666",

@@ -32,7 +32,7 @@ defmodule LiveStyleDemoWeb.TodoLive do
   # View Transitions
   # ============================================================================
 
-  view_transition(:todo_item,
+  view_transition_class(:todo_item,
     group: [
       pointer_events: "none",
       animation_duration: ".22s",

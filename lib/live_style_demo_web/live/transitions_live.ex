@@ -45,7 +45,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
 
   # Card transition: smooth position animation for shuffling
   # Uses default crossfade for enter/exit
-  view_transition(:card,
+  view_transition_class(:card,
     group: [
       # Prevent transition pseudo-elements from swallowing clicks.
       pointer_events: "none",
@@ -54,7 +54,7 @@ defmodule LiveStyleDemoWeb.TransitionsLive do
     ]
   )
 
-  view_transition(:list_item,
+  view_transition_class(:list_item,
     group: [
       pointer_events: "none",
       animation_duration: ".18s",
