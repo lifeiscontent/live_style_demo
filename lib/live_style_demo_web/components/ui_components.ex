@@ -580,7 +580,8 @@ defmodule LiveStyleDemoWeb.UIComponents do
     values: [:primary, :secondary, :danger, :ghost]
   )
 
-  attr(:class, :string, default: nil)
+  # Use :any to accept both string and LiveStyle.Attrs structs
+  attr(:class, :any, default: nil)
 
   attr(:rest, :global, include: ~w(
       href

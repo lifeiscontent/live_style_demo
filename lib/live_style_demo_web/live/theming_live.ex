@@ -186,9 +186,6 @@ defmodule LiveStyleDemoWeb.ThemingLive do
   defp scale_class(:compact), do: theme_class({Space, :compact})
   defp scale_class(:cozy), do: theme_class({Space, :cozy})
 
-  defp toggle_active_class(true), do: css(:toggle_btn_active).class
-  defp toggle_active_class(false), do: nil
-
   defp scale_label(:default), do: "Default"
   defp scale_label(:compact), do: "Compact"
   defp scale_label(:cozy), do: "Cozy"
@@ -278,7 +275,7 @@ defmodule LiveStyleDemoWeb.ThemingLive do
             variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="compact"
-            class={toggle_active_class(@scale == :compact)}
+            {css([@scale == :compact && :toggle_btn_active])}
           >
             Compact
           </.button>
@@ -288,7 +285,7 @@ defmodule LiveStyleDemoWeb.ThemingLive do
             variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="default"
-            class={toggle_active_class(@scale == :default)}
+            {css([@scale == :default && :toggle_btn_active])}
           >
             Default
           </.button>
@@ -298,7 +295,7 @@ defmodule LiveStyleDemoWeb.ThemingLive do
             variant={:secondary}
             phx-click="set_scale"
             phx-value-scale="cozy"
-            class={toggle_active_class(@scale == :cozy)}
+            {css([@scale == :cozy && :toggle_btn_active])}
           >
             Cozy
           </.button>

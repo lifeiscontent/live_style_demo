@@ -611,21 +611,28 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   end
 
   def appearance_hook_definition(assigns) do
-    assigns = assign(assigns, :style_btn_active_class, css(:style_btn_active).class)
+    assigns =
+      assigns
+      |> assign(:style_btn_base_class, css(:style_btn).class)
+      |> assign(:style_btn_active_class, css([:style_btn, :style_btn_active]).class)
 
     ~H"""
     <div
       id="appearance-hook-def"
       hidden
       aria-hidden="true"
+      data-style-btn-base-class={@style_btn_base_class}
       data-style-btn-active-class={@style_btn_active_class}
     >
       <script :type={Phoenix.LiveView.ColocatedHook} name=".Appearance">
         const APPEARANCE_KEY = "ls-appearance"
 
-        function activeClasses() {
+        function getStyleClasses() {
           const el = document.getElementById("appearance-hook-def")
-          return (el?.dataset?.styleBtnActiveClass || "").split(/\s+/).filter(Boolean)
+          return {
+            base: el?.dataset?.styleBtnBaseClass || "",
+            active: el?.dataset?.styleBtnActiveClass || ""
+          }
         }
 
         function splitClasses(classString) {
@@ -706,11 +713,11 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         }
 
         function setActive(panel, value) {
-          const classes = activeClasses()
+          const classes = getStyleClasses()
 
           panel.querySelectorAll("[data-appearance]").forEach((btn) => {
             const isActive = btn.getAttribute("data-appearance") === value
-            classes.forEach((cls) => btn.classList.toggle(cls, isActive))
+            btn.className = isActive ? classes.active : classes.base
           })
         }
 
@@ -768,21 +775,28 @@ defmodule LiveStyleDemoWeb.ShellComponents do
   end
 
   def spacing_hook_definition(assigns) do
-    assigns = assign(assigns, :style_btn_active_class, css(:style_btn_active).class)
+    assigns =
+      assigns
+      |> assign(:style_btn_base_class, css(:style_btn).class)
+      |> assign(:style_btn_active_class, css([:style_btn, :style_btn_active]).class)
 
     ~H"""
     <div
       id="spacing-hook-def"
       hidden
       aria-hidden="true"
+      data-style-btn-base-class={@style_btn_base_class}
       data-style-btn-active-class={@style_btn_active_class}
     >
       <script :type={Phoenix.LiveView.ColocatedHook} name=".Spacing">
         const SPACE_KEY = "ls-space"
 
-        function activeClasses() {
+        function getStyleClasses() {
           const el = document.getElementById("spacing-hook-def")
-          return (el?.dataset?.styleBtnActiveClass || "").split(/\s+/).filter(Boolean)
+          return {
+            base: el?.dataset?.styleBtnBaseClass || "",
+            active: el?.dataset?.styleBtnActiveClass || ""
+          }
         }
 
         function splitClasses(classString) {
@@ -813,11 +827,11 @@ defmodule LiveStyleDemoWeb.ShellComponents do
         }
 
         function setActive(panel, value) {
-          const classes = activeClasses()
+          const classes = getStyleClasses()
 
           panel.querySelectorAll("[data-space]").forEach((btn) => {
             const isActive = btn.getAttribute("data-space") === value
-            classes.forEach((cls) => btn.classList.toggle(cls, isActive))
+            btn.className = isActive ? classes.active : classes.base
           })
         }
 
