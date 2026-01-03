@@ -18,7 +18,7 @@ config :live_style_demo, LiveStyleDemoWeb.Endpoint,
   watchers: [
     esbuild: {Esbuild, :install_and_run, [:live_style_demo, ~w(--sourcemap=inline --watch)]},
     esbuild_css: {Esbuild, :install_and_run, [:css, ~w(--watch)]},
-    live_style: {LiveStyle.Compiler.Runner, :run, [:default, ~w(--watch)]}
+    live_style: {LiveStyle, :install_and_run, [:default, ~w(--watch)]}
   ]
 
 # ## SSL Support

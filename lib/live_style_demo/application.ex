@@ -11,8 +11,6 @@ defmodule LiveStyleDemo.Application do
       LiveStyleDemoWeb.Telemetry,
       {DNSCluster, query: Application.get_env(:live_style_demo, :dns_cluster_query) || :ignore},
       {Phoenix.PubSub, name: LiveStyleDemo.PubSub},
-      # Start a worker by calling: LiveStyleDemo.Worker.start_link(arg)
-      # {LiveStyleDemo.Worker, arg},
       # Start to serve requests, typically the last entry
       LiveStyleDemoWeb.Endpoint
     ]
