@@ -10,7 +10,7 @@ defmodule LiveStyleDemo.MixProject do
       start_permanent: Mix.env() == :prod,
       aliases: aliases(),
       deps: deps(),
-      compilers: [:phoenix_live_view] ++ Mix.compilers(),
+      compilers: [:phoenix_live_view, :live_style] ++ Mix.compilers(),
       listeners: [Phoenix.CodeReloader]
     ]
   end
@@ -46,7 +46,13 @@ defmodule LiveStyleDemo.MixProject do
       {:postgrex, ">= 0.0.0"},
       {:phoenix_html, "~> 4.1"},
       {:phoenix_live_reload, "~> 1.2", only: :dev},
-      {:phoenix_live_view, "~> 1.1.0"},
+      {:phoenix_live_view,
+       github: "lifeiscontent/phoenix_live_view",
+       branch: "feat/live-view-template-transformers",
+       override: true},
+      {:live_style,
+       github: "lifeiscontent/live_style",
+       branch: "feat/live-style-template-transformer"},
       {:lazy_html, ">= 0.1.0", only: :test},
       {:phoenix_live_dashboard, "~> 0.8.3"},
       {:esbuild, "~> 0.10", runtime: Mix.env() == :dev},
@@ -82,8 +88,14 @@ defmodule LiveStyleDemo.MixProject do
       "ecto.reset": ["ecto.drop", "ecto.setup"],
       test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
-      "assets.build": ["compile", "tailwind live_style_demo", "esbuild live_style_demo"],
+      "assets.build": [
+        "compile",
+        "live_style live_style_demo",
+        "tailwind live_style_demo",
+        "esbuild live_style_demo"
+      ],
       "assets.deploy": [
+        "live_style live_style_demo",
         "tailwind live_style_demo --minify",
         "esbuild live_style_demo --minify",
         "phx.digest"

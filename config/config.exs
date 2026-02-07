@@ -52,6 +52,17 @@ config :tailwind,
     cd: Path.expand("..", __DIR__)
   ]
 
+config :live_style,
+  live_style_demo: [
+    input: "assets/css/live_style.css",
+    output: "priv/static/assets/css/live_style.css"
+  ]
+
+config :phoenix_live_view,
+  template_transformers: [
+    LiveStyle.TemplateTransformer
+  ]
+
 # Configure Elixir's Logger
 config :logger, :default_formatter,
   format: "$time $metadata[$level] $message\n",

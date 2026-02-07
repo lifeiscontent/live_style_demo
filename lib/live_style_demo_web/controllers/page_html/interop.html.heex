@@ -1,0 +1,37 @@
+<div class={[:interop_page]}>
+  <main class={[:interop_card, {LiveStyleDemoWeb.SharedStyles, :surface}]}>
+    <h1 class={[:title]}>LiveStyle HEEx interop demo</h1>
+
+    <p class={[:subtitle]}>
+      This page resolves local atom refs and cross-module refs in <code>class=&lbrace;...&rbrace;</code>.
+      Static refs are emitted in static chunks and dynamic args remain dynamic.
+    </p>
+
+    <div class={[:row]}>
+      <span class={[:chip_local]}>local atom (:chip_local)</span>
+      <span class={[{LiveStyleDemoWeb.SharedStyles, :module_ref}]}>
+        module tuple (&lbrace;Module, :key&rbrace;)
+      </span>
+      <span class={[[:chip_local, {LiveStyleDemoWeb.SharedStyles, :list_ref}]]}>
+        nested list with tuple refs
+      </span>
+      <span class={["string-pill", :chip_local]}>string + atom</span>
+      <span class={[{:dynamic_opacity, opacity: 0.5}]}>
+        local dynamic MFA with static args
+      </span>
+      <span class={[{LiveStyleDemoWeb.SharedStyles, :dynamic_opacity, opacity: 0.35}]}>
+        module dynamic MFA with static args
+      </span>
+      <span class={[{:dynamic_opacity, opacity: @opacity}]}>
+        local dynamic MFA with dynamic assign
+      </span>
+    </div>
+
+    <pre class={[:code]}><code>&lt;span class=&lbrace;[:chip_local]&rbrace; /&gt;
+&lt;span class=&lbrace;[&lbrace;LiveStyleDemoWeb.SharedStyles, :module_ref&rbrace;]&rbrace; /&gt;
+&lt;span class=&lbrace;[[:chip_local, &lbrace;LiveStyleDemoWeb.SharedStyles, :list_ref&rbrace;]]&rbrace; /&gt;
+&lt;span class=&lbrace;[&lbrace;:dynamic_opacity, opacity: 0.5&rbrace;]&rbrace; /&gt;
+&lt;span class=&lbrace;[&lbrace;LiveStyleDemoWeb.SharedStyles, :dynamic_opacity, opacity: 0.35&rbrace;]&rbrace; /&gt;
+&lt;span class=&lbrace;[&lbrace;:dynamic_opacity, opacity: @opacity&rbrace;]&rbrace; /&gt;</code></pre>
+  </main>
+</div>

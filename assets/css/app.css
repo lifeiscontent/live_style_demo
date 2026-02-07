@@ -103,3 +103,15 @@
 [data-phx-session], [data-phx-teleported-src] { display: contents }
 
 /* This file is for your main application CSS */
+
+@import "./live_style.css";
+
+.string-pill {
+  background: #fef3c7;
+  border: 1px dashed #d97706;
+  border-radius: 9999px;
+  color: #7c2d12;
+  font-size: 0.75rem;
+  font-weight: 700;
+  padding: 0.25rem 0.75rem;
+}
